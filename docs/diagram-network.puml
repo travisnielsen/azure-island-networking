@@ -1,0 +1,94 @@
+@startuml diagram-network
+
+!define AzurePuml https://raw.githubusercontent.com/travisnielsen/Azure-PlantUML/themesupport/dist
+
+' Theme
+!includeurl AzurePuml/themes/blueprint.puml
+
+' Azure Services
+!includeurl AzurePuml/Compute/AzureVirtualMachine.puml
+!includeurl AzurePuml/Compute/AzureFunction.puml
+!includeurl AzurePuml/Management/AzureSubscription.puml
+!includeurl AzurePuml/Networking/AzureBastion.puml
+!includeurl AzurePuml/Networking/AzureFirewall.puml
+!includeurl AzurePuml/Networking/AzureVirtualNetwork.puml
+!includeurl AzurePuml/Networking/AzureSubnet.puml
+!includeurl AzurePuml/Networking/AzureExpressRoute.puml
+!includeurl AzurePuml/Networking/AzureRouteTable.puml
+!includeurl AzurePuml/Networking/AzureApplicationGateway.puml
+!includeurl AzurePuml/Networking/AzureNAT.puml
+!includeurl AzurePuml/Networking/AzureNSG.puml
+!includeurl AzurePuml/Networking/AzurePrivateLink.puml
+!includeurl AzurePuml/Networking/AzurePrivateLinkHub.puml
+!includeurl AzurePuml/Networking/AzurePrivateLinkService.puml
+!includeurl AzurePuml/Networking/AzureVPNGateway.puml
+!includeurl AzurePuml/Storage/AzureStorage.puml
+
+LAYOUT_LEFT_RIGHT
+
+TITLE: Network Topology
+skinparam TitleFontSize 35
+
+AzureVirtualNetwork(vnetIsland, "Workload A", "10.10.0.0/20") {
+    AzureSubnet(vnetIslandtUtil, "utility", "", "") {
+
+    }
+    AzureSubnet(vnetIslandPrivateEndpoints, "private-endpoints", "", "") {
+
+    }
+    AzureSubnet(vnetIslandIntegration, "integration-func-a", "", "") {
+
+    }
+
+}
+
+AzureVirtualNetwork(vnetBridge, "Bridge VNET", "10.10.0.0/20") {
+    AzureSubnet(vnetBridgeAzFw, "firewall", "", "") {
+
+    }
+    AzureSubnet(vnetBridgeBastion, "bastion", "", "") {
+
+    }
+    AzureSubnet(vnetBridgeAppGw, "web-publish", "", "") {
+
+    }
+
+}
+
+AzureVirtualNetwork(vnetHub, "vnet-hub", "10.10.0.0/20") {
+    AzureFirewall(azfw, "Hub Firewall", "", "Deny egress (default)")
+}
+
+AzureVirtualNetwork(vnetSpoke, "vnet-spoke", "10.20.0.0/20") {
+
+    AzureSubnet(vnetSpokeDns, "dns", "", "") {
+        AzureNSG(vnetSpokeNsgDns, "vnet-spoke-dns-nsg", "", "")
+        AzureVirtualMachine(vmdns1, "DNS Server 1", "", "")
+        AzureVirtualMachine(vmdns2, "DNS Server 2", "", "")
+
+        vnetSpokeNsgDns -[hidden]d-> vmdns1
+        vmdns1 -[hidden]d-> vmdns2
+    }
+
+
+    ' AzureVirtualMachine(vm, "Utility Servers", "", "Allow SSH / RDP from Bastion subnet")
+    ' AzureRouteTable(udr1, "User Defined Route", "Force egress to hub", "0.0.0.0 to AZFW")
+    ' AzurePrivateLink(azsvcLink, "Azure Services", "", "Inbound connections")
+    ' AzureRouteTable(udr2, "User Defined Route", "Force egress to hub", "0.0.0.0 to AZFW")
+}
+
+vnetIsland --> vnetBridge
+vnetBridge --> vnetHub
+vnetHub --> vnetSpoke
+
+' bastion -[#d33682]-> vm: "<color:#d33682>RDP/SSH"
+' vnetHub -[#268bd2]-- vnetSpoke: "<color:#268bd2><size:18>VNET\n<color:#268bd2><size:18>Peering"
+' AzureNSG(nsgs, "Traffic Segmentation", "1 per subnet", "Deny outbound Internet\nExplicit inbound allow")
+' AzureStorage(adls, "Data Lake", "Standard SKU", "Source data")
+' azsvcLink -[#859900]-> adls: "<color:#859900>Private Link"
+' AzureFunction(functions, "Functions", "Premium Plan", "Private storage account for service (preview)")
+' azsvcLink -[#859900]-> functions: "<color:#859900>Private Link"
+' subFuncInt <-[#2aa198]- functions: "<color:#2aa198>VNET Integration (outbound)"
+
+
+@end

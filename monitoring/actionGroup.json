@@ -1,0 +1,46 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "actionGroupName": {
+            "type": "string",
+            "defaultValue": "WBADemoAdmin",
+            "metadata": {
+                "description": "Unique name (within the Resource Group) for the Action group."
+            }
+        },
+        "actionGroupShortName": {
+            "type": "string",
+            "defaultValue": "WBADemoAdmin",
+            "metadata": {
+                "description": "Short name (maximum 12 characters) for the Action group."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Insights/actionGroups",
+            "apiVersion": "2018-03-01",
+            "name": "[parameters('actionGroupName')]",
+            "location": "global",
+            "properties": {
+                "smsReceivers": [],
+                "webhookReceivers": [],
+                "groupShortName": "[parameters('actionGroupShortName')]",
+                "enabled": true,
+                "emailReceivers": [
+                    {
+                        "name": "wbaDemoAdmin",
+                        "emailAddress": "ernest.oshokoya@microsoft.com"
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "actionGroupId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Insights/actionGroups',parameters('actionGroupName'))]"
+        }
+    }
+}
