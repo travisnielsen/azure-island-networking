@@ -16,6 +16,8 @@
 !includeurl AzurePuml/Networking/AzureExpressRoute.puml
 !includeurl AzurePuml/Networking/AzureRouteTable.puml
 !includeurl AzurePuml/Networking/AzureApplicationGateway.puml
+!includeurl AzurePuml/Networking/AzureDNS.puml
+!includeurl AzurePuml/Networking/AzureIPAddressSpace.puml
 !includeurl AzurePuml/Networking/AzureNAT.puml
 !includeurl AzurePuml/Networking/AzureNSG.puml
 !includeurl AzurePuml/Networking/AzurePrivateLink.puml
@@ -27,27 +29,58 @@
 LAYOUT_LEFT_RIGHT
 
 TITLE: Network Topology
-skinparam TitleFontSize 35
+' skinparam TitleFontSize 35
 
-AzureVirtualNetwork(vnetIsland, "Workload A", "10.10.0.0/20") {
-    AzureSubnet(vnetIslandtUtil, "utility", "", "") {
+AzureVirtualNetwork(vnetIslanda, "workload a", "10.10.0.0/20") {
 
+    together {
+        AzureDNS(privateZone1, "a-storage-dns", "Private DNS Zone", "privatelink.blob.core.windows.net")
+        AzureDNS(privateZone2, "a-eventhub-dns", "Private DNS Zone", "privatelink.blob.core.windows.net")
+        AzureDNS(privateZone3, "a-appservice-dns", "Private DNS Zone", "privatelink.blob.core.windows.net")
     }
-    AzureSubnet(vnetIslandPrivateEndpoints, "private-endpoints", "", "") {
-
+    together {
+        AzureSubnet(vnetIslandtUtil, "utility", "", "") {
+            AzureNSG(islandUtilNsg, "util-nsg", "", "")
+            AzureRouteTable(islandUtilUdr, "island-util-routes", "", "")
+            AzureVirtualMachine(vmutil, "utility server", "", "")
+            islandUtilNsg -[hidden]- islandUtilUdr
+            islandUtilUdr -[hidden]- vmutil
+        }
+        AzureSubnet(vnetIslandPrivateEndpoints, "services", "", "") {
+            AzureNSG(islandPrivateEndpointsNsg, "privatelink-nsg", "", "")
+            AzurePrivateLink(islandPrivateEndpoints, "private endpoints", "", "")
+            islandPrivateEndpointsNsg -[hidden]- islandPrivateEndpoints
+        }
+        AzureSubnet(vnetIslandIntegration, "integration-func-a", "", "") {
+            AzureNSG(islandFuncANsg, "integration-nsg", "", "")
+            AzureRouteTable(islandFuncAUdr, "integration-routes", "", "")
+            AzureIPAddressSpace(islandFuncAIntegration, "Function App instances", "")
+            islandFuncANsg -[hidden]- islandFuncAUdr
+            islandFuncAUdr -[hidden]- islandFuncAIntegration
+        }
     }
-    AzureSubnet(vnetIslandIntegration, "integration-func-a", "", "") {
 
-    }
+    privateZone1 -[hidden]-> vnetIslandtUtil
 
 }
 
-AzureVirtualNetwork(vnetBridge, "Bridge VNET", "10.10.0.0/20") {
-    AzureSubnet(vnetBridgeAzFw, "firewall", "", "") {
-
+together {
+    AzureVirtualNetwork(vnetIslandb, "workload b", "10.10.0.0/20") {
     }
-    AzureSubnet(vnetBridgeBastion, "bastion", "", "") {
 
+    AzureVirtualNetwork(vnetIslandc, "workload c", "10.10.0.0/20") {
+    }
+}
+
+vnetIslanda ---[hidden]d-> vnetIslandb
+vnetIslanda ---[hidden]d-> vnetIslandc
+
+AzureVirtualNetwork(vnetBridge, "bridge", "10.10.0.0/20") {
+    AzureSubnet(vnetBridgeAzFw, "FirewallSubnet", "", "") {
+        AzureFirewall(bridgefw, "Bridge Firewall", "", "Deny egress (default)")
+    }
+    AzureSubnet(vnetBridgeBastion, "BastionSubnet", "", "") {
+        AzureBastion(bastion, "SSH / RDP Proxy", "", "")
     }
     AzureSubnet(vnetBridgeAppGw, "web-publish", "", "") {
 
@@ -55,21 +88,25 @@ AzureVirtualNetwork(vnetBridge, "Bridge VNET", "10.10.0.0/20") {
 
 }
 
-AzureVirtualNetwork(vnetHub, "vnet-hub", "10.10.0.0/20") {
-    AzureFirewall(azfw, "Hub Firewall", "", "Deny egress (default)")
-}
-
-AzureVirtualNetwork(vnetSpoke, "vnet-spoke", "10.20.0.0/20") {
-
-    AzureSubnet(vnetSpokeDns, "dns", "", "") {
-        AzureNSG(vnetSpokeNsgDns, "vnet-spoke-dns-nsg", "", "")
-        AzureVirtualMachine(vmdns1, "DNS Server 1", "", "")
-        AzureVirtualMachine(vmdns2, "DNS Server 2", "", "")
-
-        vnetSpokeNsgDns -[hidden]d-> vmdns1
-        vmdns1 -[hidden]d-> vmdns2
+AzureVirtualNetwork(vnetHub, "hub", "10.10.0.0/20") {
+    AzureSubnet(vnetHubFirewall, "FirewallSubnet", "", "") {
+        AzureFirewall(hubfw, "Hub Firewall", "", "Deny egress (default)")
     }
 
+    AzureSubnet(vnetHubDns, "infra", "", "") {
+        AzureNSG(vnetHubNsgDns, "dns-nsg", "", "")
+        AzureVirtualMachine(vmdns, "DNS Servers", "", "")
+        vnetHubNsgDns -[hidden]d- vmdns
+    }
+}
+
+AzureVirtualNetwork(vnetSpoke, "spoke", "10.20.0.0/20") {
+
+    AzureSubnet(vnetSpokeApp, "app", "", "") {
+        AzureNSG(vnetSpokeNsgApp, "app-nsg", "", "")
+        AzureVirtualMachine(spokeApp1, "App Server", "", "")
+        vnetSpokeNsgApp -[hidden]d-> spokeApp1
+    }
 
     ' AzureVirtualMachine(vm, "Utility Servers", "", "Allow SSH / RDP from Bastion subnet")
     ' AzureRouteTable(udr1, "User Defined Route", "Force egress to hub", "0.0.0.0 to AZFW")
@@ -77,9 +114,11 @@ AzureVirtualNetwork(vnetSpoke, "vnet-spoke", "10.20.0.0/20") {
     ' AzureRouteTable(udr2, "User Defined Route", "Force egress to hub", "0.0.0.0 to AZFW")
 }
 
-vnetIsland --> vnetBridge
-vnetBridge --> vnetHub
-vnetHub --> vnetSpoke
+vnetIslanda ----- vnetBridge
+vnetIslandb ----- vnetBridge
+vnetIslandc ----- vnetBridge
+vnetBridge ---- vnetHub
+vnetHub ----- vnetSpoke
 
 ' bastion -[#d33682]-> vm: "<color:#d33682>RDP/SSH"
 ' vnetHub -[#268bd2]-- vnetSpoke: "<color:#268bd2><size:18>VNET\n<color:#268bd2><size:18>Peering"
