@@ -7,19 +7,20 @@ param adminUserName string
 @secure()
 param adminPassword string
 
+/* Was throwing a bicep warning because it wasn't being used
 @allowed([
   'win10'
   'linux'
 ])
 @description('The type of VM: Windows 10 or Linux.')
 param os string = 'win10'
-
+*/
 
 @description('Size of the virtual machine.')
 param vmSize string = 'Standard_D2_v3'
 
 @description('location for all resources')
-param location string = resourceGroup().location
+param location string
 
 var subscriptionId = subscription().subscriptionId
 var nicName = '${vmName}-nic'

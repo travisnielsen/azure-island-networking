@@ -1,13 +1,14 @@
 param prefix string
-param hubId string
 param actionGroupId string
 param desktopSubnetCidr string
 param devopsSubnetCidr string
 param azPaasSubnetCidr string
+param location string
+param hubVnetName string
 
 resource publicIp 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
   name: '${prefix}-azfw-ip'
-  location: resourceGroup().location
+  location: location
   properties: {
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
@@ -19,14 +20,14 @@ resource publicIp 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
 
 resource fwl 'Microsoft.Network/azureFirewalls@2020-06-01' = {
   name: '${prefix}-azfw'
-  location: resourceGroup().location
+  location: location
   properties: {
     ipConfigurations: [
       {
         name: '${prefix}-azfw-ipconf'
         properties: {
           subnet: {
-            id: '${hubId}/subnets/AzureFirewallSubnet'
+            id: resourceId(subscription().id, '${prefix}-network-rg', 'Microsoft.Network/virtualNetworks/subnets', hubVnetName, 'AzureFilrewallSubnet')
           }
           publicIPAddress: {
             id: publicIp.id
@@ -141,16 +142,13 @@ resource firewallHealth 'microsoft.insights/metricAlerts@2018-03-01' = {
     }
     autoMitigate: true
     targetResourceType: 'Microsoft.Network/azureFirewalls'
-    targetResourceRegion: resourceGroup().location
+    targetResourceRegion: location
     actions: [
       {
         actionGroupId: actionGroupId
       }
     ]
   }
-  dependsOn: [
-    fwl
-  ]
 }
 
 resource applicationRuleHitCount 'microsoft.insights/metricAlerts@2018-03-01' = {
@@ -190,16 +188,13 @@ resource applicationRuleHitCount 'microsoft.insights/metricAlerts@2018-03-01' = 
     }
     autoMitigate: true
     targetResourceType: 'Microsoft.Network/azureFirewalls'
-    targetResourceRegion: resourceGroup().location
+    targetResourceRegion: location
     actions: [
       {
         actionGroupId: actionGroupId
       }
     ]
   }
-  dependsOn: [
-    fwl
-  ]
 }
 
 resource networkRuleHitCount 'microsoft.insights/metricAlerts@2018-03-01' = {
@@ -239,16 +234,13 @@ resource networkRuleHitCount 'microsoft.insights/metricAlerts@2018-03-01' = {
     }
     autoMitigate: true
     targetResourceType: 'Microsoft.Network/azureFirewalls'
-    targetResourceRegion: resourceGroup().location
+    targetResourceRegion: location
     actions: [
       {
         actionGroupId: actionGroupId
       }
     ]
   }
-  dependsOn: [
-    fwl
-  ]
 }
 
 output privateIp string = fwl.properties.ipConfigurations[0].properties.privateIPAddress

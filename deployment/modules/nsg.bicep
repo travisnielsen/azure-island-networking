@@ -1,11 +1,11 @@
 param name string
 param securityRules array
 param networkWatcherName string
-
+param location string
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2020-08-01-preview' = {
-  name: '${uniqueString(resourceGroup().id)}'
-  location: resourceGroup().location
+  name: uniqueString(resourceGroup().id)
+  location: location
   sku: {
     name: 'Standard_LRS'
   }
@@ -17,8 +17,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2020-08-01-preview' =
 }
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
-  name: '${uniqueString(resourceGroup().id)}'
-  location: resourceGroup().location
+  name: uniqueString(resourceGroup().id)
+  location: location
   properties: {
     retentionInDays: 30
     sku: {
@@ -29,23 +29,20 @@ resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
 
 resource spokensg 'Microsoft.Network/networkSecurityGroups@2020-06-01' = {
   name: name
-  location: resourceGroup().location
+  location: location
   properties: {
     securityRules: securityRules
   }
 }
 
 module flowLogs 'flowlogs.bicep' = {
-  name: '${spokensg.name}'
+  name: spokensg.name
   scope: resourceGroup('NetworkWatcherRG')
-  dependsOn: [
-    spokensg
-  ]
   params: {
     networkWatcherName: networkWatcherName
     flowLogName: name
     nsgId: spokensg.id
-    location: 'centralus'
+    location: location
     storageId: storageAccount.id
     workspaceId: logAnalytics.id
   }

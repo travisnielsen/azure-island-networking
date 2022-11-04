@@ -1,15 +1,11 @@
 param vmssName string = 'DevopsBuildAgentScaleSet'
-
 param vnetResourceGroupName string
 param subnetName string
 param vnetName string
-
-param location string = resourceGroup().location
-
+param location string
 param adminUserName string
-param adminPassword string {
-  secure: true
-}
+@secure()
+param adminPassword string
 
 var subscriptionId = subscription().subscriptionId
 

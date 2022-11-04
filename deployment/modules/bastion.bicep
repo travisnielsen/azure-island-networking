@@ -1,9 +1,10 @@
 param name string
 param subnetId string
+param location string
 
 resource bastionIP 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
-  name: '${name}'
-  location: resourceGroup().location
+  name: name
+  location: location
   properties: {
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
@@ -15,20 +16,17 @@ resource bastionIP 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
 
 resource bastion 'Microsoft.Network/bastionHosts@2020-06-01' = {
   name: name
-  location: resourceGroup().location
+  location: location
   properties: {
     ipConfigurations: [
-      {
-        name: 'bastionConf'
-        properties: {
+      { name: 'bastionConf', properties: {
           subnet: {
             id: subnetId
           }
           publicIPAddress: {
             id: bastionIP.id
           }
-        }
-      }
+        } }
     ]
   }
 }
