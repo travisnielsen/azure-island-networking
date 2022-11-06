@@ -1,0 +1,63 @@
+@startuml diagram-topology
+
+!define AzurePuml https://raw.githubusercontent.com/travisnielsen/Azure-PlantUML/themesupport/dist
+
+' Theme
+' !includeurl AzurePuml/themes/blueprint.puml
+!includeurl AzurePuml/AzureCommon.puml
+
+' C4
+' !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+!includeurl AzurePuml/Management/AzureSubscription.puml
+!includeurl AzurePuml/Networking/AzureVirtualNetwork.puml
+!includeurl AzurePuml/Networking/AzureDNS.puml
+!includeurl AzurePuml/Networking/AzureVPNGateway.puml
+!includeurl AzurePuml/Networking/AzureExpressRoute.puml
+
+LAYOUT_LEFT_RIGHT
+
+TITLE: Island Network Topology
+
+skinparam Rectangle {
+    BorderColor<<island>> green
+    BorderThickness<<island>> 2
+    BackgroundColor<<island>> white
+
+}
+
+AzureSubscription(subscriptionIsland, "Workload Subscription A", "") {
+
+    Rectangle "Name Resolution Services" as nameResolution {
+        AzureDNS(dnsIslandPrivateZones, "Private DNS Zones", "storage, event hub, AppServices, etc..", "Automated support for Azure servcies with private links")
+        Rectangle "DNS Private Resolver\ncontoso.com" <<PrivateDnsResolver>> as dnsPrivateResolver
+    } 
+
+    together {
+        AzureVirtualNetwork(vnetIslandA, "workload a", "AKS, Azure Functions, Virtual Machines", "192.168.0.0/20") <<island>> {
+        }
+        AzureVirtualNetwork(vnetIslandB, "workload b", "Databricks, Synapse", "192.168.16.0/20") <<island>> {
+        }
+    }
+
+    nameResolution -down-> vnetIslandA
+    nameResolution-> vnetIslandB
+}
+
+AzureSubscription(subscriptionInfrastructure, "Infrastructure Subscription", "") {
+    AzureVirtualNetwork(vnetBridge, "Bridge", "Azure Firewall, Bastion, Application Gateway, Private Link Service Endpoints", "10.10.16.0/20") <<island>> {
+    }
+    AzureVirtualNetwork(vnetHub, "Hub", "Azure Firewall, DNS servers (contoso.com), Private Link Service Endpoints", "10.10.0.0/20")
+}
+
+AzureSubscription(subscriptionSpoke, "Workload Subscription B", "") {
+    AzureVirtualNetwork(vnetSpoke, "Spoke", "Custom API: api.contoso.com", "10.10.32.0/20")
+
+}
+
+vnetIslandA <-[thickness=2,#green]down-> vnetBridge : "Peer"
+vnetIslandB <-[thickness=2,#green]down-> vnetBridge : "Peer"
+vnetBridge <-down-> vnetHub : "Peer"
+vnetHub <-down-> vnetSpoke : "Peer"
+
+@enduml

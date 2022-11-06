@@ -10,7 +10,7 @@ This reference design introduces the "island networking" concept which enables a
 
 The following diagram describe the basic networking concepts:
 
-<img src="media/diagram-network.svg" alt="Network diagram"/>
+<img src="media/diagram-topology.svg" alt="Network diagram"/>
 
 ## Deployment
 

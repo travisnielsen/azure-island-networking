@@ -2,28 +2,35 @@ targetScope = 'subscription'
 param region string = 'centralus'
 param appPrefix string
 param tags object = {
-  project: 'AzSecurePaaS'
+  project: 'AzIslandNetworking'
   component: 'core'
 }
 
-// HUB VNET IP SETTINGS
-param bastionSubnetAddressPrefix string = '10.10.0.128/25'  // 123 addresses - 10.10.0.128 - 10.10.0.255
-param desktopSubnetAddressPrefix string = '10.10.1.0/25'    // 123 addresses - 10.10.1.0 - 10.10.1.127
-param dnsSubnetAddressPrefix string = '10.10.1.128/26'    // 59 addresses - 10.10.1.128 - 10.10.1.191
-param buildServerSubnetAddressPrefix string = '10.10.2.0/25'    // 123 addresses - 10.10.2.0 - 10.10.2.127
-
-// SPOKE VNET IP SETTINGS
-param spokeVnetAddressSpace string = '10.20.0.0/20'
-param devopsSubnetAddressPrefix string = '10.20.0.64/26'        // 59 addresses - 10.20.0.64 - 10.20.0.128
-param azServicesSubnetAddressPrefix string = '10.20.1.0/24'     // 251 addresses - 10.20.1.0 - 10.20.1.255
-param integrationSubnetAddressPrefix string = '10.20.2.0/25'    // 123 addresses - 10.20.2.0 - 10.20.2.127
-
-
-// DESKTOP
-param vmAdminUserName string = 'vmadmin'
+// DNS Server
+// DevOps Build Server
+param dnsVmAdminUserName string = 'dnsadmin'
 
 @secure()
-param vmAdminPwd string
+param dnsVmAdminPwd string
+
+// HUB VNET IP SETTINGS
+param hubVnetAddressSpace string = '10.10.0.0/20'
+param hubFirewallSubnetAddressSpace string = '10.10.0.0/25'           // 123 addresses - 10.10.0.0 - 10.10.0.127
+param hubDnsSubnetAddressSpace string = '10.10.0.128/25'              // 123 addresses - 10.10.0.128 - 10.10.1.255
+
+// BRIDGE VNET IP SETTINGS
+param bridgeVnetAddressSpace string = '10.10.16.0/20'
+param bridgeFirewallSubnetAddressSpace string = '10.10.16.0/25'       // 123 addresses - 10.10.16.0 - 10.10.16.127
+param bridgeBastionSubnetAddressSpace string = '10.10.16.128/25'      // 123 addresses - 10.10.16.128 - 10.10.0.255
+param bridgePrivateLinkSubnetAddressSpace string = '10.10.17.0/25'    // 123 addresses - 10.10.17.0 - 10.10.17.127
+param bridgeAppGatewaySubnetAddressSpace string = '10.10.17.128/25'   // 123 addresses - 10.10.17.128 - 10.10.17.255
+
+
+// SPOKE VNET IP SETTINGS
+param spokeVnetAddressSpace string = '10.10.32.0/20'
+param spokeVnetVmAddressSpace string = '10.10.32.0/25'                // 123 addresses - 10.10.32.0 - 10.10.32.127
+param spokeVnetPrivateLinkAddressSpace string = '10.10.32.128/25'     // 123 addresses - 10.10.32.128 - 10.10.32.255
+param spokeVnetIntegrationSubnetAddressSpace string = '10.10.33.0/25' // 123 addresses - 10.10.33.0 - 10.10.33.127
 
 // Network Watcher
 param networkWatcherName string = 'NetworkWatcher_centralus'
@@ -34,8 +41,8 @@ resource netrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   tags: tags
 }
 
-resource desktoprg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${appPrefix}-desktop'
+resource iaasrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: '${appPrefix}-iaas'
   location: region
   tags: tags
 }
@@ -46,75 +53,90 @@ resource devopsrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   tags: tags
 }
 
-// Deploy Action Group for monitoring/alerting
-module actionGroup 'modules/actionGroup.bicep' = {
-  name: 'actionGroup'
-  scope: resourceGroup(netrg.name)
-  params: {
-    actionGroupName: '${appPrefix}-networkadmin'
-    actionGroupShortName: '${appPrefix}admin'
-  }
-}
 
 module hubVnet 'modules/vnet.bicep' = {
   name: 'hub-vnet'
   scope: resourceGroup(netrg.name)
   params: {
     vnetName: '${appPrefix}-hub'
-    addressSpaces: [
-      '10.10.0.0/20'
+    location: region
+    addressSpaces: [ 
+      hubVnetAddressSpace 
     ]
     subnets: [
       {
         name: 'AzureFirewallSubnet'
         properties: {
-          addressPrefix: '10.10.0.0/25'
+          addressPrefix: hubFirewallSubnetAddressSpace
+        }
+      }
+      {
+        name: 'dns'
+        properties: {
+          addressPrefix: hubDnsSubnetAddressSpace
+          networkSecurityGroup: { 
+            id: hubDnsNsg.outputs.id 
+          }
+          privateEndpointNetworkPolicies: 'Enabled'
+          /*
+          routeTable: {
+            id: route.outputs.id
+          }
+          */
+        }
+      }
+    ]
+  }
+}
+
+
+module bridgeVnet 'modules/vnet.bicep' = {
+  name: 'bridge-vnet'
+  scope: resourceGroup(netrg.name)
+  params: {
+    vnetName: '${appPrefix}-bridge'
+    location: region
+    addressSpaces: [ 
+      bridgeVnetAddressSpace 
+    ]
+    subnets: [
+      {
+        name: 'AzureFirewallSubnet'
+        properties: {
+          addressPrefix: bridgeFirewallSubnetAddressSpace
         }
       }
       {
         // NOTE: UDR not allowed in a Bastion subnet
         name: 'AzureBastionSubnet'
         properties: {
-          addressPrefix: bastionSubnetAddressPrefix
-          /*
-          networkSecurityGroup: {
-            id: BastionNsg.outputs.id
-          }
-          */
-        }
-      }
-      {
-        // NOTE: UDR not allowed in a Bastion subnet
-        name: 'dns'
-        properties: {
-          addressPrefix: dnsSubnetAddressPrefix
-          /*
-          networkSecurityGroup: {
-            id: BastionNsg.outputs.id
-          }
-          */
-        }
-      }
-      {
-        name: 'desktop'
-        properties: {
-          addressPrefix: desktopSubnetAddressPrefix
-          networkSecurityGroup: {
-            id: desktopNsg.outputs.id
+          addressPrefix: bridgeBastionSubnetAddressSpace
+          networkSecurityGroup: { 
+            id: bastionNsg.outputs.id 
           }
         }
       }
       {
-        name: 'buildServer'
+        name: 'privatelinks'
         properties: {
-          addressPrefix: buildServerSubnetAddressPrefix
-          networkSecurityGroup: {
-            id: desktopNsg.outputs.id
+          addressPrefix: bridgePrivateLinkSubnetAddressSpace
+          networkSecurityGroup: { 
+            id: bridgePrivateLinkNsg.outputs.id 
           }
         }
-      }    
+      }
+      {
+        name: 'appgateways'
+        properties: {
+          addressPrefix: bridgeAppGatewaySubnetAddressSpace
+          networkSecurityGroup: { 
+            id: bridgeAppGatewayNsg.outputs.id 
+          }
+        }
+      }
     ]
   }
+
 }
 
 module spokeVnet 'modules/vnet.bicep' = {
@@ -122,31 +144,32 @@ module spokeVnet 'modules/vnet.bicep' = {
   scope: resourceGroup(netrg.name)
   params: {
     vnetName: '${appPrefix}-app'
+    location: region
     addressSpaces: [
-      spokeVnetAddressSpace
+      spokeVnetAddressSpace 
     ]
     subnets: [
       {
-        name: 'devops'
+        name: 'iaas'
         properties: {
-          addressPrefix: devopsSubnetAddressPrefix
-          routeTable: {
-            id: route.outputs.id
+          addressPrefix: spokeVnetVmAddressSpace
+          routeTable: { 
+            id: route.outputs.id 
           }
-          networkSecurityGroup: {
-            id: devopsNsg.outputs.id
+          networkSecurityGroup: { 
+            id: spokeVirtualMachinesNsg.outputs.id 
           }
         }
       }
       {
-        name: 'azureservices'
+        name: 'privatelink'
         properties: {
-          addressPrefix: azServicesSubnetAddressPrefix
-          routeTable: {
-            id: route.outputs.id
+          addressPrefix: spokeVnetPrivateLinkAddressSpace
+          routeTable: { 
+            id: route.outputs.id 
           }
-          networkSecurityGroup: {
-            id: azServicesNsg.outputs.id
+          networkSecurityGroup: { 
+            id: spokePrivateLinkNsg.outputs.id 
           }
           privateEndpointNetworkPolicies: 'Disabled'
         }
@@ -154,21 +177,21 @@ module spokeVnet 'modules/vnet.bicep' = {
       {
         name: 'funcintegration'
         properties: {
-          addressPrefix: integrationSubnetAddressPrefix
+          addressPrefix: spokeVnetIntegrationSubnetAddressSpace
           delegations: [
             {
               name: 'delegation'
-              properties: {
-                serviceName: 'Microsoft.Web/serverfarms'
+              properties: { 
+                serviceName: 'Microsoft.Web/serverfarms' 
               }
             }
           ]
           privateEndpointNetworkPolicies: 'Enabled'
-          routeTable: {
-            id: route.outputs.id
+          routeTable: { 
+            id: route.outputs.id 
           }
-          networkSecurityGroup: {
-            id: funcIntegrationNsg.outputs.id
+          networkSecurityGroup: { 
+            id: spokeFuncIntegrationNsg.outputs.id 
           }
         }
       }
@@ -176,29 +199,30 @@ module spokeVnet 'modules/vnet.bicep' = {
   }
 }
 
-// NSG for Desktop subnet (jump servers / user compute)
-module desktopNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-hub-desktop'
+
+// NSG for DNS subnet (Linux server running BIND)
+module hubDnsNsg 'modules/nsg.bicep' = {
+  name: '${appPrefix}-hub-dns'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${appPrefix}-hub-desktop'
-    networkWatcherName: networkWatcherName
+    name: '${appPrefix}-hub-dns'
+    location: region
     securityRules: [
       {
         name: 'allow-bastion'
-        properties: {
-          priority: 100
+        properties: { 
+          priority: 100 
+          direction: 'Inbound'
           protocol: '*'
           access: 'Allow'
-          direction: 'Inbound'
-          sourceAddressPrefix: bastionSubnetAddressPrefix
+          sourceAddressPrefix: bridgeBastionSubnetAddressSpace
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
-          destinationPortRanges: [
+          destinationPortRanges: [ 
             '22'
-            '3389'
+            '3389' 
           ] 
-        }
+        } 
       }
       {
         name: 'deny-default'
@@ -234,14 +258,14 @@ module desktopNsg 'modules/nsg.bicep' = {
 
 // NSG for Bastion subnet
 module bastionNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-hub-bastion'
+  name: '${appPrefix}-bridge-bastion'
   scope: resourceGroup(netrg.name)
   dependsOn: [
-    desktopNsg
+    hubDnsNsg
   ]
   params: {
-    name: '${appPrefix}-hub-bastion'
-    networkWatcherName: networkWatcherName
+    name: '${appPrefix}-bridge-bastion'
+    location: region
     securityRules: [
         // SEE: https://docs.microsoft.com/en-us/azure/bastion/bastion-nsg#apply
         {
@@ -329,19 +353,14 @@ module bastionNsg 'modules/nsg.bicep' = {
   }
 }
 
-// NSG for devops subnet (private build servers)
-module devopsNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-app-devops'
+// NSG for Azure services configured with Private Link (bridge)
+module bridgePrivateLinkNsg 'modules/nsg.bicep' = {
+  name: '${appPrefix}-bridge-privatelinks'
   scope: resourceGroup(netrg.name)
-  dependsOn: [
-    bastionNsg
-  ]
   params: {
-    name: '${appPrefix}-app-devops'
-    networkWatcherName: networkWatcherName
+    name: '${appPrefix}-bridge-privatelinks'
+    location: region
     securityRules: [
-
-      /* Internet egress will be forced through Azure Fireall. Deny at the NSG level supercedes UDR flow
       {
         name: 'deny-inbound-default'
         properties: {
@@ -355,8 +374,34 @@ module devopsNsg 'modules/nsg.bicep' = {
           destinationPortRange: '*'
         }
       }
-      */
+      {
+        name: 'deny-internet'
+        properties: {
+          priority: 1000
+          protocol: '*'
+          access: 'Deny'
+          direction: 'Outbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: 'Internet'
+          destinationPortRange: '*'
+        }
+      }
+    ]
+  }
+}
 
+// NSG for App Gateway subnet (private build servers)
+module bridgeAppGatewayNsg 'modules/nsg.bicep' = {
+  name: '${appPrefix}-bridge-appgw'
+  scope: resourceGroup(netrg.name)
+  dependsOn: [
+    bastionNsg
+  ]
+  params: {
+    name: '${appPrefix}-bridge-appgw'
+    location: region
+    securityRules: [
       {
         name: 'deny-internet'
         properties: {
@@ -375,15 +420,39 @@ module devopsNsg 'modules/nsg.bicep' = {
 }
 
 // NSG for Azure Functions subnet
-module funcIntegrationNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-app-functions'
+module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
+  name: '${appPrefix}-spoke-iaas'
   scope: resourceGroup(netrg.name)
-  dependsOn: [
-    devopsNsg
-  ]
   params: {
-    name: '${appPrefix}-app-functions'
-    networkWatcherName: networkWatcherName
+    name: '${appPrefix}-spoke-iaas'
+    location: region
+    securityRules: [
+      {
+        name: 'deny-inbound-default'
+        properties: {
+          priority: 120
+          protocol: '*'
+          access: 'Deny'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '*'
+        }
+      }
+
+      // Internet egress will be forced through Azure Fireall. Deny at the NSG level supercedes UDR flow
+    ]
+  }
+}
+
+// NSG for Azure Functions subnet
+module spokeFuncIntegrationNsg 'modules/nsg.bicep' = {
+  name: '${appPrefix}-spoke-functions'
+  scope: resourceGroup(netrg.name)
+  params: {
+    name: '${appPrefix}-spoke-functions'
+    location: region
     securityRules: [
       {
         name: 'deny-inbound-default'
@@ -418,30 +487,17 @@ module funcIntegrationNsg 'modules/nsg.bicep' = {
   }
 }
 
-// NSG for Azure services configured with Private Link
-module azServicesNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-app-azsvc'
+// NSG for Azure services configured with Private Link (spoke)
+module spokePrivateLinkNsg 'modules/nsg.bicep' = {
+  name: '${appPrefix}-spoke-privatelinks'
   scope: resourceGroup(netrg.name)
   dependsOn: [
-    funcIntegrationNsg
+    spokeFuncIntegrationNsg
   ]
   params: {
-    name: '${appPrefix}-app-azsvc'
-    networkWatcherName: networkWatcherName
+    name: '${appPrefix}-spoke-privatelinks'
+    location: region
     securityRules: [
-      {
-        name: 'allow-devops-subnet'
-        properties: {
-          priority: 100
-          protocol: '*'
-          access: 'Allow'
-          direction: 'Inbound'
-          sourceAddressPrefix: devopsSubnetAddressPrefix
-          sourcePortRange: '*'
-          destinationAddressPrefix: '*'
-          destinationPortRange: '443'
-        }
-      }
       {
         name: 'deny-inbound-default'
         properties: {
@@ -472,19 +528,60 @@ module azServicesNsg 'modules/nsg.bicep' = {
   }
 }
 
-// Hub firewall
+
+// Azure Fireall - HUB
 module hubAzFw 'modules/azfw.bicep' = {
   name: 'hub-azfw'
   scope: resourceGroup(netrg.name)
   params: {
     prefix: 'hub'
+    location: region
     hubId: hubVnet.outputs.id
-    desktopSubnetCidr: desktopSubnetAddressPrefix
-    devopsSubnetCidr: devopsSubnetAddressPrefix
-    azPaasSubnetCidr: azServicesSubnetAddressPrefix
-    actionGroupId: actionGroup.outputs.id
+    networkRules: [
+      {
+        name: 'core-rules'
+        properties: {
+          action: { type: 'Allow' }
+          priority: 100
+          rules: [
+            {
+              description: 'Allow outbound web traffic'
+              name: 'allow-outbound-all'
+              protocols: [ 
+                'TCP' 
+              ]
+              sourceAddresses: [
+                spokeVnetIntegrationSubnetAddressSpace
+                spokeVnetVmAddressSpace
+                hubDnsSubnetAddressSpace
+              ]
+              destinationAddresses: [ 
+                '*'
+              ]
+              destinationPorts: [ 
+                '80'
+                '443'
+              ]
+            }
+          ]
+        }
+      }
+    ]
   }
 }
+
+
+// Azure Firewall - BRIDGE
+module bridgeAzFw 'modules/azfw.bicep' = {
+  name: 'bridge-azfw'
+  scope: resourceGroup(netrg.name)
+  params: {
+    prefix: 'bridge'
+    location: region
+    hubId: bridgeVnet.outputs.id
+  }
+}
+
 
 // VNET peering
 module HubToSpokePeering 'modules/peering.bicep' = {
@@ -508,23 +605,47 @@ module SpokeToHubPeering 'modules/peering.bicep' = {
   }
 }
 
-// User Define Route (force egress traffic through hub firewall)
+
+module HubToBridgePeering 'modules/peering.bicep' = {
+  name: 'hub-to-bridge-peering'
+  scope: resourceGroup(netrg.name)
+  params: {
+    localVnetName: hubVnet.outputs.name
+    remoteVnetName: 'bridge'
+    remoteVnetId: bridgeVnet.outputs.id
+  }
+}
+
+module BridgeToHubPeering 'modules/peering.bicep' = {
+  name: 'bridge-to-hub-peering'
+  scope: resourceGroup(netrg.name)
+  params: {
+    localVnetName: bridgeVnet.outputs.name
+    remoteVnetName: 'hub'
+    remoteVnetId: hubVnet.outputs.id
+  }
+}
+
+
+// User Defined Route (force egress traffic through hub firewall)
 module route 'modules/udr.bicep' = {
-  name: 'udr'
+  name: 'core-udr'
   scope: resourceGroup(netrg.name)
   params: {
     name: '${appPrefix}-udr'
+    location: region
     azFwlIp: hubAzFw.outputs.privateIp
   }
 }
 
 // Bastion
 module bastion 'modules/bastion.bicep' = {
-  name: 'hub-bastion'
+  name: 'bridge-bastion'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${uniqueString(netrg.id)}'
-    subnetId: '${hubVnet.outputs.id}/subnets/AzureBastionSubnet'
+    name: uniqueString(netrg.id)
+    location: region
+    subnetId: '${bridgeVnet.outputs.id}/subnets/AzureBastionSubnet'
   }
 }
 
@@ -572,7 +693,7 @@ module privateZoneAzureBlobStorage 'modules/dnszoneprivate.bicep' = {
   name: 'dns-private-storage-blob'
   scope: resourceGroup(netrg.name)
   params: {
-    zoneName: 'privatelink.blob.core.windows.net'
+    zoneName: 'privatelink.blob.${environment().suffixes.storage}'
   }
 }
 
@@ -586,7 +707,7 @@ module spokeVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
   params: {
     vnetName: spokeVnet.outputs.name
     vnetId: spokeVnet.outputs.id
-    zoneName: 'privatelink.blob.core.windows.net'
+    zoneName: 'privatelink.blob.${environment().suffixes.storage}'
     autoRegistration: false
   }
 }
@@ -601,7 +722,7 @@ module hubVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
   params: {
     vnetName: hubVnet.outputs.name
     vnetId: hubVnet.outputs.id
-    zoneName: 'privatelink.blob.core.windows.net'
+    zoneName: 'privatelink.blob.${environment().suffixes.storage}'
     autoRegistration: false
   }
 }
@@ -651,7 +772,7 @@ module privateZoneSql 'modules/dnszoneprivate.bicep' = {
   name: 'dns-private-sql'
   scope: resourceGroup(netrg.name)
   params: {
-    zoneName: 'privatelink.database.windows.net'
+    zoneName: 'privatelink${environment().suffixes.sqlServerHostname}'
   }
 }
 
@@ -665,7 +786,7 @@ module spokeVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
   params: {
     vnetName: spokeVnet.outputs.name
     vnetId: spokeVnet.outputs.id
-    zoneName: 'privatelink.database.windows.net'
+    zoneName: 'privatelink${environment().suffixes.sqlServerHostname}'
     autoRegistration: false
   }
 }
@@ -680,7 +801,7 @@ module hubVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
   params: {
     vnetName: hubVnet.outputs.name
     vnetId: hubVnet.outputs.id
-    zoneName: 'privatelink.database.windows.net'
+    zoneName: 'privatelink${environment().suffixes.sqlServerHostname}'
     autoRegistration: false
   }
 }
@@ -739,73 +860,40 @@ module hubVnetAzureZoneLink 'modules/dnszonelink.bicep' = {
 }
 
 
-// TODO: THIS IS A HACK - need to find a better way to apply the UDR to the desktop and build server subnet
-module applyUdrForDesktop 'modules/vnet.bicep' = {
-  name: 'hub-vnet-applyDesktopUDR'
+// TODO: THIS IS A HACK - need to find a better way to apply the UDR to the DNS server subnet
+
+module applyUdrsForHub 'modules/vnet.bicep' = {
+  name: 'hub-vnet-update'
   scope: resourceGroup(netrg.name)
   dependsOn: [
-    route
+    hubVnet
   ]
   params: {
     vnetName: '${appPrefix}-hub'
-    addressSpaces: [
-      '10.10.0.0/20'
+    location: region
+    addressSpaces: [ 
+      hubVnetAddressSpace 
     ]
     subnets: [
       {
         name: 'AzureFirewallSubnet'
         properties: {
-          addressPrefix: '10.10.0.0/25'
+          addressPrefix: hubFirewallSubnetAddressSpace
         }
       }
       {
-        name: 'AzureBastionSubnet'
+        name: 'dns'
         properties: {
-          addressPrefix: bastionSubnetAddressPrefix
-        }
-      }
-      {
-        name: 'desktop'
-        properties: {
-          addressPrefix: desktopSubnetAddressPrefix
-          networkSecurityGroup: {
-            id: desktopNsg.outputs.id
+          addressPrefix: hubDnsSubnetAddressSpace
+          networkSecurityGroup: { 
+            id: hubDnsNsg.outputs.id 
           }
+          privateEndpointNetworkPolicies: 'Enabled'
           routeTable: {
             id: route.outputs.id
           }
         }
       }
-      {
-        name: 'buildServer'
-        properties: {
-          addressPrefix: buildServerSubnetAddressPrefix
-          networkSecurityGroup: {
-            id: desktopNsg.outputs.id
-          }
-          routeTable: {
-            id: route.outputs.id
-          }
-        }
-      }      
     ]
-  }
-}
-
-
-// Virtual Machine for application access via Bastion
-module vm 'modules/vm-win10.bicep' = {
-  name: 'desktop-vm'
-  scope: resourceGroup(desktoprg.name)
-  dependsOn: [
-    applyUdrForDesktop
-  ]
-  params: {
-    vmName: '${uniqueString(desktoprg.id)}01'
-    networkResourceGroupName: netrg.name
-    vnetName: '${appPrefix}-hub'
-    subnetName: 'desktop'
-    adminUserName: vmAdminUserName
-    adminPassword: vmAdminPwd
   }
 }
