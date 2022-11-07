@@ -2,6 +2,6 @@
 #az deployment group create -g privatepaas -f sample-function.json
 
 $timeStamp = Get-Date -Format "yyyyMMddHHmm"
-$location = $Args[0]
 
-az deployment sub create --name "$timeStamp-appsvc" --location $location --template-file application-base.bicep --parameters application-base.params.json region=$location
+az configure --defaults group='contoso-workloadA-rg'
+az deployment group create --name "$timeStamp-appsvc" --template-file application-services.bicep --parameters application-services.params.json

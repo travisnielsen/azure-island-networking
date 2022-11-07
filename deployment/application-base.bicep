@@ -102,6 +102,20 @@ module vnet 'modules/vnet.bicep' = {
           networkSecurityGroup: {
             id: ehProducerNsg.outputs.id
           }
+          delegations: [
+            {
+              name: '${appPrefix}-asp-delegation-${substring(uniqueString(deployment().name), 0, 4)}'
+              properties: {
+                serviceName: 'Microsoft.Web/serverfarms'
+              }
+              type: 'Microsoft.Network/virtualNetworks/subnets/delegations'
+            }
+          ]
+          serviceENdpoints: [
+            {
+              service: 'Microsoft.Storage'
+            }
+          ]
         }
       }
       {
@@ -116,6 +130,20 @@ module vnet 'modules/vnet.bicep' = {
           networkSecurityGroup: {
             id: ehConsumerNsg.outputs.id
           }
+          delegations: [
+            {
+              name: '${appPrefix}-asp-delegation-${substring(uniqueString(deployment().name), 0, 4)}'
+              properties: {
+                serviceName: 'Microsoft.Web/serverfarms'
+              }
+              type: 'Microsoft.Network/virtualNetworks/subnets/delegations'
+            }
+          ]
+          serviceENdpoints: [
+            {
+              service: 'Microsoft.Storage'
+            }
+          ]
         }
       }
     ]
