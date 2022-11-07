@@ -10,7 +10,7 @@ targetScope = 'subscription'
   'westus3'
 ])
 param region string
-param appPrefix string
+param orgPrefix string
 param tags object = {
   project: 'AzIslandNetworking'
   component: 'core'
@@ -42,19 +42,19 @@ param spokeVnetPrivateLinkAddressSpace string = '10.10.32.128/25'     // 123 add
 param spokeVnetIntegrationSubnetAddressSpace string = '10.10.33.0/25' // 123 addresses - 10.10.33.0 - 10.10.33.127
 
 resource netrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${appPrefix}-network-rg'
+  name: '${orgPrefix}-network-rg'
   location: region
   tags: tags
 }
 
 resource iaasrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${appPrefix}-iaas-rg'
+  name: '${orgPrefix}-iaas-rg'
   location: region
   tags: tags
 }
 
 resource devopsrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${appPrefix}-devops-rg'
+  name: '${orgPrefix}-devops-rg'
   location: region
   tags: tags
 }
@@ -63,7 +63,7 @@ module hubVnet 'modules/vnet.bicep' = {
   name: 'hub-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${appPrefix}-hub'
+    vnetName: '${orgPrefix}-vnet-hub'
     location: region
     addressSpaces: [ 
       hubVnetAddressSpace 
@@ -94,12 +94,11 @@ module hubVnet 'modules/vnet.bicep' = {
   }
 }
 
-
 module bridgeVnet 'modules/vnet.bicep' = {
   name: 'bridge-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${appPrefix}-bridge'
+    vnetName: '${orgPrefix}-vnet-bridge'
     location: region
     addressSpaces: [ 
       bridgeVnetAddressSpace 
@@ -148,7 +147,7 @@ module spokeVnet 'modules/vnet.bicep' = {
   name: 'spoke-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${appPrefix}-spoke'
+    vnetName: '${orgPrefix}-vnet-spoke'
     location: region
     addressSpaces: [
       spokeVnetAddressSpace 
@@ -207,10 +206,10 @@ module spokeVnet 'modules/vnet.bicep' = {
 
 // NSG for DNS subnet (Linux server running BIND)
 module hubDnsNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-hub-dns'
+  name: '${orgPrefix}-hub-dns'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${appPrefix}-hub-dns'
+    name: '${orgPrefix}-hub-dns'
     location: region
     securityRules: [
       {
@@ -263,13 +262,13 @@ module hubDnsNsg 'modules/nsg.bicep' = {
 
 // NSG for Bastion subnet
 module bastionNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-bridge-bastion'
+  name: '${orgPrefix}-bridge-bastion'
   scope: resourceGroup(netrg.name)
   dependsOn: [
     hubDnsNsg
   ]
   params: {
-    name: '${appPrefix}-bridge-bastion'
+    name: '${orgPrefix}-bridge-bastion'
     location: region
     securityRules: [
       // SEE: https://docs.microsoft.com/en-us/azure/bastion/bastion-nsg#apply
@@ -360,10 +359,10 @@ module bastionNsg 'modules/nsg.bicep' = {
 
 // NSG for Azure services configured with Private Link (bridge)
 module bridgePrivateLinkNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-bridge-privatelinks'
+  name: '${orgPrefix}-bridge-privatelinks'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${appPrefix}-bridge-privatelinks'
+    name: '${orgPrefix}-bridge-privatelinks'
     location: region
     securityRules: [
       {
@@ -398,13 +397,13 @@ module bridgePrivateLinkNsg 'modules/nsg.bicep' = {
 
 // NSG for App Gateway subnet (private build servers)
 module bridgeAppGatewayNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-bridge-appgw'
+  name: '${orgPrefix}-bridge-appgw'
   scope: resourceGroup(netrg.name)
   dependsOn: [
     bastionNsg
   ]
   params: {
-    name: '${appPrefix}-bridge-appgw'
+    name: '${orgPrefix}-bridge-appgw'
     location: region
     securityRules: [
       {
@@ -426,10 +425,10 @@ module bridgeAppGatewayNsg 'modules/nsg.bicep' = {
 
 // NSG for Azure Functions subnet
 module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-spoke-iaas'
+  name: '${orgPrefix}-spoke-iaas'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${appPrefix}-spoke-iaas'
+    name: '${orgPrefix}-spoke-iaas'
     location: region
     securityRules: [
       {
@@ -453,10 +452,10 @@ module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
 
 // NSG for Azure Functions subnet
 module spokeFuncIntegrationNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-spoke-functions'
+  name: '${orgPrefix}-spoke-functions'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${appPrefix}-spoke-functions'
+    name: '${orgPrefix}-spoke-functions'
     location: region
     securityRules: [
       {
@@ -494,13 +493,13 @@ module spokeFuncIntegrationNsg 'modules/nsg.bicep' = {
 
 // NSG for Azure services configured with Private Link (spoke)
 module spokePrivateLinkNsg 'modules/nsg.bicep' = {
-  name: '${appPrefix}-spoke-privatelinks'
+  name: '${orgPrefix}-spoke-privatelinks'
   scope: resourceGroup(netrg.name)
   dependsOn: [
     spokeFuncIntegrationNsg
   ]
   params: {
-    name: '${appPrefix}-spoke-privatelinks'
+    name: '${orgPrefix}-spoke-privatelinks'
     location: region
     securityRules: [
       {
@@ -539,7 +538,7 @@ module hubAzFw 'modules/azfw.bicep' = {
   name: 'hub-azfw'
   scope: resourceGroup(netrg.name)
   params: {
-    prefix: '${appPrefix}-hub'
+    prefix: '${orgPrefix}-hub'
     fireWallSubnetName: 'AzureFirewallSubnet'
     location: region
     hubVnetName: hubVnet.outputs.name
@@ -581,7 +580,7 @@ module bridgeAzFw 'modules/azfw.bicep' = {
   name: 'bridge-azfw'
   scope: resourceGroup(netrg.name)
   params: {
-    prefix: '${appPrefix}-bridge'
+    prefix: '${orgPrefix}-bridge'
     fireWallSubnetName: 'AzureFirewallSubnet'
     location: region
     hubVnetName: bridgeVnet.outputs.name
@@ -637,7 +636,7 @@ module route 'modules/udr.bicep' = {
   name: 'core-udr'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${appPrefix}-udr'
+    name: '${orgPrefix}-udr'
     location: region
     azFwlIp: hubAzFw.outputs.privateIp
   }
@@ -872,7 +871,7 @@ module applyUdrsForHub 'modules/vnet.bicep' = {
     hubVnet
   ]
   params: {
-    vnetName: '${appPrefix}-hub'
+    vnetName: '${orgPrefix}-hub'
     location: region
     addressSpaces: [ 
       hubVnetAddressSpace 
