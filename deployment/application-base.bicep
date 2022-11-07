@@ -17,9 +17,6 @@ param tags object = {
   component: 'core'
 }
 
-// Network Watcher
-param networkWatcherName string = 'NetworkWatcher_${region}'
-
 resource networkRg 'Microsoft.Resources/resourceGroups@2020-06-01' existing = {
   name: '${orgPrefix}-network-rg'
 }
@@ -157,7 +154,6 @@ module aksIntegrationNsg 'modules/nsg.bicep' = {
   params: {
     name: '${orgPrefix}-${appPrefix}-app-aks'
     location: region
-    networkWatcherName: networkWatcherName
     securityRules: [
       {
         name: 'deny-inbound-default'
@@ -183,7 +179,6 @@ module utilNsg 'modules/nsg.bicep' = {
   params: {
     name: '${orgPrefix}-${appPrefix}-app-util'
     location: region
-    networkWatcherName: networkWatcherName
     securityRules: [
       {
         name: 'deny-inbound-default'
@@ -209,7 +204,6 @@ module privateEndpointsNsg 'modules/nsg.bicep' = {
   params: {
     name: '${orgPrefix}-${appPrefix}-app-pe'
     location: region
-    networkWatcherName: networkWatcherName
     securityRules: [
       {
         name: 'deny-inbound-default'
@@ -235,7 +229,6 @@ module ehProducerNsg 'modules/nsg.bicep' = {
   params: {
     name: '${orgPrefix}-${appPrefix}-app-ehProducer'
     location: region
-    networkWatcherName: networkWatcherName
     securityRules: [
       {
         name: 'deny-inbound-default'
@@ -261,7 +254,6 @@ module ehConsumerNsg 'modules/nsg.bicep' = {
   params: {
     name: '${orgPrefix}-${appPrefix}-app-ehConsumer'
     location: region
-    networkWatcherName: networkWatcherName
     securityRules: [
       {
         name: 'deny-inbound-default'
