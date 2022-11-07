@@ -1,6 +1,6 @@
 param name string
 param azFwlIp string
-param location string
+param location string = resourceGroup().location
 
 resource route 'Microsoft.Network/routeTables@2020-06-01' = {
   name: name

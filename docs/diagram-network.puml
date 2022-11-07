@@ -40,18 +40,18 @@ AzureVirtualNetwork(vnetIslanda, "workload a", "10.10.0.0/20") {
     }
     together {
         AzureSubnet(vnetIslandtUtil, "utility", "", "") {
-            AzureNSG(islandUtilNsg, "util-nsg", "", "")
-            AzureRouteTable(islandUtilUdr, "island-util-routes", "", "")
+            AzureNSG(islandUtilNsg, "util-nsg", "", "DENY: Internet")
+            AzureRouteTable(islandUtilUdr, "util-routes", "", "Fwd INTERNET to Bridge FW")
             AzureVirtualMachine(vmutil, "utility server", "", "")
             islandUtilNsg -[hidden]- islandUtilUdr
             islandUtilUdr -[hidden]- vmutil
         }
         AzureSubnet(vnetIslandPrivateEndpoints, "services", "", "") {
-            AzureNSG(islandPrivateEndpointsNsg, "privatelink-nsg", "", "")
+            AzureNSG(islandPrivateEndpointsNsg, "services-nsg", "", "")
             AzurePrivateLink(islandPrivateEndpoints, "private endpoints", "", "")
             islandPrivateEndpointsNsg -[hidden]- islandPrivateEndpoints
         }
-        AzureSubnet(vnetIslandIntegration, "integration-func-a", "", "") {
+        AzureSubnet(vnetIslandIntegration, "appsvc-integration", "", "") {
             AzureNSG(islandFuncANsg, "integration-nsg", "", "")
             AzureRouteTable(islandFuncAUdr, "integration-routes", "", "")
             AzureIPAddressSpace(islandFuncAIntegration, "Function App instances", "")

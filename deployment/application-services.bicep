@@ -1,5 +1,6 @@
 param timeStamp string = utcNow('yyyyMMddHHmm')
 param appPrefix string
+param orgPrefix string
 param regionCode string
 param location string = resourceGroup().location
 param zoneRedundant bool = false
@@ -38,17 +39,14 @@ var entities = [
 
 // TODO - Refactor to parameterize vnet name
 // TODO - This is all jacked up around managed identities
-/*
-var aksSubnetId = '/subscriptions/${subscription().subscriptionId}/resourceGroups/${appPrefix}-network-rg/providers/Microsoft.Network/virtualNetworks/${appPrefix}-workload-a/subnets/aks'
 module aks 'modules/aks.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-aks'
   params: {
     location: location
     resourcePrefix: resourcePrefix
-    subnetId: aksSubnetId
+    subnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${orgPrefix}-network-rg/providers/Microsoft.Network/virtualNetworks/${appPrefix}-vnet/subnets/aks'
   }
 }
-*/
 
 var tenantId = subscription().tenantId
 module keyVault 'Modules/keyVault.bicep' = {

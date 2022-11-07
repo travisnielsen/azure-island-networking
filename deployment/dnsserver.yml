@@ -1,0 +1,7 @@
+# cloud-init
+package_upgrade: true
+packages:
+  - bind9
+  - bind9utils
+  - bind9-doc
+  - dnsutils
