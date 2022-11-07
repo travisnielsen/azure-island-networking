@@ -3,23 +3,38 @@ param networkResourceGroupName string
 param vnetName string
 param subnetName string
 param adminUserName string
-
 @secure()
 param adminPassword string
-
-@allowed([
-  'win10'
-  'linux'
-])
-@description('The type of VM: Windows 10 or Linux.')
-param os string = 'win10'
-
-
 @description('Size of the virtual machine.')
-param vmSize string = 'Standard_D2_v3'
-
+param vmSize string
 @description('location for all resources')
 param location string = resourceGroup().location
+@description('Base64 encocded string to be run at VM startup')
+param initScriptBase64 string = ''
+
+@allowed([
+  'windows10'
+  'linux'
+])
+param os string
+
+var linuxImage = {
+  publisher: 'Canonical'
+  offer: 'UbuntuServer'
+  sku: '22.04-LTS'
+  version: 'latest'
+}
+
+var windows10Image = {
+  publisher: 'MicrosoftWindowsDesktop'
+  offer: 'Windows-10'
+  sku: '20h2-pro'
+  version: 'latest'
+}
+
+var linuxConfiguration = {
+  disablePasswordAuthentication: false
+}
 
 var subscriptionId = subscription().subscriptionId
 var nicName = '${vmName}-nic'
@@ -53,14 +68,11 @@ resource vm 'Microsoft.Compute/virtualMachines@2020-06-01' = {
       computerName: vmName
       adminUsername: adminUserName
       adminPassword: adminPassword
+      linuxConfiguration: (os =~ 'linux') ? linuxConfiguration : null
+      customData: ( !empty(initScriptBase64) ? initScriptBase64 : null )
     }
     storageProfile: {
-      imageReference: {
-        publisher: 'MicrosoftWindowsDesktop'
-        offer: 'Windows-10'
-        sku: '20h2-pro'
-        version: 'latest'
-      }
+      imageReference: (os =~ 'linux') ? linuxImage : windows10Image
       osDisk: {
         name: '${vmName}-os'
         caching: 'ReadWrite'

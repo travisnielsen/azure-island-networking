@@ -861,7 +861,6 @@ module hubVnetAzureZoneLink 'modules/dnszonelink.bicep' = {
 
 
 // TODO: THIS IS A HACK - need to find a better way to apply the UDR to the DNS server subnet
-
 module applyUdrsForHub 'modules/vnet.bicep' = {
   name: 'hub-vnet-update'
   scope: resourceGroup(netrg.name)
@@ -895,5 +894,27 @@ module applyUdrsForHub 'modules/vnet.bicep' = {
         }
       }
     ]
+  }
+}
+
+
+// DNS server for contoso.com
+module dnsServer 'modules/virtualMachine.bicep' = {
+  name: 'dns-server-consoso-com'
+  scope: resourceGroup(iaasrg.name)
+  dependsOn: [
+    hubVnet
+  ]
+  params: {
+    adminUserName: dnsVmAdminUserName
+    adminPassword: dnsVmAdminPwd
+    networkResourceGroupName: iaasrg.name
+    location: region
+    vnetName: 'hub-vnet'
+    subnetName: 'dns'
+    os: 'linux'
+    vmName: 'contoso-dns01'
+    vmSize: 'Standard_B2ms'
+    initScriptBase64: loadFileAsBase64('dnsserver.yml')
   }
 }
