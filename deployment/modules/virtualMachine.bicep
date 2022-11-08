@@ -19,9 +19,9 @@ param initScriptBase64 string = ''
 param os string
 
 var linuxImage = {
-  publisher: 'Canonical'
-  offer: 'UbuntuServer'
-  sku: '18.04-LTS'
+  publisher: 'canonical'
+  offer: '0001-com-ubuntu-server-focal'
+  sku: '20_04-lts-gen2'
   version: 'latest'
 }
 
