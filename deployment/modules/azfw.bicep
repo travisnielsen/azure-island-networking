@@ -1,7 +1,8 @@
 param prefix string
 param location string = resourceGroup().location
-param hubId string
+param hubVnetName string
 param networkRules array = []
+param fireWallSubnetName string
 
 resource publicIp 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
   name: '${prefix}-azfw-ip'
@@ -24,7 +25,7 @@ resource fwl 'Microsoft.Network/azureFirewalls@2020-06-01' = {
         name: '${prefix}-azfw-ipconf'
         properties: {
           subnet: {
-            id: '${hubId}/subnets/AzureFirewallSubnet'
+            id: resourceId('Microsoft.Network/virtualNetworks/subnets', hubVnetName, fireWallSubnetName)
           }
           publicIPAddress: {
             id: publicIp.id

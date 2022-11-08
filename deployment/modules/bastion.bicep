@@ -19,17 +19,14 @@ resource bastion 'Microsoft.Network/bastionHosts@2020-06-01' = {
   location: location
   properties: {
     ipConfigurations: [
-      {
-        name: 'bastionConf'
-        properties: {
+      { name: 'bastionConf', properties: {
           subnet: {
             id: subnetId
           }
           publicIPAddress: {
             id: bastionIP.id
           }
-        }
-      }
+        } }
     ]
   }
 }

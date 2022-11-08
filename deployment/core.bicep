@@ -1,5 +1,15 @@
 targetScope = 'subscription'
-param region string = 'centralus'
+
+@allowed([
+  'eastus'
+  'eastus2'
+  'northcentralus'
+  'centralus'
+  'westus'
+  'westus2'
+  'westus3'
+])
+param region string
 param appPrefix string
 param tags object = {
   project: 'AzIslandNetworking'
@@ -25,40 +35,35 @@ param bridgeBastionSubnetAddressSpace string = '10.10.16.128/25'      // 123 add
 param bridgePrivateLinkSubnetAddressSpace string = '10.10.17.0/25'    // 123 addresses - 10.10.17.0 - 10.10.17.127
 param bridgeAppGatewaySubnetAddressSpace string = '10.10.17.128/25'   // 123 addresses - 10.10.17.128 - 10.10.17.255
 
-
 // SPOKE VNET IP SETTINGS
 param spokeVnetAddressSpace string = '10.10.32.0/20'
 param spokeVnetVmAddressSpace string = '10.10.32.0/25'                // 123 addresses - 10.10.32.0 - 10.10.32.127
 param spokeVnetPrivateLinkAddressSpace string = '10.10.32.128/25'     // 123 addresses - 10.10.32.128 - 10.10.32.255
 param spokeVnetIntegrationSubnetAddressSpace string = '10.10.33.0/25' // 123 addresses - 10.10.33.0 - 10.10.33.127
 
-// Network Watcher
-param networkWatcherName string = 'NetworkWatcher_centralus'
-
 resource netrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${appPrefix}-network'
+  name: '${appPrefix}-network-rg'
   location: region
   tags: tags
 }
 
 resource iaasrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${appPrefix}-iaas'
+  name: '${appPrefix}-iaas-rg'
   location: region
   tags: tags
 }
 
 resource devopsrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${appPrefix}-devops'
+  name: '${appPrefix}-devops-rg'
   location: region
   tags: tags
 }
-
 
 module hubVnet 'modules/vnet.bicep' = {
   name: 'hub-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${appPrefix}-hub'
+    vnetName: '${appPrefix}-vnet-hub'
     location: region
     addressSpaces: [ 
       hubVnetAddressSpace 
@@ -94,7 +99,7 @@ module bridgeVnet 'modules/vnet.bicep' = {
   name: 'bridge-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${appPrefix}-bridge'
+    vnetName: '${appPrefix}-vnet-bridge'
     location: region
     addressSpaces: [ 
       bridgeVnetAddressSpace 
@@ -143,7 +148,7 @@ module spokeVnet 'modules/vnet.bicep' = {
   name: 'spoke-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${appPrefix}-app'
+    vnetName: '${appPrefix}-vnet-spoke'
     location: region
     addressSpaces: [
       spokeVnetAddressSpace 
@@ -237,7 +242,7 @@ module hubDnsNsg 'modules/nsg.bicep' = {
           destinationPortRange: '*'
         }
       }
-      /* Internet egress will be forced through Azure Fireall. Deny at the NSG level supercedes UDR flow 
+      /* Internet egress will be forced through Azure Firewall. Deny at the NSG level supercedes UDR flow 
       {
         name: 'deny-internet'
         properties: {
@@ -267,88 +272,88 @@ module bastionNsg 'modules/nsg.bicep' = {
     name: '${appPrefix}-bridge-bastion'
     location: region
     securityRules: [
-        // SEE: https://docs.microsoft.com/en-us/azure/bastion/bastion-nsg#apply
-        {
-          name: 'bastion-ingress'
-          properties: {
-            priority: 100
-            protocol: 'Tcp'
-            access: 'Allow'
-            direction: 'Inbound'
-            sourceAddressPrefix: 'Internet'
-            sourcePortRange: '*'
-            destinationAddressPrefix: '*'
-            destinationPortRange: '443'
-          }
+      // SEE: https://docs.microsoft.com/en-us/azure/bastion/bastion-nsg#apply
+      {
+        name: 'bastion-ingress'
+        properties: {
+          priority: 100
+          protocol: 'Tcp'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: 'Internet'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '443'
         }
-        {
-          name: 'bastion-gatewaymgr'
-          properties: {
-            priority: 120
-            protocol: 'Tcp'
-            access: 'Allow'
-            direction: 'Inbound'
-            sourceAddressPrefix: 'GatewayManager'
-            sourcePortRange: '*'
-            destinationAddressPrefix: '*'
-            destinationPortRange: '443'
-          }
+      }
+      {
+        name: 'bastion-gatewaymgr'
+        properties: {
+          priority: 120
+          protocol: 'Tcp'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: 'GatewayManager'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '443'
         }
-        {
-          name: 'bastion-loadbalancer'
-          properties: {
-            priority: 140
-            protocol: 'Tcp'
-            access: 'Allow'
-            direction: 'Inbound'
-            sourceAddressPrefix: 'AzureLoadBalancer'
-            sourcePortRange: '*'
-            destinationAddressPrefix: '*'
-            destinationPortRange: '443'
-          }
+      }
+      {
+        name: 'bastion-loadbalancer'
+        properties: {
+          priority: 140
+          protocol: 'Tcp'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: 'AzureLoadBalancer'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '443'
         }
-        {
-          name: 'allow-ssh-rdp-vnet'
-          properties: {
-            priority: 100
-            protocol: '*'
-            access: 'Allow'
-            direction: 'Outbound'
-            sourceAddressPrefix: '*'
-            sourcePortRange: '*'
-            destinationAddressPrefix: 'VirtualNetwork'
-            destinationPortRanges: [
-              '22'
-              '3389'
-            ]
-          }
+      }
+      {
+        name: 'allow-ssh-rdp-vnet'
+        properties: {
+          priority: 100
+          protocol: '*'
+          access: 'Allow'
+          direction: 'Outbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: 'VirtualNetwork'
+          destinationPortRanges: [
+            '22'
+            '3389'
+          ]
         }
-        {
-          name: 'allow-azure-dependencies'
-          properties: {
-            priority: 120
-            protocol: '*'
-            access: 'Allow'
-            direction: 'Outbound'
-            sourceAddressPrefix: '*'
-            sourcePortRange: '*'
-            destinationAddressPrefix: 'AzureCloud'
-            destinationPortRange: '443'
-          }
+      }
+      {
+        name: 'allow-azure-dependencies'
+        properties: {
+          priority: 120
+          protocol: '*'
+          access: 'Allow'
+          direction: 'Outbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: 'AzureCloud'
+          destinationPortRange: '443'
         }
-        {
-          name: 'deny-internet'
-          properties: {
-            priority: 140
-            protocol: '*'
-            access: 'Deny'
-            direction: 'Outbound'
-            sourceAddressPrefix: '*'
-            sourcePortRange: '*'
-            destinationAddressPrefix: 'Internet'
-            destinationPortRange: '*'
-          }
+      }
+      {
+        name: 'deny-internet'
+        properties: {
+          priority: 140
+          protocol: '*'
+          access: 'Deny'
+          direction: 'Outbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: 'Internet'
+          destinationPortRange: '*'
         }
+      }
     ]
   }
 }
@@ -534,9 +539,10 @@ module hubAzFw 'modules/azfw.bicep' = {
   name: 'hub-azfw'
   scope: resourceGroup(netrg.name)
   params: {
-    prefix: 'hub'
+    prefix: '${appPrefix}-hub'
+    fireWallSubnetName: 'AzureFirewallSubnet'
     location: region
-    hubId: hubVnet.outputs.id
+    hubVnetName: hubVnet.outputs.name
     networkRules: [
       {
         name: 'core-rules'
@@ -570,15 +576,15 @@ module hubAzFw 'modules/azfw.bicep' = {
   }
 }
 
-
 // Azure Firewall - BRIDGE
 module bridgeAzFw 'modules/azfw.bicep' = {
   name: 'bridge-azfw'
   scope: resourceGroup(netrg.name)
   params: {
-    prefix: 'bridge'
+    prefix: '${appPrefix}-bridge'
+    fireWallSubnetName: 'AzureFirewallSubnet'
     location: region
-    hubId: bridgeVnet.outputs.id
+    hubVnetName: bridgeVnet.outputs.name
   }
 }
 
@@ -625,7 +631,6 @@ module BridgeToHubPeering 'modules/peering.bicep' = {
     remoteVnetId: hubVnet.outputs.id
   }
 }
-
 
 // User Defined Route (force egress traffic through hub firewall)
 module route 'modules/udr.bicep' = {
@@ -727,7 +732,6 @@ module hubVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
   }
 }
 
-
 // Private DNS for Azure Data Factory
 module privateZoneAzureDataFactory 'modules/dnszoneprivate.bicep' = {
   name: 'dns-private-datafactory'
@@ -827,7 +831,7 @@ module frontdoorcname 'modules/dnscname.bicep' = {
   params: {
     appName: 'management'
     dnsZone: 'privatelink.azure.com'
-    alias: 'arm-frontdoor-prod.trafficmanager.net'
+    alias: 'arm-frontdoor-prod.${environment().suffixes.azureFrontDoorEndpointSuffix}'
   }
 }
 
@@ -901,7 +905,7 @@ module applyUdrsForHub 'modules/vnet.bicep' = {
 // DNS server for contoso.com
 module dnsServer 'modules/virtualMachine.bicep' = {
   name: 'dns-server-consoso-com'
-  scope: resourceGroup(iaasrg.name)
+  scope: resourceGroup(netrg.name)
   dependsOn: [
     hubVnet
   ]
@@ -910,7 +914,7 @@ module dnsServer 'modules/virtualMachine.bicep' = {
     adminPassword: dnsVmAdminPwd
     networkResourceGroupName: netrg.name
     location: region
-    vnetName: '${appPrefix}-hub'
+    vnetName: hubVnet.outputs.name
     subnetName: 'dns'
     os: 'linux'
     vmName: 'contoso-dns01'

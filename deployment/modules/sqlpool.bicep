@@ -2,6 +2,7 @@ param sqlServerName string
 param sqlPoolName string
 param sqlPoolSKU string
 param adminLoginName string
+@secure()
 param adminLoginPwd string
 param adminObjectId string
 param resourceGroupNameNetwork string
@@ -10,16 +11,17 @@ param subnetNamePrivateEndpoint string
 //param logAnalyticsWorkspaceId string
 param actionGroupId string
 param tags object
+param location string
+param subscriptionId string
 
 var blocContributorRoleId = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 var sqlDefenderContainerName = 'defender'
 
 resource auditstorage 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   name: 'sqlops${uniqueString(resourceGroup().id)}'
-  location: resourceGroup().location
+  location: location
   sku: {
     name: 'Standard_LRS'
-    tier: 'Standard'
   }
   kind: 'StorageV2'
   properties: {
@@ -46,7 +48,7 @@ var containerSasProperties = {
 
 resource sqlserver 'Microsoft.Sql/servers@2019-06-01-preview' = {
   name: sqlServerName
-  location: resourceGroup().location
+  location: location
   identity: {
     type: 'SystemAssigned'
   }
@@ -61,9 +63,6 @@ resource sqlserver 'Microsoft.Sql/servers@2019-06-01-preview' = {
 
 resource sqladmin 'Microsoft.Sql/servers/administrators@2019-06-01-preview' = {
   name: '${sqlserver.name}/ActiveDirectory'
-  dependsOn: [
-    sqlserver
-  ]
   properties: {
     administratorType: 'ActiveDirectory'
     login: adminLoginName
@@ -74,13 +73,11 @@ resource sqladmin 'Microsoft.Sql/servers/administrators@2019-06-01-preview' = {
 
 module sqlPrivateEndpoint 'privateendpoint.bicep' = {
   name: '${sqlserver.name}-privateendpoint'
-  dependsOn: [
-    sqlserver
-  ]
   params: {
+    location: location
     privateEndpointName: '${sqlserver.name}-sqlEndpoint'
     serviceResourceId: sqlserver.id
-    dnsZoneName: 'privatelink.database.windows.net'
+    dnsZoneName: 'privatelink${environment().suffixes.sqlServerHostname}'
     resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetNamePrivateEndpoint
     subnetName: subnetNamePrivateEndpoint
@@ -113,10 +110,6 @@ resource sqlServerDiagnosticSettings 'microsoft.insights/diagnosticSettings@2017
 
 resource roleassignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(blocContributorRoleId, resourceGroup().id)
-  dependsOn: [
-    sqlserver
-    auditstorage
-  ]
   scope: auditstorage
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', blocContributorRoleId)
@@ -134,7 +127,7 @@ resource auditsettings 'Microsoft.Sql/servers/auditingSettings@2017-03-01-previe
   properties: {
     state: 'Enabled'
     storageEndpoint: auditstorage.properties.primaryEndpoints.blob
-    storageAccountSubscriptionId: subscription().subscriptionId
+    storageAccountSubscriptionId: subscriptionId
     isStorageSecondaryKeyInUse: false
     isAzureMonitorTargetEnabled: false
     auditActionsAndGroups: [
@@ -151,9 +144,6 @@ resource auditsettings 'Microsoft.Sql/servers/auditingSettings@2017-03-01-previe
 
 resource securityAlertsPolicy 'Microsoft.Sql/servers/securityAlertPolicies@2020-02-02-preview' = {
   name: '${sqlserver.name}/DefaultSecurityAlertPolicy'
-  dependsOn: [
-    sqlserver
-  ]
   properties: {
     state: 'Enabled'
   }
@@ -180,7 +170,7 @@ resource azuredefender 'Microsoft.Sql/servers/vulnerabilityAssessments@2018-06-0
 
 resource sqldb 'Microsoft.Sql/servers/databases@2020-08-01-preview' = {
   name: '${sqlServerName}/${sqlPoolName}'
-  location: resourceGroup().location
+  location: location
   dependsOn: [
     sqlserver
   ]
@@ -238,7 +228,6 @@ resource sqlHighCPU 'Microsoft.Insights/metricAlerts@2018-03-01' = {
   }
   dependsOn: [
     sqlserver
-    sqldb
   ]
 }
 
@@ -282,7 +271,6 @@ resource failedConnections 'Microsoft.Insights/metricAlerts@2018-03-01' = {
   }
   dependsOn: [
     sqlserver
-    sqldb
   ]
 }
 
@@ -326,7 +314,6 @@ resource highDTU 'Microsoft.Insights/metricAlerts@2018-03-01' = {
   }
   dependsOn: [
     sqlserver
-    sqldb
   ]
 }
 

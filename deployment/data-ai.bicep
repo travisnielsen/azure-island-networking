@@ -5,6 +5,7 @@ param tags object = {
 }
 
 param sqlAdminLoginName string
+@secure()
 param sqlAdminLoginPwd string
 param sqlAdminObjectId string
 
@@ -12,15 +13,16 @@ param storageContainerName string = 'testdata'
 param sqlDatabaseName string = 'nytaxi'
 param sqlDatabaseSKU string = 'DW100c'
 
+param location string = resourceGroup().location
+
 // VNet integration
 var subscriptionId = subscription().subscriptionId
-var region = resourceGroup().location
+
 var networkResourceGroupName = '${appPrefix}-network'
 var vnetName = '${appPrefix}-app'
 
 var sqlServerName = '${uniqueString(resourceGroup().id)}-sql'
 var dataFactoryName = '${uniqueString(resourceGroup().id)}-df'
-
 
 // Deploy Action Group for monitoring/alerting
 module actionGroup 'modules/actionGroup.bicep' = {
@@ -36,10 +38,9 @@ module actionGroup 'modules/actionGroup.bicep' = {
  */
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   name: uniqueString(resourceGroup().id)
-  location: resourceGroup().location
+  location: location
   sku: {
     name: 'Standard_LRS'
-    tier: 'Standard'
   }
   kind: 'StorageV2'
   properties: {
@@ -51,9 +52,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2019-06-01' = {
   name: '${storageAccount.name}/default/${storageContainerName}'
-  dependsOn: [
-    storageAccount
-  ]
 }
 
 /*
@@ -62,25 +60,23 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
 module logAnalytics 'modules/loganalytics.bicep' = {
   name: 'logAnalytics'
   params: {
+    location: location
     name: uniqueString(resourceGroup().id)
     appTags: tags
   }
 }
 
-
 module storagePrivateEndpoint 'modules/privateendpoint.bicep' = {
   name: 'storageAccount-privateEndpoint'
-  dependsOn: [
-    storageAccount
-  ]
   params: {
+    location: location
     privateEndpointName: '${storageAccount.name}-storageEndpoint'
     serviceResourceId: storageAccount.id
     resourceGroupNameNetwork: networkResourceGroupName
     vnetName: vnetName
     subnetName: 'azureServices'
     // dnsZoneId: resourceId(subscriptionId, 'Microsoft.Network/privateDnsZones', 'privatelink.blob.core.windows.net' )
-    dnsZoneName: 'privatelink.blob.core.windows.net'
+    dnsZoneName: 'privatelink.blob.${environment().suffixes.storage}'
     groupId: 'blob'
   }
 }
@@ -91,6 +87,8 @@ module storagePrivateEndpoint 'modules/privateendpoint.bicep' = {
 module sqlSynapse 'modules/sqlpool.bicep' = {
   name: 'sql-dedicatedpool'
   params: {
+    location: location
+    subscriptionId: subscriptionId
     sqlServerName: sqlServerName
     sqlPoolName: sqlDatabaseName
     sqlPoolSKU: sqlDatabaseSKU
@@ -112,7 +110,7 @@ resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
     storageAccount
     sqlSynapse
   ]
-  location: resourceGroup().location
+  location: location
   identity: {
     type: 'SystemAssigned'
   }
@@ -133,10 +131,8 @@ resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
 
 module dataFactoryPrivateEndpoint 'modules/privateendpoint.bicep' = {
   name: 'datafactory-privateEndpoint'
-  dependsOn: [
-    dataFactory
-  ]
   params: {
+    location: location
     privateEndpointName: '${dataFactory.name}-dataFactoryEndpoint'
     serviceResourceId: dataFactory.id
     resourceGroupNameNetwork: networkResourceGroupName
@@ -149,14 +145,13 @@ module dataFactoryPrivateEndpoint 'modules/privateendpoint.bicep' = {
 
 resource dataFactoryManagedVNET 'Microsoft.DataFactory/factories/managedVirtualNetworks@2018-06-01' = {
   name: '${dataFactory.name}/default'
-  properties: { 
+  properties: {
   }
 }
 
 resource integrationRuntime 'Microsoft.DataFactory/factories/integrationRuntimes@2018-06-01' = {
   name: '${dataFactory.name}/AutoResolveIntegrationRuntime'
   dependsOn: [
-    dataFactory
     dataFactoryManagedVNET
   ]
   properties: {
@@ -221,13 +216,13 @@ resource adfLinkedServiceSql 'Microsoft.DataFactory/factories/linkedservices@201
 
 resource adfLinkedServiceBlob 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
   name: '${dataFactory.name}/BlobStorage1'
-  dependsOn:[
+  dependsOn: [
     integrationRuntime
   ]
   properties: {
     type: 'AzureBlobStorage'
     typeProperties: {
-      serviceEndpoint: 'https://${storageAccount.name}.blob.core.windows.net'
+      serviceEndpoint: 'https://${storageAccount.name}.blob.${environment().suffixes.storage}'
       accountKind: storageAccount.kind
     }
     connectVia: {
@@ -240,7 +235,6 @@ resource adfLinkedServiceBlob 'Microsoft.DataFactory/factories/linkedservices@20
 resource adfDatasetSynapse 'Microsoft.DataFactory/factories/datasets@2018-06-01' = {
   name: '${dataFactory.name}/AzureSynapseAnalyticsTable1'
   dependsOn: [
-    dataFactory
     adfLinkedServiceSql
   ]
   properties: {
@@ -254,15 +248,14 @@ resource adfDatasetSynapse 'Microsoft.DataFactory/factories/datasets@2018-06-01'
       table: {
         value: '@concat(\'tbl\', string(rand(1000000,9999999)))'
         type: 'Expression'
+      }
     }
-  }
   }
 }
 
 resource adfDatasetBlob 'Microsoft.DataFactory/factories/datasets@2018-06-01' = {
   name: '${dataFactory.name}/DelimitedText1'
   dependsOn: [
-    dataFactory
     adfLinkedServiceBlob
   ]
   properties: {
@@ -275,18 +268,17 @@ resource adfDatasetBlob 'Microsoft.DataFactory/factories/datasets@2018-06-01' = 
       location: {
         type: 'AzureBlobStorageLocation'
         container: 'testdata'
+      }
+      // columnDelimiter: ','
+      // escapeChar: '\\'
+      // quoteChar: '\\"'
     }
-    // columnDelimiter: ','
-    // escapeChar: '\\'
-    // quoteChar: '\\"'
-  }
   }
 }
 
 resource adfDataFlow 'Microsoft.DataFactory/factories/dataflows@2018-06-01' = {
   name: '${dataFactory.name}/dataflow1'
   dependsOn: [
-    dataFactory
     adfDatasetBlob
     adfDatasetSynapse
   ]
@@ -294,26 +286,26 @@ resource adfDataFlow 'Microsoft.DataFactory/factories/dataflows@2018-06-01' = {
     type: 'MappingDataFlow'
     typeProperties: {
       sources: [
-          {
-            dataset: {
-              referenceName: 'DelimitedText1'
-              type: 'DatasetReference'
-            }
-            name: 'source1'
+        {
+          dataset: {
+            referenceName: 'DelimitedText1'
+            type: 'DatasetReference'
           }
-        ]
-        sinks: [
-          {
-            dataset: {
-              referenceName: 'AzureSynapseAnalyticsTable1'
-              type: 'DatasetReference'
-            }
-            name: 'sink1'
+          name: 'source1'
+        }
+      ]
+      sinks: [
+        {
+          dataset: {
+            referenceName: 'AzureSynapseAnalyticsTable1'
+            type: 'DatasetReference'
           }
-        ]
-        // transformations: [
-        // ]
-        script: 'source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tpurgeFiles: true,\n\twildcardPaths:[\'*.csv\']) ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: \'table\',\n\tstaged: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> sink1'
+          name: 'sink1'
+        }
+      ]
+      // transformations: [
+      // ]
+      script: 'source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tpurgeFiles: true,\n\twildcardPaths:[\'*.csv\']) ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: \'table\',\n\tstaged: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> sink1'
     }
   }
 }
@@ -321,7 +313,6 @@ resource adfDataFlow 'Microsoft.DataFactory/factories/dataflows@2018-06-01' = {
 resource adfPipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
   name: '${dataFactory.name}/pipeline1'
   dependsOn: [
-    dataFactory
     adfDataFlow
     integrationRuntime
   ]
@@ -349,7 +340,7 @@ resource adfPipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
               sink1: {}
             }
             staging: {}
-            compute:{
+            compute: {
               coreCount: 8
               computeType: 'General'
             }
@@ -364,11 +355,9 @@ resource adfPipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
 resource adfTrigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
   name: '${dataFactory.name}/trigger1'
   dependsOn: [
-    dataFactory
     adfPipeline
   ]
   properties: {
-    runtimeState: 'Started'
     pipelines: [
       {
         pipelineReference: {
@@ -396,10 +385,6 @@ resource adfTrigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
 
 resource roleAssignmentName 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(storageAccount.id, 'ba92f5b4-2d11-453d-a403-e96b0029c9fe', dataFactory.name)
-  dependsOn: [
-    storageAccount
-    dataFactory
-  ]
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
     principalId: reference(dataFactory.id, '2018-06-01', 'full').identity.principalId
