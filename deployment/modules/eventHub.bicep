@@ -1,6 +1,9 @@
-param resourcePrefix string
-param location string
 param eventHubNames array
+param location string
+param orgPrefix string
+param resourcePrefix string
+param timeStamp string
+param vnetName string
 param zoneRedundant bool
 
 resource eventHubNameSpace 'Microsoft.EventHub/namespaces@2021-11-01' = {
@@ -8,6 +11,7 @@ resource eventHubNameSpace 'Microsoft.EventHub/namespaces@2021-11-01' = {
   location: location
   properties: {
     zoneRedundant: zoneRedundant
+    // publicNetworkAccess: 'Disabled' - This won't be available until 2022-01-01-preview goes GA
   }
   sku: {
     name: 'Premium'
@@ -22,5 +26,19 @@ resource eventHubs 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = [for e
     partitionCount: 1
   }
 }]
+
+module privateEndpoint 'privateendpoint.bicep' = {
+  name: '${timeStamp}-${resourcePrefix}-pe-ehns'
+  params: {
+    location: location
+    privateEndpointName: '${resourcePrefix}-pe-ehns'
+    serviceResourceId: eventHubNameSpace.id
+    dnsZoneName: 'privatelink.azurewebsites.net'
+    resourceGroupNameNetwork: '${orgPrefix}-network-rg'
+    vnetName: vnetName
+    subnetName: 'privateEndpoints'
+    groupId: 'namespace'
+  }
+}
 
 output hostName string = '${eventHubNameSpace.name}.servicebus.windows.net'

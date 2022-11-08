@@ -1,12 +1,12 @@
 param location string
-param timeStamp string
-param resourcePrefix string
 param orgPrefix string
-param vnetName string
+param resourcePrefix string
 param tenantId string
+param timeStamp string
+param vnetName string
 
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
-  name:'${resourcePrefix}-kv'
+  name: '${resourcePrefix}-kv'
   location: location
   properties: {
     sku: {
@@ -25,10 +25,10 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
 }
 
 module privateEndpoint 'privateendpoint.bicep' = {
-  name: '${timeStamp}-${resourcePrefix}-kv-privateEndpoint'
+  name: '${timeStamp}-${resourcePrefix}-pe-kv'
   params: {
     location: location
-    privateEndpointName: '${keyVault.name}-endpoint'
+    privateEndpointName: '${resourcePrefix}-pe-kv'
     serviceResourceId: keyVault.id
     dnsZoneName: 'privatelink.azurewebsites.net'
     resourceGroupNameNetwork: '${orgPrefix}-network-rg'

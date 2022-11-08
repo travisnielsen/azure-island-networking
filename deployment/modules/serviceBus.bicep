@@ -1,7 +1,10 @@
-param resourcePrefix string
 param location string
-param zoneRedundant bool
+param orgPrefix string
 param queueNames array
+param resourcePrefix string
+param timeStamp string
+param vnetName string
+param zoneRedundant bool
 
 resource serviceBus 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
   name: '${resourcePrefix}-sbns'
@@ -12,6 +15,7 @@ resource serviceBus 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
   }
   properties: {
     zoneRedundant: zoneRedundant
+    // publicNetworkAccess: 'Disabled' - This won't be available until 2022-01-01-preview goes GA
   }
 }
 
@@ -25,6 +29,20 @@ resource queues 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = [for queue
     maxDeliveryCount: 2000
   }
 }]
+
+module privateEndpoint 'privateendpoint.bicep' = {
+  name: '${timeStamp}-${resourcePrefix}-pe-sbns'
+  params: {
+    location: location
+    privateEndpointName: '${resourcePrefix}-pe-sbns'
+    serviceResourceId: serviceBus.id
+    dnsZoneName: 'privatelink.azurewebsites.net'
+    resourceGroupNameNetwork: '${orgPrefix}-network-rg'
+    vnetName: vnetName
+    subnetName: 'privateEndpoints'
+    groupId: 'namespace'
+  }
+}
 
 /*
 resource autoScaleSettings 'Microsoft.Insights/autoscalesettings@2015-04-01' = {
@@ -64,9 +82,7 @@ resource autoScaleSettings 'Microsoft.Insights/autoscalesettings@2015-04-01' = {
 }
 */
 
-
 output hostName string = '${serviceBus.name}.servicebus.windows.net'
-
 
 /*
 

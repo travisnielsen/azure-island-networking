@@ -7,6 +7,7 @@ param zoneRedundant bool = false
 
 var resourcePrefix = '${orgPrefix}-${appPrefix}-${regionCode}'
 var workloadVnetName = '${orgPrefix}-vnet-${appPrefix}'
+var tenantId = subscription().tenantId
 
 var functionApps = [
   {
@@ -51,30 +52,20 @@ module aks 'modules/aks.bicep' = {
 }
 */
 
-var tenantId = subscription().tenantId
 module keyVault 'Modules/keyVault.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-kv'
   params: {
     location: location
-    timeStamp: timeStamp
     orgPrefix: orgPrefix
     resourcePrefix: resourcePrefix
-    vnetName: workloadVnetName
     tenantId: tenantId
+    timeStamp: timeStamp
+    vnetName: workloadVnetName
   }
 }
 
-/*
 module monitoring 'Modules/monitoring.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-monitoring'
-  params: {
-    location: location
-    resourcePrefix: resourcePrefix
-  }
-}
-
-module containerRegistry 'Modules/containerRegistry.bicep' = {
-  name: '${timeStamp}-${resourcePrefix}-acr'
   params: {
     location: location
     resourcePrefix: resourcePrefix
@@ -85,8 +76,11 @@ module eventHub 'Modules/eventHub.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-eventHub'
   params: {
     eventHubNames: entities
-    location: location 
+    location: location
+    orgPrefix: orgPrefix
     resourcePrefix: resourcePrefix
+    timeStamp: timeStamp
+    vnetName: workloadVnetName
     zoneRedundant: zoneRedundant
   }
 }
@@ -95,9 +89,21 @@ module serviceBus 'Modules/serviceBus.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-serviceBus'
   params: {
     location: location
-    resourcePrefix: resourcePrefix
-    zoneRedundant: zoneRedundant
+    orgPrefix: orgPrefix
     queueNames: entities
+    resourcePrefix: resourcePrefix
+    timeStamp: timeStamp
+    vnetName: workloadVnetName
+    zoneRedundant: zoneRedundant
+  }
+}
+
+/*
+module containerRegistry 'Modules/containerRegistry.bicep' = {
+  name: '${timeStamp}-${resourcePrefix}-acr'
+  params: {
+    location: location
+    resourcePrefix: resourcePrefix
   }
 }
 
