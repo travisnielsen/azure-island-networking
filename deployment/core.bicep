@@ -42,19 +42,19 @@ param spokeVnetPrivateLinkAddressSpace string = '10.10.32.128/25'     // 123 add
 param spokeVnetIntegrationSubnetAddressSpace string = '10.10.33.0/25' // 123 addresses - 10.10.33.0 - 10.10.33.127
 
 resource netrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${orgPrefix}-network-rg'
+  name: '${orgPrefix}-network'
   location: region
   tags: tags
 }
 
 resource iaasrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${orgPrefix}-iaas-rg'
+  name: '${orgPrefix}-iaas'
   location: region
   tags: tags
 }
 
 resource devopsrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${orgPrefix}-devops-rg'
+  name: '${orgPrefix}-devops'
   location: region
   tags: tags
 }
@@ -904,7 +904,7 @@ module applyUdrsForHub 'modules/vnet.bicep' = {
 // DNS server for contoso.com
 module dnsServer 'modules/virtualMachine.bicep' = {
   name: 'dns-server-consoso-com'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(iaasrg.name)
   dependsOn: [
     hubVnet
   ]
