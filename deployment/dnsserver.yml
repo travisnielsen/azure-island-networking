@@ -5,3 +5,26 @@ packages:
   - bind9utils
   - bind9-doc
   - dnsutils
+write_files:
+  - content: |
+      zone "contoso.com" {
+         type primary;
+         file "/etc/bind/zones/db.contoso.com";
+      };
+    path: /etc/bind/named.conf.local
+    append: true
+  - content: |
+      $TTL    604800
+      @       IN      SOA     ns1.contoso.com. admin.contoso.com. (
+                  4     ; Serial
+             604800     ; Refresh
+              86400     ; Retry
+            2419200     ; Expire
+             604800 )   ; Negative Cache TTL
+      @       IN      NS      ns1.contoso.com.
+      ns1.contoso.com.        IN      A      172.0.0.1
+      api.contoso.com.        IN      A      10.10.32.4
+    path: /etc/bind/zones/db.contoso.com
+runcmd:
+  - sudo sed -i 's/bind/bind -4/g' /etc/default/named
+  - sudo systemctl restart bind9
