@@ -21,7 +21,7 @@ param os string
 var linuxImage = {
   publisher: 'Canonical'
   offer: 'UbuntuServer'
-  sku: '22.04-LTS'
+  sku: '18.04-LTS'
   version: 'latest'
 }
 

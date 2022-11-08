@@ -908,9 +908,9 @@ module dnsServer 'modules/virtualMachine.bicep' = {
   params: {
     adminUserName: dnsVmAdminUserName
     adminPassword: dnsVmAdminPwd
-    networkResourceGroupName: iaasrg.name
+    networkResourceGroupName: netrg.name
     location: region
-    vnetName: 'hub-vnet'
+    vnetName: '${appPrefix}-hub'
     subnetName: 'dns'
     os: 'linux'
     vmName: 'contoso-dns01'
