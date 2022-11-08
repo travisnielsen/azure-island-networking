@@ -20,25 +20,25 @@ In the `deployments` directory, create a new file called `core.params.json` and 
 
 ```json
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "appPrefix": { "value": "contoso" },
-    "vmAdminUserName": { "value": "vmadmin" },
-    "vmAdminPwd": { "value": "" },
-    "tags": {
-      "value": {
-        "appId": "contoso",
-        "costCenter": "abc123"
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "appPrefix": { "value": "contoso" },
+      "dnsVmAdminUserName": { "value": "vmadmin" },
+      "dnsVmAdminPwd": { "value": "" },
+      "tags": {
+        "value": {
+          "project": "AzIslandNetworking",
+          "component": "core"
+        }
       }
     }
-  }
 }
 ```
 
 Update the following values:
 
-- `vmAdminPwd`: Set this to a random password
+* `dnsVmAdminPwd`: Set this to a random password
 
 Run the following commands to deploy the core infrastructure:
 

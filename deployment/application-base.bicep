@@ -39,7 +39,7 @@ module vnet 'modules/vnet.bicep' = {
   name: '${appPrefix}-vnet'
   scope: resourceGroup(networkRg.name)
   params: {
-    vnetName: '${appPrefix}-vnet'
+    vnetName: '${orgPrefix}-vnet-${appPrefix}'
     location: region
     addressSpaces: [
       islandVnetAddressSpace
