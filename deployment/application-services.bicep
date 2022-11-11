@@ -13,7 +13,7 @@ var workloadVnetName = fullPrefix
 var tenantId = subscription().tenantId
 var resourceGroupNameNetwork = '${orgPrefix}-network'
 
- //NOTE: This is set to false for ease of testing and rapid iteration on changes.  For real workloads this should be set to true
+//NOTE: This is set to false for ease of testing and rapid iteration on changes.  For real workloads this should be set to true
 var enableSoftDeleteForKeyVault = false
 
 var functionApps = [
@@ -31,13 +31,6 @@ var functionApps = [
     functionAppNameSuffix: 'ehProducer'
     storageAccountNameSuffix: 'ehproducer'
     dockerImageAndTag: 'cdcehproducer:latest'
-  }
-]
-
-var webApps = [
-  {
-    appServiceNameSuffix: 'weather'
-    dockerImageAndTag: 'cdcgenericmicroserviceapi:latest'
   }
 ]
 
@@ -124,23 +117,25 @@ module cosmos 'Modules/cosmos.bicep' = {
     resourcePrefix: resourcePrefix
   }
 }
+*/
 
 var functionAppsCount = length(functionApps)
-module functions 'Modules/functions.bicep' = [for i in range(0, functionAppsCount): {
+module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCount): {
   name: '${timeStamp}-${resourcePrefix}-${functionApps[i].functionAppNameSuffix}'
   params: {
-    location: location
-    resourcePrefix: resourcePrefix
-    storageSkuName: 'LRS'
-    storageAccountNameSuffix: functionApps[i].storageAccountNameSuffix
-    functionAppNameSuffix: functionApps[i].functionAppNameSuffix
-    timeStamp: timeStamp
-    zoneRedundant: zoneRedundant
-    functionSubnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${appPrefix}-network-rg/providers/Microsoft.Network/virtualNetworks/${appPrefix}-workload-a/subnets/aks'
     dockerImageAndTag: functionApps[i].dockerImageAndTag
+    functionAppNameSuffix: functionApps[i].functionAppNameSuffix
+    functionSubnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroupNameNetwork}/providers/Microsoft.Network/virtualNetworks/${workloadVnetName}/subnets/${functionApps[i].functionAppNameSuffix}'
+    location: location
+    resourceGroupNameNetwork: resourceGroupNameNetwork
+    resourcePrefix: resourcePrefix
+    storageSkuName: 'Standard_LRS'
+    storageAccountNameSuffix: functionApps[i].storageAccountNameSuffix
+    timeStamp: timeStamp
+    vnetName: workloadVnetName
+    zoneRedundant: zoneRedundant    
   }
   dependsOn: [
     monitoring
   ]
 }]
-*/

@@ -25,19 +25,25 @@ resource networkRg 'Microsoft.Resources/resourceGroups@2020-06-01' existing = {
   name: '${orgPrefix}-network'
 }
 
-resource workloadArg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+resource workloadRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: fullPrefix
   location: region
   tags: tags
 }
 
+resource hubAzFw 'Microsoft.Network/azureFirewalls@2022-05-01' existing = {
+  name: '${orgPrefix}-hub-azfw'
+  scope: resourceGroup(networkRg.name)
+}
+
 // ISLAND VNET IP SETTINGS
 param islandVnetAddressSpace string = '192.168.0.0/16'
-param aksSubnetAddressPrefix string = '192.168.0.0/22'        // 1019 addresses - 192.168.0.0 - 192.168.4.0
-param utilSubnetAddressPrefix string = '192.168.4.0/22'       // 1019 addresses - 192.168.4.0 - 192.168.8.0
-param privateEndpointAddressPrefix string = '192.168.8.0/24'  // 251  addresses - 192.168.8.0 - 192.168.9.0
-param ehProducerFaAddressPrefix string = '192.168.9.0/26'     // 61   addresses - 192.168.9.0 - 192.168.9.63
-param ehConsumerFaAddressPrefix string = '192.168.9.64/26'    // 61   addresses - 192.168.9.0 - 192.168.9.127
+param aksSubnetAddressPrefix string = '192.168.0.0/22'          // 1019 addresses - 192.168.0.0 - 192.168.4.0
+param utilSubnetAddressPrefix string = '192.168.4.0/22'         // 1019 addresses - 192.168.4.0 - 192.168.8.0
+param privateEndpointAddressPrefix string = '192.168.8.0/24'    // 251  addresses - 192.168.8.0 - 192.168.9.0
+param ehProducerFaAddressPrefix string = '192.168.9.0/26'       // 61   addresses - 192.168.9.0 - 192.168.9.63
+param ehConsumerFaAddressPrefix string = '192.168.9.64/26'      // 61   addresses - 192.168.9.64 - 192.168.9.127
+param sbConsumerFaAddressPrefix string = '192.168.9.128/26'      // 61   addresses - 192.168.9.128 - 192.168.9.192
 
 module vnet 'modules/vnet.bicep' = {
   name: '${appPrefix}-vnet'
@@ -53,11 +59,9 @@ module vnet 'modules/vnet.bicep' = {
         name: 'aks'
         properties: {
           addressPrefix: aksSubnetAddressPrefix
-          /* TODO - Need to figure out how to get this value
           routeTable: {
-            id: routeId
+            id: route.outputs.id
           }
-          */
           networkSecurityGroup: {
             id: aksIntegrationNsg.outputs.id
           }
@@ -67,11 +71,9 @@ module vnet 'modules/vnet.bicep' = {
         name: 'util'
         properties: {
           addressPrefix: utilSubnetAddressPrefix
-          /* TODO - Need to figure out how to get this value
           routeTable: {
-            id: routeId
+            id: route.outputs.id
           }
-          */
           networkSecurityGroup: {
             id: utilNsg.outputs.id
           }
@@ -81,11 +83,9 @@ module vnet 'modules/vnet.bicep' = {
         name: 'privateEndpoints'
         properties: {
           addressPrefix: privateEndpointAddressPrefix
-          /* TODO - Need to figure out how to get this value
           routeTable: {
-            id: routeId
+            id: route.outputs.id
           }
-          */
           networkSecurityGroup: {
             id: privateEndpointsNsg.outputs.id
           }
@@ -95,11 +95,9 @@ module vnet 'modules/vnet.bicep' = {
         name: 'ehProducer'
         properties: {
           addressPrefix: ehProducerFaAddressPrefix
-          /* TODO - Need to figure out how to get this value
           routeTable: {
-            id: routeId
+            id: route.outputs.id
           }
-          */
           networkSecurityGroup: {
             id: ehProducerNsg.outputs.id
           }
@@ -123,13 +121,37 @@ module vnet 'modules/vnet.bicep' = {
         name: 'ehConsumer'
         properties: {
           addressPrefix: ehConsumerFaAddressPrefix
-          /* TODO - Need to figure out how to get this value
           routeTable: {
-            id: routeId
+            id: route.outputs.id
           }
-          */
           networkSecurityGroup: {
             id: ehConsumerNsg.outputs.id
+          }
+          delegations: [
+            {
+              name: '${appPrefix}-asp-delegation-${substring(uniqueString(deployment().name), 0, 4)}'
+              properties: {
+                serviceName: 'Microsoft.Web/serverfarms'
+              }
+              type: 'Microsoft.Network/virtualNetworks/subnets/delegations'
+            }
+          ]
+          serviceENdpoints: [
+            {
+              service: 'Microsoft.Storage'
+            }
+          ]
+        }
+      }
+      {
+        name: 'sbConsumer'
+        properties: {
+          addressPrefix: sbConsumerFaAddressPrefix
+          routeTable: {
+            id: route.outputs.id
+          }
+          networkSecurityGroup: {
+            id: sbConsumerNsg.outputs.id
           }
           delegations: [
             {
@@ -151,12 +173,22 @@ module vnet 'modules/vnet.bicep' = {
   }
 }
 
+module route 'modules/udr.bicep' = {
+  name: '${appPrefix}-workload-udr'
+  scope: resourceGroup(networkRg.name)
+  params: {
+    name: '${fullPrefix}-udr'
+    location: region
+    azFwlIp: hubAzFw.properties.ipConfigurations[0].properties.privateIPAddress
+  }
+}
+
 // NSG for AKS subnet
 module aksIntegrationNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-aks'
   scope: resourceGroup(networkRg.name)
   params: {
-    name: '${orgPrefix}-${appPrefix}-app-aks'
+    name: '${fullPrefix}-app-aks'
     location: region
     securityRules: [
       {
@@ -181,7 +213,7 @@ module utilNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-util'
   scope: resourceGroup(networkRg.name)
   params: {
-    name: '${orgPrefix}-${appPrefix}-app-util'
+    name: '${fullPrefix}-app-util'
     location: region
     securityRules: [
       {
@@ -206,7 +238,7 @@ module privateEndpointsNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-pe'
   scope: resourceGroup(networkRg.name)
   params: {
-    name: '${orgPrefix}-${appPrefix}-app-pe'
+    name: '${fullPrefix}-app-pe'
     location: region
     securityRules: [
       {
@@ -231,7 +263,7 @@ module ehProducerNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-ehProducer'
   scope: resourceGroup(networkRg.name)
   params: {
-    name: '${orgPrefix}-${appPrefix}-app-ehProducer'
+    name: '${fullPrefix}-app-ehProducer'
     location: region
     securityRules: [
       {
@@ -256,7 +288,7 @@ module ehConsumerNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-ehConsumer'
   scope: resourceGroup(networkRg.name)
   params: {
-    name: '${orgPrefix}-${appPrefix}-app-ehConsumer'
+    name: '${fullPrefix}-app-ehConsumer'
     location: region
     securityRules: [
       {
@@ -273,5 +305,41 @@ module ehConsumerNsg 'modules/nsg.bicep' = {
         }
       }
     ]
+  }
+}
+
+// NSG for EH Consumer Integration subnet
+module sbConsumerNsg 'modules/nsg.bicep' = {
+  name: '${appPrefix}-app-sbConsumer'
+  scope: resourceGroup(networkRg.name)
+  params: {
+    name: '${fullPrefix}-app-sbConsumer'
+    location: region
+    securityRules: [
+      {
+        name: 'deny-inbound-default'
+        properties: {
+          priority: 120
+          protocol: '*'
+          access: 'Deny'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '*'
+        }
+      }
+    ]
+  }
+}
+
+module acrPullMi 'modules/managedIdentity.bicep' = {
+  name: '${appPrefix}-mi-acrPull'
+  scope: resourceGroup(workloadRg.name)
+  params: {
+    location: region
+    resourcePrefix: fullPrefix
+    role: 'acrPull'
+    tags: tags
   }
 }
