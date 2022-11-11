@@ -17,12 +17,16 @@ param tags object = {
   component: 'core'
 }
 
+@maxLength(16)
+@description('The full prefix is the combination of the org prefix and app prefix and cannot exceed 16 characters in order to avoid deployment failures with certain PaaS resources such as storage or key vault')
+param fullPrefix string = '${orgPrefix}-${appPrefix}'
+
 resource networkRg 'Microsoft.Resources/resourceGroups@2020-06-01' existing = {
   name: '${orgPrefix}-network'
 }
 
 resource workloadArg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${orgPrefix}-${appPrefix}'
+  name: fullPrefix
   location: region
   tags: tags
 }
@@ -39,7 +43,7 @@ module vnet 'modules/vnet.bicep' = {
   name: '${appPrefix}-vnet'
   scope: resourceGroup(networkRg.name)
   params: {
-    vnetName: '${orgPrefix}-${appPrefix}'
+    vnetName: fullPrefix
     location: region
     addressSpaces: [
       islandVnetAddressSpace

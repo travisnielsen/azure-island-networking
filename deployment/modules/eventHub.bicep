@@ -31,7 +31,7 @@ module privateEndpoint 'privateendpoint.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-pe-ehns'
   params: {
     location: location
-    privateEndpointName: '${resourcePrefix}-ehns'
+    privateEndpointName: '${resourcePrefix}-pe-ehns'
     serviceResourceId: eventHubNameSpace.id
     dnsZoneName: 'privatelink.azurewebsites.net'
     resourceGroupNameNetwork: resourceGroupNameNetwork

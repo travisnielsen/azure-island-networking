@@ -4,11 +4,17 @@ param orgPrefix string
 param regionCode string
 param location string = resourceGroup().location
 param zoneRedundant bool = false
+@maxLength(16)
+@description('The full prefix is the combination of the org prefix and app prefix and cannot exceed 16 characters in order to avoid deployment failures with certain PaaS resources such as storage or key vault')
+param fullPrefix string = '${orgPrefix}-${appPrefix}'
 
-var resourcePrefix = '${orgPrefix}-${appPrefix}-${regionCode}'
-var workloadVnetName = '${orgPrefix}-${appPrefix}'
+var resourcePrefix = '${fullPrefix}-${regionCode}'
+var workloadVnetName = fullPrefix
 var tenantId = subscription().tenantId
 var resourceGroupNameNetwork = '${orgPrefix}-network'
+
+ //NOTE: This is set to false for ease of testing and rapid iteration on changes.  For real workloads this should be set to true
+var enableSoftDeleteForKeyVault = false
 
 var functionApps = [
   {
@@ -55,6 +61,7 @@ module aks 'modules/aks.bicep' = {
 module keyVault 'Modules/keyVault.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-kv'
   params: {
+    enableSoftDelete: enableSoftDeleteForKeyVault
     location: location
     resourceGroupNameNetwork: resourceGroupNameNetwork
     resourcePrefix: resourcePrefix
