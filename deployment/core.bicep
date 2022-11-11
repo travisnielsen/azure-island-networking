@@ -256,7 +256,11 @@ module hubDnsNsg 'modules/nsg.bicep' = {
           direction: 'Inbound'
           protocol: '*'
           access: 'Allow'
-          sourceAddressPrefix: bridgeBastionSubnetAddressSpace
+          sourceAddressPrefixes: [
+            bridgeBastionSubnetAddressSpace
+            hubVnetAddressSpace
+            spokeVnetAddressSpace
+          ]
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
           destinationPortRanges: [ 
@@ -267,7 +271,7 @@ module hubDnsNsg 'modules/nsg.bicep' = {
       {
         name: 'deny-default'
         properties: {
-          priority: 120
+          priority: 200
           protocol: '*'
           access: 'Deny'
           direction: 'Inbound'
@@ -468,9 +472,40 @@ module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
     location: region
     securityRules: [
       {
+        name: 'allow-inbound-ssh'
+        properties: {
+          priority: 100
+          protocol: '*'
+          access: 'Deny'
+          direction: 'Inbound'
+          sourceAddressPrefix: hubVnetAddressSpace
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRanges: [
+            '22'
+          ]
+        }
+      }   
+      {
+        name: 'allow-inbound-web'
+        properties: {
+          priority: 110
+          protocol: '*'
+          access: 'Deny'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRanges: [
+            '80'
+            '443'
+          ]
+        }
+      }
+      {
         name: 'deny-inbound-default'
         properties: {
-          priority: 120
+          priority: 200
           protocol: '*'
           access: 'Deny'
           direction: 'Inbound'
