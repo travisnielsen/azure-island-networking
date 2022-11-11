@@ -7,6 +7,26 @@ packages:
   - dnsutils
 write_files:
   - content: |
+      acl "trusted_clients" {
+        127.0.0.0/8;
+        192.168.0.0/16;
+        10.0.0.0/8;
+      };
+      options {
+        directory "/var/cache/bind";
+        dnssec-validation auto;
+        listen-on { any; };
+        listen-on-v6 { none; };
+        allow-query {
+          trusted_clients;
+        };
+        allow-query-cache {
+          trusted-clients;
+        };
+      };
+    path: /etc/bind/named.conf.options
+    append: false
+  - content: |
       zone "contoso.com" {
          type primary;
          file "/etc/bind/zones/db.contoso.com";

@@ -25,8 +25,9 @@ param dnsVmAdminPwd string
 
 // HUB VNET IP SETTINGS
 param hubVnetAddressSpace string = '10.10.0.0/20'
-param hubFirewallSubnetAddressSpace string = '10.10.0.0/25'           // 123 addresses - 10.10.0.0 - 10.10.0.127
-param hubDnsSubnetAddressSpace string = '10.10.0.128/25'              // 123 addresses - 10.10.0.128 - 10.10.1.255
+param hubFirewallSubnetAddressSpace string = '10.10.0.0/25'             // 123 addresses - 10.10.0.0 - 10.10.0.127
+param hubDnsSubnetAddressSpace string = '10.10.0.128/25'                // 123 addresses - 10.10.0.128 - 10.10.1.255
+param hubDnsResolverOutboundSubnetAddressSpace string = '10.10.1.0/26'  // 59 addresses - 10.10.1.0 - 10.10.1.63
 
 // BRIDGE VNET IP SETTINGS
 param bridgeVnetAddressSpace string = '10.10.16.0/20'
@@ -90,6 +91,26 @@ module hubVnet 'modules/vnet.bicep' = {
           */
         }
       }
+      {
+        name: 'dns-resolver-outbound'
+        properties: {
+          addressPrefix: hubDnsResolverOutboundSubnetAddressSpace
+          networkSecurityGroup: { 
+            id: hubDnsNsg.outputs.id 
+          }
+          privateEndpointNetworkPolicies: 'Enabled'
+          delegations: [
+            {
+              name: 'dns-resolver'
+              properties: { 
+                serviceName: 'Microsoft.Network/dnsResolvers' 
+              }
+            }
+          ]
+        }
+      }
+
+
     ]
   }
 }
@@ -229,9 +250,28 @@ module hubDnsNsg 'modules/nsg.bicep' = {
         } 
       }
       {
+        name: 'allow-dns'
+        properties: { 
+          priority: 110
+          direction: 'Inbound'
+          protocol: '*'
+          access: 'Allow'
+          sourceAddressPrefixes: [
+            bridgeBastionSubnetAddressSpace
+            hubVnetAddressSpace
+            spokeVnetAddressSpace
+          ]
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRanges: [ 
+            '53' 
+          ] 
+        } 
+      }
+      {
         name: 'deny-default'
         properties: {
-          priority: 120
+          priority: 200
           protocol: '*'
           access: 'Deny'
           direction: 'Inbound'
@@ -432,9 +472,40 @@ module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
     location: region
     securityRules: [
       {
+        name: 'allow-inbound-ssh'
+        properties: {
+          priority: 100
+          protocol: '*'
+          access: 'Deny'
+          direction: 'Inbound'
+          sourceAddressPrefix: hubVnetAddressSpace
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRanges: [
+            '22'
+          ]
+        }
+      }   
+      {
+        name: 'allow-inbound-web'
+        properties: {
+          priority: 110
+          protocol: '*'
+          access: 'Deny'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRanges: [
+            '80'
+            '443'
+          ]
+        }
+      }
+      {
         name: 'deny-inbound-default'
         properties: {
-          priority: 120
+          priority: 200
           protocol: '*'
           access: 'Deny'
           direction: 'Inbound'
@@ -896,6 +967,24 @@ module applyUdrsForHub 'modules/vnet.bicep' = {
           }
         }
       }
+      {
+        name: 'dns-resolver-outbound'
+        properties: {
+          addressPrefix: hubDnsResolverOutboundSubnetAddressSpace
+          networkSecurityGroup: { 
+            id: hubDnsNsg.outputs.id 
+          }
+          privateEndpointNetworkPolicies: 'Enabled'
+          delegations: [
+            {
+              name: 'dns-resolver'
+              properties: { 
+                serviceName: 'Microsoft.Network/dnsResolvers' 
+              }
+            }
+          ]
+        }
+      }
     ]
   }
 }
@@ -919,5 +1008,53 @@ module dnsServer 'modules/virtualMachine.bicep' = {
     vmName: 'contoso-dns01'
     vmSize: 'Standard_B2ms'
     initScriptBase64: loadFileAsBase64('dnsserver.yml')
+  }
+}
+
+
+// Private DNS Resolver
+module dnsResolver 'modules/dnsResolver.bicep' = {
+  name: 'dns-resolver'
+  scope: resourceGroup(netrg.name)
+  dependsOn: [
+    applyUdrsForHub
+  ]
+  params: {
+    name: 'dns-resolver-hub'
+    location: region
+    vnetId: hubVnet.outputs.id
+    outboundEndpointName: 'dns-resolver-hub-outbound'
+    outboundSubnetName: 'dns-resolver-outbound'
+  }
+}
+
+// Forwarding ruleset for contoso.com
+module contosoForwardingRuleset 'modules/dnsForwardingRuleset.bicep' = {
+  name: 'dns-forward-ruleset-contoso'
+  scope: resourceGroup(netrg.name)
+  params: {
+    name: 'dns-forward-ruleset'
+    location: region
+    outEndpointIds: [
+      dnsResolver.outputs.outboundEndpointId
+    ]
+    vnetResolverLinks: [
+      {
+        name: hubVnet.outputs.name
+        vnetId: hubVnet.outputs.id
+      }
+      {
+        name: spokeVnet.outputs.name
+        vnetId: spokeVnet.outputs.id
+      }
+    ]
+    forwardingRuleName: 'contoso-com'
+    forwardinRuleDomainName: 'contoso.com.'
+    forwardingRuleTargetDnsServers: [
+      {
+        ipaddress: '10.10.0.132'
+        port: 53
+      }
+    ]
   }
 }
