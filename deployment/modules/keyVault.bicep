@@ -1,5 +1,6 @@
+param enableSoftDelete bool
 param location string
-param orgPrefix string
+param resourceGroupNameNetwork string
 param resourcePrefix string
 param tenantId string
 param timeStamp string
@@ -15,7 +16,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
     }
     tenantId: tenantId
     accessPolicies: []
-    enableSoftDelete: false
+    enableSoftDelete: enableSoftDelete
     enableRbacAuthorization: true
     networkAcls: {
       bypass: 'AzureServices'
@@ -31,7 +32,7 @@ module privateEndpoint 'privateendpoint.bicep' = {
     privateEndpointName: '${resourcePrefix}-pe-kv'
     serviceResourceId: keyVault.id
     dnsZoneName: 'privatelink.azurewebsites.net'
-    resourceGroupNameNetwork: '${orgPrefix}-network-rg'
+    resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetName
     subnetName: 'privateEndpoints'
     groupId: 'vault'

@@ -33,7 +33,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2022-07-01' = {
         osType: 'Linux'
       }
     ]
-    nodeResourceGroup: '${resourcePrefix}-aks-rg'
+    nodeResourceGroup: '${resourcePrefix}-aks-node'
     linuxProfile: {
       adminUsername: linuxAdminUsername
       ssh: {

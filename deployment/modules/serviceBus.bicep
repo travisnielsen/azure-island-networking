@@ -1,6 +1,6 @@
 param location string
-param orgPrefix string
 param queueNames array
+param resourceGroupNameNetwork string
 param resourcePrefix string
 param timeStamp string
 param vnetName string
@@ -37,7 +37,7 @@ module privateEndpoint 'privateendpoint.bicep' = {
     privateEndpointName: '${resourcePrefix}-pe-sbns'
     serviceResourceId: serviceBus.id
     dnsZoneName: 'privatelink.azurewebsites.net'
-    resourceGroupNameNetwork: '${orgPrefix}-network-rg'
+    resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetName
     subnetName: 'privateEndpoints'
     groupId: 'namespace'

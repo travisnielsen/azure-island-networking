@@ -1,6 +1,6 @@
 param eventHubNames array
 param location string
-param orgPrefix string
+param resourceGroupNameNetwork string
 param resourcePrefix string
 param timeStamp string
 param vnetName string
@@ -34,7 +34,7 @@ module privateEndpoint 'privateendpoint.bicep' = {
     privateEndpointName: '${resourcePrefix}-pe-ehns'
     serviceResourceId: eventHubNameSpace.id
     dnsZoneName: 'privatelink.azurewebsites.net'
-    resourceGroupNameNetwork: '${orgPrefix}-network-rg'
+    resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetName
     subnetName: 'privateEndpoints'
     groupId: 'namespace'
