@@ -1,5 +1,5 @@
 param location string
-param orgPrefix string
+param resourceGroupNameNetwork string
 param resourcePrefix string
 param tenantId string
 param timeStamp string
@@ -28,10 +28,10 @@ module privateEndpoint 'privateendpoint.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-pe-kv'
   params: {
     location: location
-    privateEndpointName: '${resourcePrefix}-pe-kv'
+    privateEndpointName: '${resourcePrefix}-kv'
     serviceResourceId: keyVault.id
     dnsZoneName: 'privatelink.azurewebsites.net'
-    resourceGroupNameNetwork: '${orgPrefix}-network-rg'
+    resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetName
     subnetName: 'privateEndpoints'
     groupId: 'vault'

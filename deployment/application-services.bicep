@@ -6,8 +6,9 @@ param location string = resourceGroup().location
 param zoneRedundant bool = false
 
 var resourcePrefix = '${orgPrefix}-${appPrefix}-${regionCode}'
-var workloadVnetName = '${orgPrefix}-vnet-${appPrefix}'
+var workloadVnetName = '${orgPrefix}-${appPrefix}'
 var tenantId = subscription().tenantId
+var resourceGroupNameNetwork = '${orgPrefix}-network'
 
 var functionApps = [
   {
@@ -41,13 +42,12 @@ var entities = [
 /*
 // TODO - Refactor to parameterize vnet name
 // TODO - This is all jacked up around managed identities
-var foo = '/subscriptions/${subscription().subscriptionId}/resourceGroups/${orgPrefix}-network-rg/providers/Microsoft.Network/virtualNetworks/${appPrefix}-vnet/subnets/aks'
 module aks 'modules/aks.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-aks'
   params: {
     location: location
     resourcePrefix: resourcePrefix
-    subnetId: foo
+    subnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${orgPrefix}-network/providers/Microsoft.Network/virtualNetworks/${appPrefix}-vnet/subnets/aks'
   }
 }
 */
@@ -56,7 +56,7 @@ module keyVault 'Modules/keyVault.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-kv'
   params: {
     location: location
-    orgPrefix: orgPrefix
+    resourceGroupNameNetwork: resourceGroupNameNetwork
     resourcePrefix: resourcePrefix
     tenantId: tenantId
     timeStamp: timeStamp
@@ -77,7 +77,7 @@ module eventHub 'Modules/eventHub.bicep' = {
   params: {
     eventHubNames: entities
     location: location
-    orgPrefix: orgPrefix
+    resourceGroupNameNetwork: resourceGroupNameNetwork
     resourcePrefix: resourcePrefix
     timeStamp: timeStamp
     vnetName: workloadVnetName
@@ -89,7 +89,7 @@ module serviceBus 'Modules/serviceBus.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-serviceBus'
   params: {
     location: location
-    orgPrefix: orgPrefix
+    resourceGroupNameNetwork: resourceGroupNameNetwork
     queueNames: entities
     resourcePrefix: resourcePrefix
     timeStamp: timeStamp
@@ -98,15 +98,18 @@ module serviceBus 'Modules/serviceBus.bicep' = {
   }
 }
 
-/*
 module containerRegistry 'Modules/containerRegistry.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-acr'
   params: {
     location: location
+    resourceGroupNameNetwork: resourceGroupNameNetwork
     resourcePrefix: resourcePrefix
+    timeStamp: timeStamp
+    vnetName: workloadVnetName
   }
 }
 
+/*
 module cosmos 'Modules/cosmos.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-cosmos'
   params: {

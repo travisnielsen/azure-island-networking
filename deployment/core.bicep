@@ -63,7 +63,7 @@ module hubVnet 'modules/vnet.bicep' = {
   name: 'hub-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${orgPrefix}-vnet-hub'
+    vnetName: '${orgPrefix}-hub'
     location: region
     addressSpaces: [ 
       hubVnetAddressSpace 
@@ -98,7 +98,7 @@ module bridgeVnet 'modules/vnet.bicep' = {
   name: 'bridge-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${orgPrefix}-vnet-bridge'
+    vnetName: '${orgPrefix}-bridge'
     location: region
     addressSpaces: [ 
       bridgeVnetAddressSpace 
@@ -147,7 +147,7 @@ module spokeVnet 'modules/vnet.bicep' = {
   name: 'spoke-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${orgPrefix}-vnet-spoke'
+    vnetName: '${orgPrefix}-spoke'
     location: region
     addressSpaces: [
       spokeVnetAddressSpace 

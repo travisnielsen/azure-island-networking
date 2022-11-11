@@ -18,11 +18,11 @@ param tags object = {
 }
 
 resource networkRg 'Microsoft.Resources/resourceGroups@2020-06-01' existing = {
-  name: '${orgPrefix}-network-rg'
+  name: '${orgPrefix}-network'
 }
 
 resource workloadArg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${orgPrefix}-${appPrefix}-rg'
+  name: '${orgPrefix}-${appPrefix}'
   location: region
   tags: tags
 }
@@ -39,7 +39,7 @@ module vnet 'modules/vnet.bicep' = {
   name: '${appPrefix}-vnet'
   scope: resourceGroup(networkRg.name)
   params: {
-    vnetName: '${orgPrefix}-vnet-${appPrefix}'
+    vnetName: '${orgPrefix}-${appPrefix}'
     location: region
     addressSpaces: [
       islandVnetAddressSpace
