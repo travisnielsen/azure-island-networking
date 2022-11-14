@@ -8,6 +8,12 @@ param zoneRedundant bool = false
 @description('The full prefix is the combination of the org prefix and app prefix and cannot exceed 16 characters in order to avoid deployment failures with certain PaaS resources such as storage or key vault')
 param fullPrefix string = '${orgPrefix}-${appPrefix}'
 
+param utilVmAdminUserName string = 'vmadmin'
+@secure()
+param utilVmAdminPwd string
+param utilVmSubnetName string = 'util'
+
+
 var resourcePrefix = '${fullPrefix}-${regionCode}'
 var workloadVnetName = fullPrefix
 var tenantId = subscription().tenantId
@@ -139,3 +145,19 @@ module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCo
     monitoring
   ]
 }]
+
+// utility server for traffic testing
+module webServer 'modules/virtualMachine.bicep' = {
+  name: 'util-server-consoso-com'
+  params: {
+    adminUserName: utilVmAdminUserName
+    adminPassword: utilVmAdminPwd
+    networkResourceGroupName: resourceGroupNameNetwork
+    location: location
+    vnetName: workloadVnetName
+    subnetName: utilVmSubnetName
+    os: 'linux'
+    vmName: '${resourcePrefix}-util01'
+    vmSize: 'Standard_B2ms'
+  }
+}

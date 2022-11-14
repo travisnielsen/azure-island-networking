@@ -60,6 +60,29 @@ resource devopsrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   tags: tags
 }
 
+// Log Analytics
+module logAnalytics 'modules/loganalytics.bicep' = {
+  name: 'log-analytics'
+  scope: resourceGroup(netrg.name)
+  params: {
+    location: region
+    name: netrg.name
+  }
+}
+
+// Storage for NSG flow logs
+module nsgFlowLogStorage 'modules/storage.bicep' = {
+  name: 'nsg-flowlog-storage'
+  scope: resourceGroup(netrg.name)
+  params: {
+    location: region
+    resourcePrefix: orgPrefix
+    storageAccountNameSuffix: 'flowlogs'
+    storageSkuName: 'Standard_LRS'
+  }
+}
+
+
 module hubVnet 'modules/vnet.bicep' = {
   name: 'hub-vnet'
   scope: resourceGroup(netrg.name)
@@ -268,19 +291,7 @@ module hubDnsNsg 'modules/nsg.bicep' = {
           ] 
         } 
       }
-      {
-        name: 'deny-default'
-        properties: {
-          priority: 200
-          protocol: '*'
-          access: 'Deny'
-          direction: 'Inbound'
-          sourceAddressPrefix: '*'
-          sourcePortRange: '*'
-          destinationAddressPrefix: '*'
-          destinationPortRange: '*'
-        }
-      }
+
       /* Internet egress will be forced through Azure Firewall. Deny at the NSG level supercedes UDR flow 
       {
         name: 'deny-internet'
@@ -502,19 +513,6 @@ module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
           ]
         }
       }
-      {
-        name: 'deny-inbound-default'
-        properties: {
-          priority: 200
-          protocol: '*'
-          access: 'Deny'
-          direction: 'Inbound'
-          sourceAddressPrefix: '*'
-          sourcePortRange: '*'
-          destinationAddressPrefix: '*'
-          destinationPortRange: '*'
-        }
-      }
 
       // Internet egress will be forced through Azure Fireall. Deny at the NSG level supercedes UDR flow
     ]
@@ -655,6 +653,50 @@ module bridgeAzFw 'modules/azfw.bicep' = {
     fireWallSubnetName: 'AzureFirewallSubnet'
     location: region
     hubVnetName: bridgeVnet.outputs.name
+    networkRules: [
+      {
+        name: 'island-networking-config'
+        properties: {
+          action: { type: 'Allow' }
+          priority: 100
+          rules: [
+            {
+              description: 'Allow outbound web traffic'
+              name: 'allow-outbound-all'
+              protocols: [ 
+                'TCP' 
+              ]
+              sourceAddresses: [
+                '192.160.0.0/16'
+              ]
+              destinationAddresses: [ 
+                '*'
+              ]
+              destinationPorts: [ 
+                '80'
+                '443'
+              ]
+            }
+            {
+              description: 'Allow Island to Corp'
+              name: 'island-to-corp'
+              protocols: [ 
+                'TCP'
+              ]
+              sourceAddresses: [
+                '192.160.0.0/16'
+              ]
+              destinationAddresses: [ 
+                '10.0.0.0/8'
+              ]
+              destinationPorts: [ 
+                '*'
+              ]
+            }
+          ]
+        }
+      }
+    ]
   }
 }
 
@@ -1058,3 +1100,7 @@ module contosoForwardingRuleset 'modules/dnsForwardingRuleset.bicep' = {
     ]
   }
 }
+
+
+
+ 

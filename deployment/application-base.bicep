@@ -36,8 +36,8 @@ resource bridgeVnet 'Microsoft.Network/virtualNetworks@2022-05-01' existing = {
   scope: resourceGroup(networkRg.name)
 }
 
-resource hubAzFw 'Microsoft.Network/azureFirewalls@2022-05-01' existing = {
-  name: '${orgPrefix}-hub-azfw'
+resource bridgeAzFw 'Microsoft.Network/azureFirewalls@2022-05-01' existing = {
+  name: '${orgPrefix}-bridge-azfw'
   scope: resourceGroup(networkRg.name)
 }
 
@@ -184,7 +184,7 @@ module route 'modules/udr.bicep' = {
   params: {
     name: '${fullPrefix}-udr'
     location: region
-    azFwlIp: hubAzFw.properties.ipConfigurations[0].properties.privateIPAddress
+    azFwlIp: bridgeAzFw.properties.ipConfigurations[0].properties.privateIPAddress
   }
 }
 
@@ -222,9 +222,25 @@ module utilNsg 'modules/nsg.bicep' = {
     location: region
     securityRules: [
       {
+        name: 'allow-remote-vm-connections'
+        properties: {
+          priority: 100
+          protocol: '*'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRanges: [
+            '22'
+            '3389'
+          ] 
+        }
+      }
+      {
         name: 'deny-inbound-default'
         properties: {
-          priority: 120
+          priority: 200
           protocol: '*'
           access: 'Deny'
           direction: 'Inbound'
