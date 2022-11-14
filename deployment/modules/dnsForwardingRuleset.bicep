@@ -23,12 +23,12 @@ resource ruleset 'Microsoft.Network/dnsForwardingRulesets@2022-07-01' = {
   }
 }
 
-resource resolverLink 'Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks@2022-07-01' = [for resolverLink in vnetResolverLinks: {
+resource resolverLinks 'Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks@2022-07-01' = [for link in vnetResolverLinks: {
   parent: ruleset
-  name: resolverLink.name
+  name: link.name
   properties: {
     virtualNetwork: {
-      id: resolverLink.vnetId
+      id: link.vnetId
     }
   }
 }]

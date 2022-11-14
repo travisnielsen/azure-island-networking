@@ -31,6 +31,11 @@ resource workloadRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   tags: tags
 }
 
+resource bridgeVnet 'Microsoft.Network/virtualNetworks@2022-05-01' existing = {
+  name: '${orgPrefix}-bridge'
+  scope: resourceGroup(networkRg.name)
+}
+
 resource hubAzFw 'Microsoft.Network/azureFirewalls@2022-05-01' existing = {
   name: '${orgPrefix}-hub-azfw'
   scope: resourceGroup(networkRg.name)
@@ -333,6 +338,26 @@ module sbConsumerNsg 'modules/nsg.bicep' = {
   }
 }
 
+module vnetPeerIslandToBridge 'modules/peering.bicep' = {
+  name: 'island-to-bridge-peering'
+  scope: resourceGroup(networkRg.name)
+  params: {
+    localVnetName: vnet.outputs.name
+    remoteVnetName: bridgeVnet.name
+    remoteVnetId: bridgeVnet.id
+  }
+}
+
+module vnetPeerBridgeToIsland 'modules/peering.bicep' = {
+  name: 'bridge-to-island-peering'
+  scope: resourceGroup(networkRg.name)
+  params: {
+    localVnetName: bridgeVnet.name
+    remoteVnetName: vnet.outputs.name
+    remoteVnetId: vnet.outputs.id
+  }
+}
+
 module acrPullMi 'modules/managedIdentity.bicep' = {
   name: '${appPrefix}-mi-acrPull'
   scope: resourceGroup(workloadRg.name)
@@ -341,5 +366,16 @@ module acrPullMi 'modules/managedIdentity.bicep' = {
     resourcePrefix: fullPrefix
     role: 'acrPull'
     tags: tags
+  }
+}
+
+// Link to VNET to the Private DNS resolver
+module resolverLink 'modules/dnsResolverLink.bicep' = {
+  name: 'dns-resolver-link'
+  scope: resourceGroup(networkRg.name)
+  params: {
+    forwardingRulesetName: 'dns-forward-ruleset-contoso'
+    linkName: '${vnet.outputs.name}-link'
+    vnetId: vnet.outputs.id
   }
 }
