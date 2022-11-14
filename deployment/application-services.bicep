@@ -109,15 +109,16 @@ module containerRegistry 'Modules/containerRegistry.bicep' = {
   }
 }
 
-/*
 module cosmos 'Modules/cosmos.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-cosmos'
   params: {
     location: location
+    resourceGroupNameNetwork: resourceGroupNameNetwork
     resourcePrefix: resourcePrefix
+    timeStamp: timeStamp
+    vnetName: workloadVnetName
   }
 }
-*/
 
 var functionAppsCount = length(functionApps)
 module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCount): {
