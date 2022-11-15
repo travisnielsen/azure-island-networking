@@ -369,6 +369,17 @@ module acrPullMi 'modules/managedIdentity.bicep' = {
   }
 }
 
+module keyVaultSecretUserMi 'modules/managedIdentity.bicep' = {
+  name: '${appPrefix}-mi-kvSecrets'
+  scope: resourceGroup(workloadRg.name)
+  params: {
+    location: region
+    resourcePrefix: fullPrefix
+    role: 'kvSecrets'
+    tags: tags
+  }
+}
+
 // Link to VNET to the Private DNS resolver
 module resolverLink 'modules/dnsResolverLink.bicep' = {
   name: 'dns-resolver-link'

@@ -21,16 +21,34 @@ var functionApps = [
     functionAppNameSuffix: 'ehConsumer'
     storageAccountNameSuffix: 'ehconsumer'
     dockerImageAndTag: 'cdcehconsumer:latest'
+    appSettings: [
+      {
+        name: 'BaseWeatherUri'
+        value: 'https://www.google.com'
+      }
+    ]
   }
   {
     functionAppNameSuffix: 'sbConsumer'
     storageAccountNameSuffix: 'sbconsumer'
     dockerImageAndTag: 'cdcsbconsumer:latest'
+    appSettings: [
+      {
+        name: 'BaseWeatherUri'
+        value: 'https://www.google.com'
+      }
+    ]
   }
   {
     functionAppNameSuffix: 'ehProducer'
     storageAccountNameSuffix: 'ehproducer'
     dockerImageAndTag: 'cdcehproducer:latest'
+    appSettings: [
+      {
+        name: 'BaseWeatherUri'
+        value: 'https://www.google.com'
+      }
+    ]
   }
 ]
 
@@ -51,6 +69,15 @@ module aks 'modules/aks.bicep' = {
 }
 */
 
+module monitoring 'Modules/monitoring.bicep' = {
+  name: '${timeStamp}-${resourcePrefix}-monitoring'
+  params: {
+    location: location
+    resourcePrefix: resourcePrefix
+  }
+}
+
+
 module keyVault 'Modules/keyVault.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-kv'
   params: {
@@ -61,14 +88,6 @@ module keyVault 'Modules/keyVault.bicep' = {
     tenantId: tenantId
     timeStamp: timeStamp
     vnetName: workloadVnetName
-  }
-}
-
-module monitoring 'Modules/monitoring.bicep' = {
-  name: '${timeStamp}-${resourcePrefix}-monitoring'
-  params: {
-    location: location
-    resourcePrefix: resourcePrefix
   }
 }
 
@@ -126,6 +145,7 @@ module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCo
   params: {
     dockerImageAndTag: functionApps[i].dockerImageAndTag
     functionAppNameSuffix: functionApps[i].functionAppNameSuffix
+    functionSpecificAppSettings: functionApps[i].appSettings
     functionSubnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroupNameNetwork}/providers/Microsoft.Network/virtualNetworks/${workloadVnetName}/subnets/${functionApps[i].functionAppNameSuffix}'
     location: location
     resourceGroupNameNetwork: resourceGroupNameNetwork

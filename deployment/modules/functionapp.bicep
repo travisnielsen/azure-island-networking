@@ -1,5 +1,6 @@
 param dockerImageAndTag string
 param functionAppNameSuffix string
+param functionSpecificAppSettings array
 param functionSubnetId string
 param location string
 param resourceGroupNameNetwork string
@@ -10,7 +11,15 @@ param timeStamp string
 param vnetName string
 param zoneRedundant bool
 
-// TODO: Design for networking limits.  Example, DNS zones
+var functionAppName = '${resourcePrefix}-fa-${functionAppNameSuffix}'
+
+resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
+  name: '${resourcePrefix}-ai'
+}
+
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-09-01' existing = {
+  name: format('{0}cr', replace(resourcePrefix, '-', ''))
+}
 
 module storage 'storage.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-${functionAppNameSuffix}-storage'
@@ -35,8 +44,47 @@ module asp 'appServicePlan.bicep' = {
   }
 }
 
+var baseAppSettings = [
+  {
+    name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+    value: 'InstrumentationKey=${appInsights.properties.InstrumentationKey}'
+  }
+  {
+    name: 'AzureWebJobsStorage__accountName'
+    value: storage.outputs.storageAccountName
+  }
+  {
+    name: 'FUNCTIONS_EXTENSION_VERSION'
+    value: '~4'
+  }
+  {
+    name: 'FUNCTIONS_WORKER_RUNTIME'
+    value: 'dotnet'
+  }
+  {
+    name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
+    value: storage.outputs.connString
+  }
+  {
+    name: 'WEBSITE_CONTENTSHARE'
+    value: '${toLower(functionAppName)}-${substring(uniqueString(functionAppName), 0, 4)}'
+  }
+  {
+    name: 'DOCKER_REGISTRY_SERVER_URL'
+    value: 'https://${containerRegistry.name}.azurecr.io'
+  }
+  {
+    name: 'DOCKER_ENABLE_CI'
+    value: 'true'
+  }
+  {
+    name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
+    value: 'false'
+  }
+]
+
 resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
-  name: '${resourcePrefix}-fa-${functionAppNameSuffix}'
+  name: functionAppName
   location: location
   kind: 'functionapp,linux,container'
   properties: {
@@ -46,6 +94,7 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
     siteConfig: {
       linuxFxVersion: 'DOCKER|${dockerImageAndTag}'
       vnetRouteAllEnabled: true
+      appSettings: concat(baseAppSettings, functionSpecificAppSettings)
     }
   }
 

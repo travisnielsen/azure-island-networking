@@ -15,7 +15,19 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
+    networkAcls: {
+      bypass: 'AzureServices'
+      virtualNetworkRules: [
+        {
+          id: '/subscriptions/7029af60-98ff-4083-96c0-695eba78c91b/resourceGroups/contoso-network/providers/Microsoft.Network/virtualNetworks/contoso-app1/subnets/ehProducer'
+          action: 'Allow'
+        }
+      ]
+      ipRules: []
+      // defaultAction: 'Deny' TODO: set this in a post provision script
+    }
   }
 }
 
 output storageAccountName string = finalStorageAccountName
+output connString string = 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
