@@ -1,5 +1,6 @@
 param location string
 param resourcePrefix string
+@description('Use: Standard_LRS')
 param storageSkuName string
 param storageAccountNameSuffix string
 var storageResourcePrefix = format('{0}sa', replace(resourcePrefix, '-', ''))

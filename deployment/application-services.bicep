@@ -160,3 +160,4 @@ module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCo
     monitoring
   ]
 }]
+

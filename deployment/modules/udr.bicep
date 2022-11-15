@@ -1,5 +1,5 @@
 param name string
-param azFwlIp string
+param routes array
 param location string = resourceGroup().location
 
 resource route 'Microsoft.Network/routeTables@2020-06-01' = {
@@ -7,16 +7,7 @@ resource route 'Microsoft.Network/routeTables@2020-06-01' = {
   location: location
   properties: {
     disableBgpRoutePropagation: false
-    routes: [
-      {
-        name: 'DefaultRoute'
-        properties: {
-          addressPrefix: '0.0.0.0/0'
-          nextHopType: 'VirtualAppliance'
-          nextHopIpAddress: azFwlIp
-        }
-      }
-    ]
+    routes: routes
   }
 }
 

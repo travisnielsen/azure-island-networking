@@ -10,6 +10,12 @@ switch ($location) {
     'eastus' {
         $regionCode = 'eus'
     }
+    'eastus2' {
+        $regionCode = 'eus2'
+    }
+    'centralus' {
+        $regionCode = 'cus'
+    }
     'westus' {
         $regionCode = 'wus'
     }

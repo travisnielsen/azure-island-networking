@@ -5,7 +5,7 @@ param remoteVnetId string
 resource peer 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-06-01' = {
   name: '${localVnetName}/to-${remoteVnetName}'
   properties: {
-    allowForwardedTraffic: false
+    allowForwardedTraffic: true
     allowGatewayTransit: false
     allowVirtualNetworkAccess: true
     useRemoteGateways: false

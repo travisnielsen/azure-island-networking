@@ -39,7 +39,7 @@ var linuxConfiguration = {
 var subscriptionId = subscription().subscriptionId
 var nicName = '${vmName}-nic'
 
-resource nInter 'Microsoft.Network/networkInterfaces@2020-06-01' = {
+resource nic 'Microsoft.Network/networkInterfaces@2022-05-01' = {
   name: nicName
   location: location
   properties: {
@@ -57,7 +57,7 @@ resource nInter 'Microsoft.Network/networkInterfaces@2020-06-01' = {
   }
 }
 
-resource vm 'Microsoft.Compute/virtualMachines@2020-06-01' = {
+resource vm 'Microsoft.Compute/virtualMachines@2022-08-01' = {
   name: vmName
   location: location
   properties: {
@@ -90,7 +90,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2020-06-01' = {
     networkProfile: {
       networkInterfaces: [
         {
-          id: nInter.id
+          id: nic.id
         }
       ]
     }
@@ -138,4 +138,5 @@ resource autoShutdown 'Microsoft.DevTestLab/schedules@2016-05-15' = {
   }
 }
 
-output vmId string = vm.id
+output id string = vm.id
+output privateIPAddress string = nic.properties.ipConfigurations[0].properties.privateIPAddress

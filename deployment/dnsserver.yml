@@ -21,7 +21,7 @@ write_files:
           trusted_clients;
         };
         allow-query-cache {
-          trusted-clients;
+          trusted_clients;
         };
       };
     path: /etc/bind/named.conf.options
