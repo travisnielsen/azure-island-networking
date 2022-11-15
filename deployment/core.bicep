@@ -79,18 +79,6 @@ module logAnalytics 'modules/loganalytics.bicep' = {
   }
 }
 
-// Storage for NSG flow logs
-module nsgFlowLogStorage 'modules/storage.bicep' = {
-  name: 'nsg-flowlog-storage'
-  scope: resourceGroup(monitoringRg.name)
-  params: {
-    location: region
-    resourcePrefix: uniqueString(monitoringRg.name)
-    storageAccountNameSuffix: 'flowlogs'
-    storageSkuName: 'Standard_LRS'
-  }
-}
-
 module hubVnet 'modules/vnet.bicep' = {
   name: 'hub-vnet'
   scope: resourceGroup(netrg.name)
