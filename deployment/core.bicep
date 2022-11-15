@@ -11,17 +11,19 @@ targetScope = 'subscription'
 ])
 param region string
 param orgPrefix string
-param tags object = {
-  project: 'AzIslandNetworking'
-  component: 'core'
-}
+param appPrefix string
+param regionCode string
+
+param tags object = { }
+
+var resourcePrefix = '${orgPrefix}-${appPrefix}-${regionCode}'
 
 // DNS Server
 // DevOps Build Server
-param dnsVmAdminUserName string = 'dnsadmin'
+param vmAdminUserName string = 'vmadmin'
 
 @secure()
-param dnsVmAdminPwd string
+param vmAdminPwd string
 
 // HUB VNET IP SETTINGS
 param hubVnetAddressSpace string = '10.10.0.0/20'
@@ -42,52 +44,58 @@ param spokeVnetVmAddressSpace string = '10.10.32.0/25'                // 123 add
 param spokeVnetPrivateLinkAddressSpace string = '10.10.32.128/25'     // 123 addresses - 10.10.32.128 - 10.10.32.255
 param spokeVnetIntegrationSubnetAddressSpace string = '10.10.33.0/25' // 123 addresses - 10.10.33.0 - 10.10.33.127
 
+// ISLAND NEtworks
+param islandNetworkAddressSpace string = '192.168.0.0/16'             // used by AZ FW for SNAT rules
+
 resource netrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${orgPrefix}-network'
+  name: '${orgPrefix}-${appPrefix}-network'
   location: region
   tags: tags
 }
 
-resource iaasrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${orgPrefix}-iaas'
+resource dnsrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: '${orgPrefix}-${appPrefix}-dns'
   location: region
   tags: tags
 }
 
-resource devopsrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${orgPrefix}-devops'
+resource utilRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: '${orgPrefix}-${appPrefix}-util'
   location: region
-  tags: tags
+}
+
+resource monitoringRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: '${orgPrefix}-${appPrefix}-monitoring'
+  location: region
 }
 
 // Log Analytics
 module logAnalytics 'modules/loganalytics.bicep' = {
   name: 'log-analytics'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(monitoringRg.name)
   params: {
     location: region
-    name: netrg.name
+    name: '${resourcePrefix}-network'
   }
 }
 
 // Storage for NSG flow logs
 module nsgFlowLogStorage 'modules/storage.bicep' = {
   name: 'nsg-flowlog-storage'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(monitoringRg.name)
   params: {
     location: region
-    resourcePrefix: orgPrefix
+    resourcePrefix: uniqueString(monitoringRg.name)
     storageAccountNameSuffix: 'flowlogs'
     storageSkuName: 'Standard_LRS'
   }
 }
 
-
 module hubVnet 'modules/vnet.bicep' = {
   name: 'hub-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${orgPrefix}-hub'
+    vnetName: '${resourcePrefix}-hub'
     location: region
     addressSpaces: [ 
       hubVnetAddressSpace 
@@ -132,8 +140,6 @@ module hubVnet 'modules/vnet.bicep' = {
           ]
         }
       }
-
-
     ]
   }
 }
@@ -142,7 +148,7 @@ module bridgeVnet 'modules/vnet.bicep' = {
   name: 'bridge-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${orgPrefix}-bridge'
+    vnetName: '${resourcePrefix}-bridge'
     location: region
     addressSpaces: [ 
       bridgeVnetAddressSpace 
@@ -152,6 +158,9 @@ module bridgeVnet 'modules/vnet.bicep' = {
         name: 'AzureFirewallSubnet'
         properties: {
           addressPrefix: bridgeFirewallSubnetAddressSpace
+          routeTable: {
+            id: bridgeRoute.outputs.id
+          }
         }
       }
       {
@@ -191,7 +200,7 @@ module spokeVnet 'modules/vnet.bicep' = {
   name: 'spoke-vnet'
   scope: resourceGroup(netrg.name)
   params: {
-    vnetName: '${orgPrefix}-spoke'
+    vnetName: '${resourcePrefix}-spoke'
     location: region
     addressSpaces: [
       spokeVnetAddressSpace 
@@ -250,10 +259,10 @@ module spokeVnet 'modules/vnet.bicep' = {
 
 // NSG for DNS subnet (Linux server running BIND)
 module hubDnsNsg 'modules/nsg.bicep' = {
-  name: '${orgPrefix}-hub-dns'
+  name: '${resourcePrefix}-hub-dns'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${orgPrefix}-hub-dns'
+    name: '${resourcePrefix}-hub-dns'
     location: region
     securityRules: [
       {
@@ -280,7 +289,6 @@ module hubDnsNsg 'modules/nsg.bicep' = {
           protocol: '*'
           access: 'Allow'
           sourceAddressPrefixes: [
-            bridgeBastionSubnetAddressSpace
             hubVnetAddressSpace
             spokeVnetAddressSpace
           ]
@@ -313,13 +321,13 @@ module hubDnsNsg 'modules/nsg.bicep' = {
 
 // NSG for Bastion subnet
 module bastionNsg 'modules/nsg.bicep' = {
-  name: '${orgPrefix}-bridge-bastion'
+  name: '${resourcePrefix}-bridge-bastion'
   scope: resourceGroup(netrg.name)
   dependsOn: [
     hubDnsNsg
   ]
   params: {
-    name: '${orgPrefix}-bridge-bastion'
+    name: '${resourcePrefix}-bridge-bastion'
     location: region
     securityRules: [
       // SEE: https://docs.microsoft.com/en-us/azure/bastion/bastion-nsg#apply
@@ -410,10 +418,10 @@ module bastionNsg 'modules/nsg.bicep' = {
 
 // NSG for Azure services configured with Private Link (bridge)
 module bridgePrivateLinkNsg 'modules/nsg.bicep' = {
-  name: '${orgPrefix}-bridge-privatelinks'
+  name: '${resourcePrefix}-bridge-privatelinks'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${orgPrefix}-bridge-privatelinks'
+    name: '${resourcePrefix}-bridge-privatelinks'
     location: region
     securityRules: [
       {
@@ -448,13 +456,13 @@ module bridgePrivateLinkNsg 'modules/nsg.bicep' = {
 
 // NSG for App Gateway subnet (private build servers)
 module bridgeAppGatewayNsg 'modules/nsg.bicep' = {
-  name: '${orgPrefix}-bridge-appgw'
+  name: '${resourcePrefix}-bridge-appgw'
   scope: resourceGroup(netrg.name)
   dependsOn: [
     bastionNsg
   ]
   params: {
-    name: '${orgPrefix}-bridge-appgw'
+    name: '${resourcePrefix}-bridge-appgw'
     location: region
     securityRules: [
       {
@@ -476,10 +484,10 @@ module bridgeAppGatewayNsg 'modules/nsg.bicep' = {
 
 // NSG for Azure Functions subnet
 module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
-  name: '${orgPrefix}-spoke-iaas'
+  name: '${resourcePrefix}-spoke-iaas'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${orgPrefix}-spoke-iaas'
+    name: '${resourcePrefix}-spoke-iaas'
     location: region
     securityRules: [
       {
@@ -487,7 +495,7 @@ module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
         properties: {
           priority: 100
           protocol: '*'
-          access: 'Deny'
+          access: 'Allow'
           direction: 'Inbound'
           sourceAddressPrefix: hubVnetAddressSpace
           sourcePortRange: '*'
@@ -502,9 +510,9 @@ module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
         properties: {
           priority: 110
           protocol: '*'
-          access: 'Deny'
+          access: 'Allow'
           direction: 'Inbound'
-          sourceAddressPrefix: '*'
+          sourceAddressPrefix: hubVnetAddressSpace
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
           destinationPortRanges: [
@@ -521,10 +529,10 @@ module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
 
 // NSG for Azure Functions subnet
 module spokeFuncIntegrationNsg 'modules/nsg.bicep' = {
-  name: '${orgPrefix}-spoke-functions'
+  name: '${resourcePrefix}-spoke-functions'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${orgPrefix}-spoke-functions'
+    name: '${resourcePrefix}-spoke-functions'
     location: region
     securityRules: [
       {
@@ -562,13 +570,13 @@ module spokeFuncIntegrationNsg 'modules/nsg.bicep' = {
 
 // NSG for Azure services configured with Private Link (spoke)
 module spokePrivateLinkNsg 'modules/nsg.bicep' = {
-  name: '${orgPrefix}-spoke-privatelinks'
+  name: '${resourcePrefix}-spoke-privatelinks'
   scope: resourceGroup(netrg.name)
   dependsOn: [
     spokeFuncIntegrationNsg
   ]
   params: {
-    name: '${orgPrefix}-spoke-privatelinks'
+    name: '${resourcePrefix}-spoke-privatelinks'
     location: region
     securityRules: [
       {
@@ -607,10 +615,11 @@ module hubAzFw 'modules/azfw.bicep' = {
   name: 'hub-azfw'
   scope: resourceGroup(netrg.name)
   params: {
-    prefix: '${orgPrefix}-hub'
+    prefix: '${resourcePrefix}-hub'
     fireWallSubnetName: 'AzureFirewallSubnet'
     location: region
     hubVnetName: hubVnet.outputs.name
+    privateTrafficPrefixes: bridgeVnetAddressSpace
     networkRules: [
       {
         name: 'core-rules'
@@ -620,14 +629,13 @@ module hubAzFw 'modules/azfw.bicep' = {
           rules: [
             {
               description: 'Allow outbound web traffic'
-              name: 'allow-outbound-all'
+              name: 'corp-to-internet'
               protocols: [ 
                 'TCP' 
               ]
               sourceAddresses: [
-                spokeVnetIntegrationSubnetAddressSpace
-                spokeVnetVmAddressSpace
-                hubDnsSubnetAddressSpace
+                spokeVnetAddressSpace
+                hubVnetAddressSpace
               ]
               destinationAddresses: [ 
                 '*'
@@ -635,6 +643,23 @@ module hubAzFw 'modules/azfw.bicep' = {
               destinationPorts: [ 
                 '80'
                 '443'
+              ]
+            }
+            {
+              description: 'Allow Island to Corp'
+              name: 'bridge-to-spoke'
+              protocols: [ 
+                'TCP'
+                'UDP'
+              ]
+              sourceAddresses: [
+                bridgeVnetAddressSpace
+              ]
+              destinationAddresses: [ 
+                spokeVnetAddressSpace
+              ]
+              destinationPorts: [ 
+                '*'
               ]
             }
           ]
@@ -649,10 +674,11 @@ module bridgeAzFw 'modules/azfw.bicep' = {
   name: 'bridge-azfw'
   scope: resourceGroup(netrg.name)
   params: {
-    prefix: '${orgPrefix}-bridge'
+    prefix: '${resourcePrefix}-bridge'
     fireWallSubnetName: 'AzureFirewallSubnet'
     location: region
     hubVnetName: bridgeVnet.outputs.name
+    privateTrafficPrefixes: islandNetworkAddressSpace
     networkRules: [
       {
         name: 'island-networking-config'
@@ -662,9 +688,9 @@ module bridgeAzFw 'modules/azfw.bicep' = {
           rules: [
             {
               description: 'Allow outbound web traffic'
-              name: 'allow-outbound-all'
+              name: 'island-to-internet'
               protocols: [ 
-                'TCP' 
+                'TCP'
               ]
               sourceAddresses: [
                 '192.160.0.0/16'
@@ -682,9 +708,10 @@ module bridgeAzFw 'modules/azfw.bicep' = {
               name: 'island-to-corp'
               protocols: [ 
                 'TCP'
+                'UDP'
               ]
               sourceAddresses: [
-                '192.160.0.0/16'
+                '192.168.0.0/16'
               ]
               destinationAddresses: [ 
                 '10.0.0.0/8'
@@ -749,11 +776,48 @@ module route 'modules/udr.bicep' = {
   name: 'core-udr'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${orgPrefix}-udr'
+    name: '${resourcePrefix}-egress-udr'
     location: region
-    azFwlIp: hubAzFw.outputs.privateIp
+    routes: [
+      {
+        name: 'InternetRoute'
+        properties: {
+          addressPrefix: '0.0.0.0/0'
+          nextHopType: 'VirtualAppliance'
+          nextHopIpAddress: hubAzFw.outputs.privateIp
+        }
+      }
+    ]
   }
 }
+
+// Force bridge traffic to the hub AZ FW private interface
+module bridgeRoute 'modules/udr.bicep' = {
+  name: 'bridge-udr'
+  scope: resourceGroup(netrg.name)
+  params: {
+    name: '${resourcePrefix}-bridge-udr'
+    location: region
+    routes: [
+      {
+        name: 'island-to-internet'
+        properties: {
+          addressPrefix: '0.0.0.0/0'
+          nextHopType: 'Internet'
+        }
+      }
+      {
+        name: 'island-to-corp-network'
+        properties: {
+          addressPrefix: spokeVnetAddressSpace
+          nextHopType: 'VirtualAppliance'
+          nextHopIpAddress: hubAzFw.outputs.privateIp
+        }
+      }
+    ]
+  }
+}
+
 
 // Bastion
 module bastion 'modules/bastion.bicep' = {
@@ -769,7 +833,7 @@ module bastion 'modules/bastion.bicep' = {
 // Private DNS zone for Azure Web Sites (Functions and Web Apps)
 module privateZoneAzureWebsites 'modules/dnszoneprivate.bicep' = {
   name: 'dns-private-azurewebsites'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   params: {
     zoneName: 'privatelink.azurewebsites.net'
   }
@@ -778,7 +842,7 @@ module privateZoneAzureWebsites 'modules/dnszoneprivate.bicep' = {
 // Link the spoke VNet to the privatelink.azurewebsites.net private zone
 module spokeVnetAzureWebsitesZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-azurewebsites-spokevnet'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneAzureWebsites
   ]
@@ -793,7 +857,7 @@ module spokeVnetAzureWebsitesZoneLink 'modules/dnszonelink.bicep' = {
 // Link the hub VNet to the privatelink.azurewebsites.net private zone
 module hubVnetAzureWebsitesZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-azurewebsites-hubvnet'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneAzureWebsites
   ]
@@ -808,7 +872,7 @@ module hubVnetAzureWebsitesZoneLink 'modules/dnszonelink.bicep' = {
 // Private DNS zone for Azure Blob Storage (ADLS)
 module privateZoneAzureBlobStorage 'modules/dnszoneprivate.bicep' = {
   name: 'dns-private-storage-blob'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   params: {
     zoneName: 'privatelink.blob.${environment().suffixes.storage}'
   }
@@ -817,7 +881,7 @@ module privateZoneAzureBlobStorage 'modules/dnszoneprivate.bicep' = {
 // Link the spoke VNet to the privatelink.blob.core.windows.net private zone
 module spokeVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-blobstorage-spokevnet'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneAzureBlobStorage
   ]
@@ -832,7 +896,7 @@ module spokeVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
 // Link the hub VNet to the privatelink.blob.core.windows.net private zone
 module hubVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-blobstorage-hubvnet'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneAzureBlobStorage
   ]
@@ -847,7 +911,7 @@ module hubVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
 // Private DNS for Azure Data Factory
 module privateZoneAzureDataFactory 'modules/dnszoneprivate.bicep' = {
   name: 'dns-private-datafactory'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   params: {
     zoneName: 'privatelink.datafactory.azure.net'
   }
@@ -856,7 +920,7 @@ module privateZoneAzureDataFactory 'modules/dnszoneprivate.bicep' = {
 // Link the spoke VNet to the privatelink.datafactory.azure.net private zone
 module spokeVnetAzureDataFactoryZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-datafactory-spokevnet'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneAzureDataFactory
   ]
@@ -871,7 +935,7 @@ module spokeVnetAzureDataFactoryZoneLink 'modules/dnszonelink.bicep' = {
 // Link the hub VNet to the privatelink.datafactory.azure.net private zone
 module hubVnetAzureDataFactoryZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-datafactory-hubvnet'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneAzureDataFactory
   ]
@@ -886,7 +950,7 @@ module hubVnetAzureDataFactoryZoneLink 'modules/dnszonelink.bicep' = {
 // Private DNS zone for SQL
 module privateZoneSql 'modules/dnszoneprivate.bicep' = {
   name: 'dns-private-sql'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   params: {
     zoneName: 'privatelink${environment().suffixes.sqlServerHostname}'
   }
@@ -895,7 +959,7 @@ module privateZoneSql 'modules/dnszoneprivate.bicep' = {
 // Link the spoke VNet to the privatelink.database.windows.net private zone
 module spokeVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-sql-spokevnet'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneSql
   ]
@@ -910,7 +974,7 @@ module spokeVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
 // Link the hub VNet to the privatelink.database.windows.net private zone
 module hubVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-sql-hubvnet'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneSql
   ]
@@ -925,7 +989,7 @@ module hubVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
 // Private DNS zone for other Azure services
 module privateZoneAzure 'modules/dnszoneprivate.bicep' = {
   name: 'dns-private-azure'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   params: {
     zoneName: 'privatelink.azure.com'
   }
@@ -936,7 +1000,7 @@ module privateZoneAzure 'modules/dnszoneprivate.bicep' = {
 // Must add CNAME record for 'management.privatelink.azure.com' that points to 'arm-frontdoor-prod.trafficmanager.net'
 module frontdoorcname 'modules/dnscname.bicep' = {
   name: 'frontdoor-cname'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneAzure
   ]
@@ -949,7 +1013,7 @@ module frontdoorcname 'modules/dnscname.bicep' = {
 
 module spokeVnetAzureZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-azure-spokevnet'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneAzure
   ]
@@ -963,7 +1027,7 @@ module spokeVnetAzureZoneLink 'modules/dnszonelink.bicep' = {
 
 module hubVnetAzureZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-azure-hub'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
     privateZoneAzure
   ]
@@ -977,14 +1041,11 @@ module hubVnetAzureZoneLink 'modules/dnszonelink.bicep' = {
 
 
 // TODO: THIS IS A HACK - need to find a better way to apply the UDR to the DNS server subnet
-module applyUdrsForHub 'modules/vnet.bicep' = {
+module applyHubRoutes 'modules/vnet.bicep' = {
   name: 'hub-vnet-update'
   scope: resourceGroup(netrg.name)
-  dependsOn: [
-    hubVnet
-  ]
   params: {
-    vnetName: '${orgPrefix}-hub'
+    vnetName: '${resourcePrefix}-hub'
     location: region
     addressSpaces: [ 
       hubVnetAddressSpace 
@@ -1035,34 +1096,33 @@ module applyUdrsForHub 'modules/vnet.bicep' = {
 // DNS server for contoso.com
 module dnsServer 'modules/virtualMachine.bicep' = {
   name: 'dns-server-consoso-com'
-  scope: resourceGroup(iaasrg.name)
+  scope: resourceGroup(utilRg.name)
   dependsOn: [
-    hubVnet
+    applyHubRoutes
   ]
   params: {
-    adminUserName: dnsVmAdminUserName
-    adminPassword: dnsVmAdminPwd
+    adminUserName: vmAdminUserName
+    adminPassword: vmAdminPwd
     networkResourceGroupName: netrg.name
     location: region
     vnetName: hubVnet.outputs.name
     subnetName: 'dns'
     os: 'linux'
-    vmName: 'contoso-dns01'
+    vmName: '${resourcePrefix}-dns01'
     vmSize: 'Standard_B2ms'
     initScriptBase64: loadFileAsBase64('dnsserver.yml')
   }
 }
 
-
 // Private DNS Resolver
 module dnsResolver 'modules/dnsResolver.bicep' = {
   name: 'dns-resolver'
-  scope: resourceGroup(netrg.name)
+  scope: resourceGroup(dnsrg.name)
   dependsOn: [
-    applyUdrsForHub
+    applyHubRoutes
   ]
   params: {
-    name: 'dns-resolver-hub'
+    name: '${resourcePrefix}-dnsresolver-hub'
     location: region
     vnetId: hubVnet.outputs.id
     outboundEndpointName: 'dns-resolver-hub-outbound'
@@ -1072,35 +1132,60 @@ module dnsResolver 'modules/dnsResolver.bicep' = {
 
 // Forwarding ruleset for contoso.com
 module contosoForwardingRuleset 'modules/dnsForwardingRuleset.bicep' = {
-  name: 'dns-forward-ruleset-contoso'
-  scope: resourceGroup(netrg.name)
+  name: 'dns-forward-ruleset-core'
+  scope: resourceGroup(dnsrg.name)
   params: {
-    name: 'dns-forward-ruleset'
+    name: 'dns-forward-ruleset-contoso'
     location: region
-    outEndpointIds: [
-      dnsResolver.outputs.outboundEndpointId
-    ]
-    vnetResolverLinks: [
-      {
-        name: hubVnet.outputs.name
-        vnetId: hubVnet.outputs.id
-      }
-      {
-        name: spokeVnet.outputs.name
-        vnetId: spokeVnet.outputs.id
-      }
-    ]
+    outEndpointId: dnsResolver.outputs.outboundEndpointId
     forwardingRuleName: 'contoso-com'
     forwardinRuleDomainName: 'contoso.com.'
     forwardingRuleTargetDnsServers: [
       {
-        ipaddress: '10.10.0.132'
+        ipAddress: dnsServer.outputs.privateIPAddress
         port: 53
       }
     ]
   }
 }
 
+// Link to Hub VNET to the Private DNS resolver
+module resolverLinkHub 'modules/dnsResolverLink.bicep' = {
+  name: 'dns-resolver-link-hub'
+  scope: resourceGroup(dnsrg.name)
+  params: {
+    forwardingRulesetName: contosoForwardingRuleset.outputs.ruleSetName
+    linkName: '${hubVnet.outputs.name}-link'
+    vnetId: hubVnet.outputs.id
+  }
+}
+
+// Link to spoke VNET to the Private DNS resolver
+module resolverLinkSpoke 'modules/dnsResolverLink.bicep' = {
+  name: 'dns-resolver-link-spoke'
+  scope: resourceGroup(dnsrg.name)
+  params: {
+    forwardingRulesetName: contosoForwardingRuleset.outputs.ruleSetName
+    linkName: '${spokeVnet.outputs.name}-link'
+    vnetId: spokeVnet.outputs.id
+  }
+}
 
 
- 
+// Test web server hosting http://api.contoso.com
+module webServer 'modules/virtualMachine.bicep' = {
+  name: 'web-server-consoso-com'
+  scope: resourceGroup(utilRg.name)
+  params: {
+    adminUserName: vmAdminUserName
+    adminPassword: vmAdminPwd
+    networkResourceGroupName: netrg.name
+    location: region
+    vnetName: spokeVnet.outputs.name
+    subnetName: 'iaas'
+    os: 'linux'
+    vmName: '${resourcePrefix}-web01'
+    vmSize: 'Standard_B2ms'
+    initScriptBase64: loadFileAsBase64('webserver.yml')
+  }
+}

@@ -2,6 +2,9 @@ param prefix string
 param location string = resourceGroup().location
 param hubVnetName string
 param networkRules array = []
+
+@description('By default, Azure Firewall will not SNAT RFC 1918 private addresses. Use this field to remove this behavior with a comma-delmimited list of CIDR blocks.')
+param privateTrafficPrefixes string = ''
 param fireWallSubnetName string
 
 resource publicIp 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
@@ -34,6 +37,9 @@ resource fwl 'Microsoft.Network/azureFirewalls@2020-06-01' = {
       }
     ]
     networkRuleCollections: ( (!empty(networkRules)) ? networkRules : null )
+    additionalProperties: {
+      'Network.SNAT.PrivateRanges': ( (!empty(privateTrafficPrefixes)) ? privateTrafficPrefixes : 'IANAPrivateRanges' )
+    }
   }
 }
 

@@ -23,9 +23,11 @@ In the `deployments` directory, create a new file called `core.params.json` and 
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "appPrefix": { "value": "contoso" },
-      "dnsVmAdminUserName": { "value": "vmadmin" },
-      "dnsVmAdminPwd": { "value": "" },
+      "region": { "value": "centralus"},
+      "orgPrefix": { "value": "contoso" },
+      "appPrefix": { "value": "core" },
+      "vmAdminUserName": { "value": "vmadmin" },
+      "vmAdminPwd": { "value": "" },
       "tags": {
         "value": {
           "project": "AzIslandNetworking",
@@ -33,66 +35,52 @@ In the `deployments` directory, create a new file called `core.params.json` and 
         }
       }
     }
-}
+ }
 ```
 
-Update the following values:
+Update these parameters to fit your environment. Be sure to set the value of `vmAdminPwd` to a random value.
 
-* `dnsVmAdminPwd`: Set this to a random password
+Next, run the following commands to deploy the core infrastructure:
 
-Run the following commands to deploy the core infrastructure:
-
-```bash
-az login
-bicep build core.bicep
-az deployment sub create --name core --location centralus --template-file core.json --parameters core.params.json
+```powershell
+.\deploy-core.ps1 centralus contoso core
 ```
 
-## Deploy Application Infrastructure
+## Deploy Application (Island) Infrastructure
 
-In the `deployments` directory, create a new file called `application.params.json` and place the following contents into the file:
+In the `deployments` directory, create a new file called `application-base.params.json` and place the following contents into the file:
 
 ```json
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "appPrefix": { "value": "contoso" },
-    "sqlAdminLoginName": { "value": "" },
-    "sqlAdminLoginPwd": { "value": "" },
-    "sqlAdminObjectId": { "value": "" },
+    "region": { "value": "centralus"},
+    "orgPrefix": { "value": "contoso" },
+    "appPrefix": { "value": "island" },
+    "coreResourcePrefix": { "value": "contoso-core-cus" },
+    "coreNetworkRgName": { "value": "contoso-core-network" },
+    "coreDnsRgName": { "value": "contoso-core-dns" },
+    "vmAdminUserName": { "value": "vmadmin" },
+    "vmAdminPwd": { "value": "" },
     "tags": {
       "value": {
-        "appId": "contoso",
-        "costCenter": "abc123"
+        "project": "AzIslandNetworking",
+        "component": "island"
       }
     }
   }
 }
 ```
 
-Update the following values:
+Update these parameters to fit your environment. Be sure to set the value of `vmAdminPwd` to a random value.
 
-- `sqlAdminLoginName`: Set this to the name of an AAD user or group
-- `sqlAdminLoginPwd`: Set this to a random password
-- `sqlAdminObjectId`: Use the following Azure CLI command to find the object ID of the user of group:
-
-  ```bash
-  az ad user show --id <sqlAdminLoginName> --query objectId --out tsv
-  ```
-
-Next, run the following command to deploy the data tier:
+Next, run the following command to deploy the application core infrastructure:
 
 ```bash
-bicep build application.bicep
-az group create --name contoso-data --location centralus
-az deployment group create --resource-group contoso-data --name datatier --template-file application.json --parameters application.params.json
+.\deploy-application-base.ps1 centralus contoso island
 ```
 
-## Deploy Application Logic
+## Deploy the Application (island) Workload
 
-Because the Function App has been deployed with a Private Link, the Function code must be deployed from within the applicaiton (spoke) virtual network. From the virtual machine deployed to the `desktop` subnet, nagiavte to the location where you cloned the Git repoistory and run the following command from the `function` directory:
-
-```bash
-func azure functionapp publish [function_app_name] --typescript
-```
+TBD

@@ -12,33 +12,57 @@ targetScope = 'subscription'
 param region string
 param orgPrefix string
 param appPrefix string
-param tags object = {
-  project: 'AzSecurePaaS'
-  component: 'core'
-}
+param regionCode string
+param coreNetworkRgName string
+param coreDnsRgName string
+param coreResourcePrefix string
+
+param tags object = { }
+
+param vmAdminUserName string = 'vmadmin'
+@secure()
+param vmAdminPwd string
+param vmSubnetName string = 'util'
 
 @maxLength(16)
 @description('The full prefix is the combination of the org prefix and app prefix and cannot exceed 16 characters in order to avoid deployment failures with certain PaaS resources such as storage or key vault')
 param fullPrefix string = '${orgPrefix}-${appPrefix}'
 
-resource networkRg 'Microsoft.Resources/resourceGroups@2020-06-01' existing = {
-  name: '${orgPrefix}-network'
+var resourcePrefix = '${orgPrefix}-${appPrefix}-${regionCode}'
+
+resource coreNetworkRg 'Microsoft.Resources/resourceGroups@2020-06-01' existing = {
+  name: coreNetworkRgName
 }
 
-resource workloadRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: fullPrefix
+resource coreDnsRg 'Microsoft.Resources/resourceGroups@2020-06-01' existing = {
+  name: coreDnsRgName
+}
+
+resource workloadNetworkRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: '${fullPrefix}-network'
   location: region
   tags: tags
 }
 
+resource workloadRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: '${fullPrefix}-${appPrefix}-workload'
+  location: region
+  tags: tags
+}
+
+resource utilRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: '${orgPrefix}-${appPrefix}-util'
+  location: region
+}
+
 resource bridgeVnet 'Microsoft.Network/virtualNetworks@2022-05-01' existing = {
-  name: '${orgPrefix}-bridge'
-  scope: resourceGroup(networkRg.name)
+  name: '${coreResourcePrefix}-bridge'
+  scope: resourceGroup(coreNetworkRgName)
 }
 
 resource bridgeAzFw 'Microsoft.Network/azureFirewalls@2022-05-01' existing = {
-  name: '${orgPrefix}-bridge-azfw'
-  scope: resourceGroup(networkRg.name)
+  name: '${coreResourcePrefix}-bridge-azfw'
+  scope: resourceGroup(coreNetworkRgName)
 }
 
 // ISLAND VNET IP SETTINGS
@@ -52,7 +76,7 @@ param sbConsumerFaAddressPrefix string = '192.168.9.128/26'      // 61   address
 
 module vnet 'modules/vnet.bicep' = {
   name: '${appPrefix}-vnet'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(workloadNetworkRg.name)
   params: {
     vnetName: fullPrefix
     location: region
@@ -180,18 +204,27 @@ module vnet 'modules/vnet.bicep' = {
 
 module route 'modules/udr.bicep' = {
   name: '${appPrefix}-workload-udr'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(workloadNetworkRg.name)
   params: {
     name: '${fullPrefix}-udr'
     location: region
-    azFwlIp: bridgeAzFw.properties.ipConfigurations[0].properties.privateIPAddress
+    routes: [
+      {
+        name: '${orgPrefix}-${appPrefix}-${regionCode}-egress-udr'
+        properties: {
+          addressPrefix: '0.0.0.0/0'
+          nextHopType: 'VirtualAppliance'
+          nextHopIpAddress: bridgeAzFw.properties.ipConfigurations[0].properties.privateIPAddress
+        }
+      }
+    ]
   }
 }
 
 // NSG for AKS subnet
 module aksIntegrationNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-aks'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(workloadNetworkRg.name)
   params: {
     name: '${fullPrefix}-app-aks'
     location: region
@@ -216,7 +249,7 @@ module aksIntegrationNsg 'modules/nsg.bicep' = {
 // NSG for Util subnet
 module utilNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-util'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(workloadNetworkRg.name)
   params: {
     name: '${fullPrefix}-app-util'
     location: region
@@ -257,7 +290,7 @@ module utilNsg 'modules/nsg.bicep' = {
 // NSG for Private Endpoints subnet
 module privateEndpointsNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-pe'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(workloadNetworkRg.name)
   params: {
     name: '${fullPrefix}-app-pe'
     location: region
@@ -282,7 +315,7 @@ module privateEndpointsNsg 'modules/nsg.bicep' = {
 // NSG for EH Producer Integration subnet
 module ehProducerNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-ehProducer'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(workloadNetworkRg.name)
   params: {
     name: '${fullPrefix}-app-ehProducer'
     location: region
@@ -307,7 +340,7 @@ module ehProducerNsg 'modules/nsg.bicep' = {
 // NSG for EH Consumer Integration subnet
 module ehConsumerNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-ehConsumer'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(workloadNetworkRg.name)
   params: {
     name: '${fullPrefix}-app-ehConsumer'
     location: region
@@ -332,7 +365,7 @@ module ehConsumerNsg 'modules/nsg.bicep' = {
 // NSG for EH Consumer Integration subnet
 module sbConsumerNsg 'modules/nsg.bicep' = {
   name: '${appPrefix}-app-sbConsumer'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(workloadNetworkRg.name)
   params: {
     name: '${fullPrefix}-app-sbConsumer'
     location: region
@@ -356,7 +389,7 @@ module sbConsumerNsg 'modules/nsg.bicep' = {
 
 module vnetPeerIslandToBridge 'modules/peering.bicep' = {
   name: 'island-to-bridge-peering'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(workloadNetworkRg.name)
   params: {
     localVnetName: vnet.outputs.name
     remoteVnetName: bridgeVnet.name
@@ -366,7 +399,7 @@ module vnetPeerIslandToBridge 'modules/peering.bicep' = {
 
 module vnetPeerBridgeToIsland 'modules/peering.bicep' = {
   name: 'bridge-to-island-peering'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(coreNetworkRg.name)
   params: {
     localVnetName: bridgeVnet.name
     remoteVnetName: vnet.outputs.name
@@ -388,10 +421,27 @@ module acrPullMi 'modules/managedIdentity.bicep' = {
 // Link to VNET to the Private DNS resolver
 module resolverLink 'modules/dnsResolverLink.bicep' = {
   name: 'dns-resolver-link'
-  scope: resourceGroup(networkRg.name)
+  scope: resourceGroup(coreDnsRg.name)
   params: {
     forwardingRulesetName: 'dns-forward-ruleset-contoso'
     linkName: '${vnet.outputs.name}-link'
     vnetId: vnet.outputs.id
+  }
+}
+
+// utility server for traffic testing
+module utilServer 'modules/virtualMachine.bicep' = {
+  name: 'util-server-consoso-com'
+  scope: resourceGroup(utilRg.name)
+  params: {
+    adminUserName: vmAdminUserName
+    adminPassword: vmAdminPwd
+    networkResourceGroupName: workloadNetworkRg.name
+    location: region
+    vnetName: vnet.outputs.name
+    subnetName: vmSubnetName
+    os: 'linux'
+    vmName: '${resourcePrefix}-util01'
+    vmSize: 'Standard_B2ms'
   }
 }
