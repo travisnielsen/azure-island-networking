@@ -13,22 +13,18 @@ param region string
 param orgPrefix string
 param appPrefix string
 param regionCode string
-param coreNetworkRgName string
-param coreDnsRgName string
-param coreResourcePrefix string
-
 param tags object = { }
-
 param vmAdminUserName string = 'vmadmin'
 @secure()
 param vmAdminPwd string
 param vmSubnetName string = 'util'
-
 @maxLength(16)
 @description('The full prefix is the combination of the org prefix and app prefix and cannot exceed 16 characters in order to avoid deployment failures with certain PaaS resources such as storage or key vault')
 param fullPrefix string = '${orgPrefix}-${appPrefix}'
 
 var resourcePrefix = '${orgPrefix}-${appPrefix}-${regionCode}'
+var coreNetworkRgName = '${orgPrefix}-${appPrefix}-network'
+var coreDnsRgName = '${orgPrefix}-${appPrefix}-dns'
 
 resource coreNetworkRg 'Microsoft.Resources/resourceGroups@2020-06-01' existing = {
   name: coreNetworkRgName
@@ -45,23 +41,23 @@ resource workloadNetworkRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 }
 
 resource workloadRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${fullPrefix}-${appPrefix}-workload'
+  name: '${resourcePrefix}-workload'
   location: region
   tags: tags
 }
 
 resource utilRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${orgPrefix}-${appPrefix}-util'
+  name: '${resourcePrefix}-util'
   location: region
 }
 
 resource bridgeVnet 'Microsoft.Network/virtualNetworks@2022-05-01' existing = {
-  name: '${coreResourcePrefix}-bridge'
+  name: '${resourcePrefix}-bridge'
   scope: resourceGroup(coreNetworkRgName)
 }
 
 resource bridgeAzFw 'Microsoft.Network/azureFirewalls@2022-05-01' existing = {
-  name: '${coreResourcePrefix}-bridge-azfw'
+  name: '${resourcePrefix}-bridge-azfw'
   scope: resourceGroup(coreNetworkRgName)
 }
 
@@ -72,7 +68,7 @@ param utilSubnetAddressPrefix string = '192.168.4.0/22'         // 1019 addresse
 param privateEndpointAddressPrefix string = '192.168.8.0/24'    // 251  addresses - 192.168.8.0 - 192.168.9.0
 param ehProducerFaAddressPrefix string = '192.168.9.0/26'       // 61   addresses - 192.168.9.0 - 192.168.9.63
 param ehConsumerFaAddressPrefix string = '192.168.9.64/26'      // 61   addresses - 192.168.9.64 - 192.168.9.127
-param sbConsumerFaAddressPrefix string = '192.168.9.128/26'      // 61   addresses - 192.168.9.128 - 192.168.9.192
+param sbConsumerFaAddressPrefix string = '192.168.9.128/26'     // 61   addresses - 192.168.9.128 - 192.168.9.192
 
 module vnet 'modules/vnet.bicep' = {
   name: '${appPrefix}-vnet'

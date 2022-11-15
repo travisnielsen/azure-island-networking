@@ -34,5 +34,5 @@ switch ($location) {
     }
 }
 
-az configure --defaults group="$orgPrefix-$appPrefix"
+az configure --defaults group="$orgPrefix-$appPrefix-workload"
 az deployment group create --name "$timeStamp-appsvc" --template-file application-services.bicep --parameters application-services.params.json orgPrefix=$orgPrefix appPrefix=$appPrefix regionCode=$regionCode

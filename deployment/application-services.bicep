@@ -11,7 +11,7 @@ param fullPrefix string = '${orgPrefix}-${appPrefix}'
 var resourcePrefix = '${fullPrefix}-${regionCode}'
 var workloadVnetName = fullPrefix
 var tenantId = subscription().tenantId
-var resourceGroupNameNetwork = '${orgPrefix}-network'
+var resourceGroupNameNetwork = '${fullPrefix}-network'
 
 //NOTE: This is set to false for ease of testing and rapid iteration on changes.  For real workloads this should be set to true
 var enableSoftDeleteForKeyVault = false
