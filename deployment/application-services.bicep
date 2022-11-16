@@ -9,52 +9,67 @@ param zoneRedundant bool = false
 param fullPrefix string = '${orgPrefix}-${appPrefix}'
 
 var resourcePrefix = '${fullPrefix}-${regionCode}'
-var workloadVnetName = fullPrefix
+var workloadVnetName = '${resourcePrefix}-workload'
 var tenantId = subscription().tenantId
 var resourceGroupNameNetwork = '${fullPrefix}-network'
 
 //NOTE: This is set to false for ease of testing and rapid iteration on changes.  For real workloads this should be set to true
 var enableSoftDeleteForKeyVault = false
 
+var entities = [
+  'poc.customers.addresses'
+]
+
 var functionApps = [
   {
     functionAppNameSuffix: 'ehConsumer'
-    storageAccountNameSuffix: 'ehconsumer'
     dockerImageAndTag: 'cdcehconsumer:latest'
     appSettings: [
       {
-        name: 'BaseWeatherUri'
-        value: 'https://www.google.com'
+        name: 'ExternalApiUri'
+        value: 'https://api.contoso.com'
       }
     ]
   }
   {
     functionAppNameSuffix: 'sbConsumer'
-    storageAccountNameSuffix: 'sbconsumer'
     dockerImageAndTag: 'cdcsbconsumer:latest'
     appSettings: [
       {
-        name: 'BaseWeatherUri'
-        value: 'https://www.google.com'
+        name: 'ExternalApiUri'
+        value: 'https://api.contoso.com'
       }
     ]
   }
   {
     functionAppNameSuffix: 'ehProducer'
-    storageAccountNameSuffix: 'ehproducer'
     dockerImageAndTag: 'cdcehproducer:latest'
     appSettings: [
       {
-        name: 'BaseWeatherUri'
-        value: 'https://www.google.com'
+        name: 'CosmosHost'
+        value: 'https://${resourcePrefix}-acdb.documents.azure.com:443'
+      }
+      {
+        name: 'CosmosAuthToken'
+        value: ''
+      }
+      {
+        name: 'EhNameSpace'
+        value: '${resourcePrefix}.servicebus.windows.net'
+      }
+      {
+        name: 'EhName'
+        value: entities[0]
+      }
+      {
+        name: 'ExternalApiUri'
+        value: 'https://api.contoso.com'
       }
     ]
   }
 ]
 
-var entities = [
-  'poc.customers.addresses'
-]
+
 
 /*
 // TODO - Refactor to parameterize vnet name
@@ -77,7 +92,6 @@ module monitoring 'Modules/monitoring.bicep' = {
   }
 }
 
-
 module keyVault 'Modules/keyVault.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-kv'
   params: {
@@ -91,6 +105,7 @@ module keyVault 'Modules/keyVault.bicep' = {
   }
 }
 
+/*
 module eventHub 'Modules/eventHub.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-eventHub'
   params: {
@@ -138,6 +153,7 @@ module cosmos 'Modules/cosmos.bicep' = {
     vnetName: workloadVnetName
   }
 }
+*/
 
 var functionAppsCount = length(functionApps)
 module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCount): {
@@ -151,7 +167,6 @@ module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCo
     resourceGroupNameNetwork: resourceGroupNameNetwork
     resourcePrefix: resourcePrefix
     storageSkuName: 'Standard_LRS'
-    storageAccountNameSuffix: functionApps[i].storageAccountNameSuffix
     timeStamp: timeStamp
     vnetName: workloadVnetName
     zoneRedundant: zoneRedundant    

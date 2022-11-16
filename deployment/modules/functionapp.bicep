@@ -6,7 +6,6 @@ param location string
 param resourceGroupNameNetwork string
 param resourcePrefix string
 param storageSkuName string
-param storageAccountNameSuffix string
 param timeStamp string
 param vnetName string
 param zoneRedundant bool
@@ -24,10 +23,11 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-09-01' e
 module storage 'storage.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-${functionAppNameSuffix}-storage'
   params: {
+    functionAppName: functionAppNameSuffix
     location: location
     resourcePrefix: resourcePrefix
     storageSkuName: storageSkuName
-    storageAccountNameSuffix: storageAccountNameSuffix
+    targetSubnetId: functionSubnetId
   }
 }
 

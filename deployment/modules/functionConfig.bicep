@@ -102,7 +102,7 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' existing = {
           value: 'https://${resourcePrefix}-acdb.documents.azure.com:443/'
         }
         {
-          name: 'BaseWeatherUri'
+          name: 'ExternalApiUri'
           value: 'https://${resourcePrefix}-as-weather.azurewebsites.net/'
         }
       ]

@@ -5,6 +5,7 @@ $timeStamp = Get-Date -Format "yyyyMMddHHmm"
 $location = $Args[0]
 $orgPrefix = $Args[1]
 $appPrefix = $Args[2]
+$corePrefix = $args[3]
 
 switch ($location) {
     'eastus' {
@@ -33,4 +34,4 @@ switch ($location) {
     }
 }
 
-az deployment sub create --name "$timeStamp-appbase" --location $location --template-file application-base.bicep --parameters application-base.params.json region=$location orgPrefix=$orgPrefix appPrefix=$appPrefix regionCode=$regionCode
+az deployment sub create --name "$timeStamp-appbase" --location $location --template-file application-base.bicep --parameters application-base.params.json region=$location orgPrefix=$orgPrefix appPrefix=$appPrefix regionCode=$regionCode corePrefix=$corePrefix
