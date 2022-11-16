@@ -69,8 +69,6 @@ var functionApps = [
   }
 ]
 
-
-
 /*
 // TODO - Refactor to parameterize vnet name
 // TODO - This is all jacked up around managed identities
@@ -105,7 +103,6 @@ module keyVault 'Modules/keyVault.bicep' = {
   }
 }
 
-/*
 module eventHub 'Modules/eventHub.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-eventHub'
   params: {
@@ -153,7 +150,6 @@ module cosmos 'Modules/cosmos.bicep' = {
     vnetName: workloadVnetName
   }
 }
-*/
 
 var functionAppsCount = length(functionApps)
 module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCount): {

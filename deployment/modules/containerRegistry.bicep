@@ -19,7 +19,7 @@ module privateEndpoint 'privateendpoint.bicep' = {
     location: location
     privateEndpointName: '${resourcePrefix}-pe-acr'
     serviceResourceId: containerRegistry.id
-    dnsZoneName: 'privatelink.azurewebsites.net'
+    dnsZoneName: 'privatelink.azure.io'
     resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetName
     subnetName: 'privateEndpoints'
