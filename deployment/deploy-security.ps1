@@ -10,12 +10,6 @@ switch ($location) {
     'eastus' {
         $regionCode = 'eus'
     }
-    'eastus2' {
-        $regionCode = 'eus2'
-    }
-    'centralus' {
-        $regionCode = 'cus'
-    }
     'westus' {
         $regionCode = 'wus'
     }
@@ -34,5 +28,5 @@ switch ($location) {
     }
 }
 
-az configure --defaults group="$orgPrefix-$appPrefix-workload"
-az deployment group create --name "$timeStamp-appsvc" --template-file application-services.bicep --parameters application-services.params.json orgPrefix=$orgPrefix appPrefix=$appPrefix regionCode=$regionCode
+az configure --defaults group="$orgPrefix-$appPrefix"
+az deployment group create --name "$timeStamp-security" --template-file security.bicep --parameters orgPrefix=$orgPrefix appPrefix=$appPrefix region=$location regionCode=$regionCode

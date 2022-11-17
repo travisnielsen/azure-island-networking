@@ -31,7 +31,7 @@ module privateEndpoint 'privateendpoint.bicep' = {
     location: location
     privateEndpointName: '${resourcePrefix}-pe-kv'
     serviceResourceId: keyVault.id
-    dnsZoneName: 'privatelink.azurewebsites.net'
+    dnsZoneName: 'privatelink${environment().suffixes.keyvaultDns}'
     resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetName
     subnetName: 'privateEndpoints'

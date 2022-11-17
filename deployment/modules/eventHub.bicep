@@ -33,7 +33,7 @@ module privateEndpoint 'privateendpoint.bicep' = {
     location: location
     privateEndpointName: '${resourcePrefix}-pe-ehns'
     serviceResourceId: eventHubNameSpace.id
-    dnsZoneName: 'privatelink.azurewebsites.net'
+    dnsZoneName: 'privatelink.servicesbus.windows.net'
     resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetName
     subnetName: 'privateEndpoints'
