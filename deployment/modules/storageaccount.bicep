@@ -1,14 +1,13 @@
 param accountName string
 param containerName string
 param tags object
-
+param location string = resourceGroup().location
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   name: accountName
-  location: resourceGroup().location
+  location: location
   sku: {
     name: 'Standard_LRS'
-    tier: 'Standard'
   }
   kind: 'StorageV2'
   properties: {

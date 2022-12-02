@@ -28,6 +28,5 @@ resource nsgFlowLogs 'Microsoft.Network/networkWatchers/flowLogs@2020-06-01' = {
         trafficAnalyticsInterval: 10
       }
     }
-
   }
 }

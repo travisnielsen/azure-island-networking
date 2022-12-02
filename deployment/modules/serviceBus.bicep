@@ -36,7 +36,7 @@ module privateEndpoint 'privateendpoint.bicep' = {
     location: location
     privateEndpointName: '${resourcePrefix}-pe-sbns'
     serviceResourceId: serviceBus.id
-    dnsZoneName: 'privatelink.servicesbus.windows.net'
+    dnsZoneName: 'privatelink.servicebus.windows.net'
     resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetName
     subnetName: 'privateEndpoints'

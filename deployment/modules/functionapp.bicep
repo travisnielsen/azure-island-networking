@@ -6,6 +6,7 @@ param location string
 param resourceGroupNameNetwork string
 param resourcePrefix string
 param storageSkuName string
+param tags object
 param timeStamp string
 param vnetName string
 param zoneRedundant bool
@@ -97,6 +98,7 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
       appSettings: concat(baseAppSettings, functionSpecificAppSettings)
     }
   }
+  tags: tags
 
   dependsOn: [
     storage

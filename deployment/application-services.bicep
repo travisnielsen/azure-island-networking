@@ -1,8 +1,9 @@
 param timeStamp string = utcNow('yyyyMMddHHmm')
-param appPrefix string
 param orgPrefix string
+param appPrefix string
 param regionCode string
 param location string = resourceGroup().location
+param tags object = { }
 param zoneRedundant bool = false
 @maxLength(16)
 @description('The full prefix is the combination of the org prefix and app prefix and cannot exceed 16 characters in order to avoid deployment failures with certain PaaS resources such as storage or key vault')
@@ -27,7 +28,23 @@ var functionApps = [
     appSettings: [
       {
         name: 'ExternalApiUri'
-        value: 'https://api.contoso.com'
+        value: 'http://api.contoso.com'
+      }
+      {
+        name: 'EhNameSpace__fullyQualifiedNamespace'
+        value: '${resourcePrefix}-ehns.servicebus.windows.net'
+      }
+      {
+        name: 'EhName'
+        value: entities[0]
+      }
+      {
+        name: 'ServiceBusHostName'
+        value: '${resourcePrefix}-sbns.servicebus.windows.net'
+      }
+      {
+        name: 'QueueName'
+        value: entities[0]
       }
     ]
   }
@@ -37,7 +54,7 @@ var functionApps = [
     appSettings: [
       {
         name: 'ExternalApiUri'
-        value: 'https://api.contoso.com'
+        value: 'http://api.contoso.com'
       }
     ]
   }
@@ -55,7 +72,7 @@ var functionApps = [
       }
       {
         name: 'EhNameSpace'
-        value: '${resourcePrefix}.servicebus.windows.net'
+        value: '${resourcePrefix}-ehns.servicebus.windows.net'
       }
       {
         name: 'EhName'
@@ -63,7 +80,7 @@ var functionApps = [
       }
       {
         name: 'ExternalApiUri'
-        value: 'https://api.contoso.com'
+        value: 'http://api.contoso.com'
       }
     ]
   }
@@ -163,6 +180,7 @@ module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCo
     resourceGroupNameNetwork: resourceGroupNameNetwork
     resourcePrefix: resourcePrefix
     storageSkuName: 'Standard_LRS'
+    tags: tags
     timeStamp: timeStamp
     vnetName: workloadVnetName
     zoneRedundant: zoneRedundant    

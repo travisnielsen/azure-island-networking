@@ -13,7 +13,6 @@ param region string
 param orgPrefix string
 param appPrefix string
 param regionCode string
-
 param tags object = { }
 
 var resourcePrefix = '${orgPrefix}-${appPrefix}-${regionCode}'
@@ -359,7 +358,7 @@ module bastionNsg 'modules/nsg.bicep' = {
         }
       }
       {
-        name: 'allow-ssh-rdp-vnet'
+        name: 'AllowSshRdpOutbound'
         properties: {
           priority: 100
           protocol: '*'
@@ -375,16 +374,45 @@ module bastionNsg 'modules/nsg.bicep' = {
         }
       }
       {
-        name: 'allow-azure-dependencies'
+        name: 'AllowAzureCloudOutbound'
         properties: {
-          priority: 120
-          protocol: '*'
+          priority: 110
+          protocol: 'TCP'
           access: 'Allow'
           direction: 'Outbound'
           sourceAddressPrefix: '*'
           sourcePortRange: '*'
           destinationAddressPrefix: 'AzureCloud'
           destinationPortRange: '443'
+        }
+      }
+      {
+        name: 'AllowBastionCommunication'
+        properties: {
+          priority: 120
+          protocol: '*'
+          access: 'Allow'
+          direction: 'Outbound'
+          sourceAddressPrefix: 'VirtualNetwork'
+          sourcePortRange: '*'
+          destinationAddressPrefix: 'VirtualNetwork'
+          destinationPortRanges: [
+            '8080'
+            '5701'
+          ]
+        }
+      }
+      {
+        name: 'AllowGetSessionInformation'
+        properties: {
+          priority: 130
+          protocol: '*'
+          access: 'Allow'
+          direction: 'Outbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: 'Internet'
+          destinationPortRange: '80'
         }
       }
       {
@@ -812,7 +840,7 @@ module bastion 'modules/bastion.bicep' = {
   name: 'bridge-bastion'
   scope: resourceGroup(netrg.name)
   params: {
-    name: uniqueString(netrg.id)
+    name: '${resourcePrefix}-bastion'
     location: region
     subnetId: '${bridgeVnet.outputs.id}/subnets/AzureBastionSubnet'
   }
@@ -1113,6 +1141,8 @@ module dnsResolver 'modules/dnsResolver.bicep' = {
     name: '${resourcePrefix}-dnsresolver-hub'
     location: region
     vnetId: hubVnet.outputs.id
+    vnetName: hubVnet.outputs.name
+    resourceGroupNameNetwork: netrg.name
     outboundEndpointName: 'dns-resolver-hub-outbound'
     outboundSubnetName: 'dns-resolver-outbound'
   }
