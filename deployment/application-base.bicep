@@ -348,28 +348,6 @@ module vnetPeerBridgeToIsland 'modules/peering.bicep' = {
   }
 }
 
-module acrPullMi 'modules/managedIdentity.bicep' = {
-  name: '${timeStamp}-${resourcePrefix}-mi-acrPull'
-  scope: resourceGroup(workloadRg.name)
-  params: {
-    location: region
-    resourcePrefix: fullPrefix
-    role: 'acrPull'
-    tags: tags
-  }
-}
-
-module keyVaultSecretUserMi 'modules/managedIdentity.bicep' = {
-  name: '${timeStamp}-${resourcePrefix}-mi-kvSecrets'
-  scope: resourceGroup(workloadRg.name)
-  params: {
-    location: region
-    resourcePrefix: fullPrefix
-    role: 'kvSecrets'
-    tags: tags
-  }
-}
-
 // Link to VNET to the Private DNS resolver
 module resolverLink 'modules/dnsResolverLink.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dnsResolverLink'
