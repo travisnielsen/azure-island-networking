@@ -8,6 +8,12 @@ param outboundEndpointName string
 @description('name of the subnet that will be used for private resolver outbound endpoint')
 param outboundSubnetName string
 
+param resourceGroupNameNetwork string
+param vnetName string
+
+var subscriptionId = subscription().subscriptionId
+var subnetId = resourceId(subscriptionId, resourceGroupNameNetwork, 'Microsoft.Network/virtualNetworks/subnets', vnetName, outboundSubnetName)
+
 resource resolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
   name: name
   location: location
@@ -24,7 +30,7 @@ resource outEndpoint 'Microsoft.Network/dnsResolvers/outboundEndpoints@2022-07-0
   location: location
   properties: {
     subnet: {
-      id: '${vnetId}/subnets/${outboundSubnetName}'
+      id: subnetId
     }
   }
 }

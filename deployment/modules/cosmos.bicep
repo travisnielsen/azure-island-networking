@@ -25,7 +25,7 @@ module privateEndpoint 'privateendpoint.bicep' = {
     location: location
     privateEndpointName: '${resourcePrefix}-pe-cosmos'
     serviceResourceId: cosmos.id
-    dnsZoneName: 'privatelink.azurewebsites.net'
+    dnsZoneName: 'privatelink.documents.azure.com'
     resourceGroupNameNetwork: resourceGroupNameNetwork
     vnetName: vnetName
     subnetName: 'privateEndpoints'
