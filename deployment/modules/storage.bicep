@@ -34,5 +34,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
 }
 
 output storageAccountName string = finalStorageAccountName
+//TODO Refactor this listkeys to avoid exposing secrets
 output connString string = 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
 output id string = storageAccount.id

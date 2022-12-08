@@ -42,6 +42,12 @@ resource workloadNetworkRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   tags: tags
 }
 
+resource workloadDnsRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: '${fullPrefix}-dns'
+  location: region
+  tags: tags
+}
+
 resource workloadRg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: '${fullPrefix}-workload'
   location: region
@@ -122,11 +128,10 @@ module vnet 'modules/vnet.bicep' = {
         name: 'ehProducer'
         properties: {
           addressPrefix: ehProducerFaAddressPrefix
-          /* TODO: Need to fix this, current route table prevents communications from function app to app insights
+          // TODO: Need to fix this, current route table prevents communications from function app to app insights
           routeTable: {
             id: route.outputs.id
           }
-          */
           networkSecurityGroup: {
             id: functionNsg.outputs.id
           }
@@ -150,11 +155,10 @@ module vnet 'modules/vnet.bicep' = {
         name: 'ehConsumer'
         properties: {
           addressPrefix: ehConsumerFaAddressPrefix
-          /* TODO: Need to fix this, current route table prevents communications from function app to app insights
+          // TODO: Need to fix this, current route table prevents communications from function app to app insights
           routeTable: {
             id: route.outputs.id
           }
-          */
           networkSecurityGroup: {
             id: functionNsg.outputs.id
           }
@@ -178,11 +182,10 @@ module vnet 'modules/vnet.bicep' = {
         name: 'sbConsumer'
         properties: {
           addressPrefix: sbConsumerFaAddressPrefix
-          /* TODO: Need to fix this, current route table prevents communications from function app to app insights
+          // TODO: Need to fix this, current route table prevents communications from function app to app insights
           routeTable: {
             id: route.outputs.id
           }
-          */
           networkSecurityGroup: {
             id: functionNsg.outputs.id
           }
@@ -379,7 +382,7 @@ module utilServer 'modules/virtualMachine.bicep' = {
 // Private DNS zone for other Azure services
 module privateZoneWebsites 'modules/dnszoneprivate.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-private-azurewebsites'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   params: {
     zoneName: 'privatelink.azurewebsites.net'
   }
@@ -387,7 +390,7 @@ module privateZoneWebsites 'modules/dnszoneprivate.bicep' = {
 
 module vnetAzureWebsitesZoneLink 'modules/dnszonelink.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-link-azurewebsites'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   dependsOn: [
     privateZoneWebsites
   ]
@@ -402,7 +405,7 @@ module vnetAzureWebsitesZoneLink 'modules/dnszonelink.bicep' = {
 // Private DNS zone for Azure Container Registry
 module privateZoneAcr 'modules/dnszoneprivate.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-private-acr'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   params: {
     zoneName: 'privatelink.azurecr.io'
   }
@@ -410,7 +413,7 @@ module privateZoneAcr 'modules/dnszoneprivate.bicep' = {
 
 module vnetAcrZoneLink 'modules/dnszonelink.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-link-acr'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   dependsOn: [
     privateZoneAcr
   ]
@@ -425,7 +428,7 @@ module vnetAcrZoneLink 'modules/dnszonelink.bicep' = {
 // Private DNS zone for Service Bus and Event Hubs
 module privateZoneServiceBus 'modules/dnszoneprivate.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-private-servicebus'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   params: {
     zoneName: 'privatelink.servicebus.windows.net'
   }
@@ -433,7 +436,7 @@ module privateZoneServiceBus 'modules/dnszoneprivate.bicep' = {
 
 module vnetServiceBusZoneLink 'modules/dnszonelink.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-link-servicebus'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   dependsOn: [
     privateZoneServiceBus
   ]
@@ -448,7 +451,7 @@ module vnetServiceBusZoneLink 'modules/dnszonelink.bicep' = {
 // Private DNS zone for Key Vault and Event Hubs
 module privateZoneKeyVault 'modules/dnszoneprivate.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-private-keyvault'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   params: {
     zoneName: 'privatelink.vaultcore.azure.net'
   }
@@ -456,7 +459,7 @@ module privateZoneKeyVault 'modules/dnszoneprivate.bicep' = {
 
 module vnetKeyVaultZoneLink 'modules/dnszonelink.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-link-keyvault'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   dependsOn: [
     privateZoneKeyVault
   ]
@@ -471,7 +474,7 @@ module vnetKeyVaultZoneLink 'modules/dnszonelink.bicep' = {
 // Private DNS zone for Key Vault and Event Hubs
 module privateZoneCosmos 'modules/dnszoneprivate.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-private-acdb'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   params: {
     zoneName: 'privatelink.documents.azure.com'
   }
@@ -479,7 +482,7 @@ module privateZoneCosmos 'modules/dnszoneprivate.bicep' = {
 
 module vnetCosmostZoneLink 'modules/dnszonelink.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-link-acdb'
-  scope: resourceGroup(workloadNetworkRg.name)
+  scope: resourceGroup(workloadDnsRg.name)
   dependsOn: [
     privateZoneCosmos
   ]
@@ -490,29 +493,3 @@ module vnetCosmostZoneLink 'modules/dnszonelink.bicep' = {
     autoRegistration: false
   }
 }
-
-/*
-module flowLogstorage 'modules/storage.bicep' = {
-  name: '${timeStamp}-${resourcePrefix}-flowLog-storage'
-  scope: resourceGroup(workloadNetworkRg.name)
-  params: {
-    functionAppName: uniqueString(deployment().name)
-    location: region
-    resourcePrefix: resourcePrefix
-    storageSkuName: 'Standard_LRS'
-    targetSubnetId: '${vnet.outputs.id}/subnets/util'
-  }
-}
-
-module flowLogs 'modules/flowlogs.bicep' = {
-  name: '${timeStamp}-${resourcePrefix}-flowLogs'
-  scope: resourceGroup(workloadNetworkRg.name)
-  params: {
-    flowLogName: '${resourcePrefix}-functionNsg-flowLog'
-    location: region
-    nsgId: functionNsg.outputs.id
-    storageId: flowLogstorage.outputs.id
-  }
-}
-
-*/

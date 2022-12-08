@@ -3,7 +3,8 @@ param functionAppNameSuffix string
 param functionSpecificAppSettings array
 param functionSubnetId string
 param location string
-param resourceGroupNameNetwork string
+param networkResourceGroupName string
+param dnsResourceGroupName string
 param resourcePrefix string
 param storageSkuName string
 param tags object
@@ -107,12 +108,14 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
 
 module privateEndpoint 'privateendpoint.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-pe-${functionAppNameSuffix}'
+  scope: resourceGroup(networkResourceGroupName)
   params: {
     location: location
     privateEndpointName: '${resourcePrefix}-pe-${functionAppNameSuffix}'
     serviceResourceId: functionApp.id
     dnsZoneName: 'privatelink.azurewebsites.net'
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     vnetName: vnetName
     subnetName: 'privateEndpoints'
     groupId: 'sites'

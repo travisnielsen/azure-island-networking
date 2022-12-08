@@ -1,5 +1,6 @@
 param location string
-param resourceGroupNameNetwork string
+param networkResourceGroupName string
+param dnsResourceGroupName string
 param resourcePrefix string
 param timeStamp string
 param vnetName string
@@ -15,12 +16,14 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-09-01' =
 
 module privateEndpoint 'privateendpoint.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-pe-acr'
+  scope: resourceGroup(networkResourceGroupName)
   params: {
     location: location
     privateEndpointName: '${resourcePrefix}-pe-acr'
     serviceResourceId: containerRegistry.id
     dnsZoneName: 'privatelink.azurecr.io'
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     vnetName: vnetName
     subnetName: 'privateEndpoints'
     groupId: 'registry'
