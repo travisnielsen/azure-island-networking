@@ -1,5 +1,6 @@
 param privateEndpointName string
-param resourceGroupNameNetwork string
+param networkResourceGroupName string
+param dnsResourceGroupName string
 param vnetName string
 param subnetName string
 param serviceResourceId string
@@ -8,8 +9,8 @@ param groupId string
 param location string
 
 var subscriptionId = subscription().subscriptionId
-var subnetId = resourceId(subscriptionId, resourceGroupNameNetwork, 'Microsoft.Network/virtualNetworks/subnets', vnetName, subnetName)
-var dnsZoneId = resourceId(subscriptionId, resourceGroupNameNetwork, 'Microsoft.Network/privateDnsZones', dnsZoneName )
+var subnetId = resourceId(subscriptionId, networkResourceGroupName, 'Microsoft.Network/virtualNetworks/subnets', vnetName, subnetName)
+var dnsZoneId = resourceId(subscriptionId, dnsResourceGroupName, 'Microsoft.Network/privateDnsZones', dnsZoneName )
 
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
   name: privateEndpointName

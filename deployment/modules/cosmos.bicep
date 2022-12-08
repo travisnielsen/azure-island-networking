@@ -1,5 +1,6 @@
 param location string
-param resourceGroupNameNetwork string
+param networkResourceGroupName string
+param dnsResourceGroupName string
 param resourcePrefix string
 param timeStamp string
 param vnetName string
@@ -21,12 +22,14 @@ resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
 
 module privateEndpoint 'privateendpoint.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-pe-cosmos'
+  scope: resourceGroup(networkResourceGroupName)
   params: {
     location: location
     privateEndpointName: '${resourcePrefix}-pe-cosmos'
     serviceResourceId: cosmos.id
     dnsZoneName: 'privatelink.documents.azure.com'
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     vnetName: vnetName
     subnetName: 'privateEndpoints'
     groupId: 'Sql'

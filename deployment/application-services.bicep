@@ -12,7 +12,8 @@ param fullPrefix string = '${orgPrefix}-${appPrefix}'
 var resourcePrefix = '${fullPrefix}-${regionCode}'
 var workloadVnetName = '${resourcePrefix}-workload'
 var tenantId = subscription().tenantId
-var resourceGroupNameNetwork = '${fullPrefix}-network'
+var networkResourceGroupName = '${fullPrefix}-network'
+var dnsResourceGroupName = '${fullPrefix}-dns'
 
 //NOTE: This is set to false for ease of testing and rapid iteration on changes.  For real workloads this should be set to true
 var enableSoftDeleteForKeyVault = false
@@ -56,6 +57,18 @@ var functionApps = [
         name: 'ExternalApiUri'
         value: 'http://api.contoso.com'
       }
+      {
+        name: 'CosmosHost'
+        value: 'https://${resourcePrefix}-acdb.documents.azure.com:443'
+      }
+      {
+        name: 'ServiceBusConnection__fullyQualifiedNamespace'
+        value: '${resourcePrefix}-sbns.servicebus.windows.net'
+      }
+      {
+        name: 'QueueName'
+        value: entities[0]
+      }
     ]
   }
   {
@@ -67,7 +80,7 @@ var functionApps = [
         value: 'https://${resourcePrefix}-acdb.documents.azure.com:443'
       }
       {
-        name: 'CosmosAuthToken'
+        name: 'CosmosAuthToken' //TODO: Wire this to KV
         value: ''
       }
       {
@@ -112,7 +125,8 @@ module keyVault 'Modules/keyVault.bicep' = {
   params: {
     enableSoftDelete: enableSoftDeleteForKeyVault
     location: location
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     resourcePrefix: resourcePrefix
     tenantId: tenantId
     timeStamp: timeStamp
@@ -125,7 +139,8 @@ module eventHub 'Modules/eventHub.bicep' = {
   params: {
     eventHubNames: entities
     location: location
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     resourcePrefix: resourcePrefix
     timeStamp: timeStamp
     vnetName: workloadVnetName
@@ -137,7 +152,8 @@ module serviceBus 'Modules/serviceBus.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-serviceBus'
   params: {
     location: location
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     queueNames: entities
     resourcePrefix: resourcePrefix
     timeStamp: timeStamp
@@ -150,7 +166,8 @@ module containerRegistry 'Modules/containerRegistry.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-acr'
   params: {
     location: location
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     resourcePrefix: resourcePrefix
     timeStamp: timeStamp
     vnetName: workloadVnetName
@@ -161,7 +178,8 @@ module cosmos 'Modules/cosmos.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-cosmos'
   params: {
     location: location
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     resourcePrefix: resourcePrefix
     timeStamp: timeStamp
     vnetName: workloadVnetName
@@ -175,9 +193,10 @@ module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCo
     dockerImageAndTag: functionApps[i].dockerImageAndTag
     functionAppNameSuffix: functionApps[i].functionAppNameSuffix
     functionSpecificAppSettings: functionApps[i].appSettings
-    functionSubnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroupNameNetwork}/providers/Microsoft.Network/virtualNetworks/${workloadVnetName}/subnets/${functionApps[i].functionAppNameSuffix}'
+    functionSubnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${networkResourceGroupName}/providers/Microsoft.Network/virtualNetworks/${workloadVnetName}/subnets/${functionApps[i].functionAppNameSuffix}'
     location: location
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     resourcePrefix: resourcePrefix
     storageSkuName: 'Standard_LRS'
     tags: tags
@@ -189,4 +208,24 @@ module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCo
     monitoring
   ]
 }]
+
+//Hard coded private endpoint for the EH Producer FA into the Hub VNET
+module privateEndpoint 'modules/privateendpoint.bicep' = {
+  name: 'workload-functionApp-privateEndpoint'
+  scope: resourceGroup('${orgPrefix}-core-network')
+  params: {
+    location: location
+    privateEndpointName: '${resourcePrefix}-pe-ehProducer'
+    serviceResourceId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${orgPrefix}-${appPrefix}-workload/providers/Microsoft.Web/sites/${resourcePrefix}-fa-ehProducer'
+    dnsZoneName: 'privatelink.azurewebsites.net'
+    networkResourceGroupName: '${orgPrefix}-core-network'
+    dnsResourceGroupName: '${orgPrefix}-core-dns'
+    vnetName: '${orgPrefix}-core-${regionCode}-hub'
+    subnetName: 'services'
+    groupId: 'sites'
+  }
+  dependsOn: [
+    functions
+  ]
+}
 
