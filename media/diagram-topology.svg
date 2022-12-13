@@ -1,28 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="657px" preserveAspectRatio="none" style="width:1479px;height:657px;background:#FFFFFF;" version="1.1" viewBox="0 0 1479 657" width="1479px" zoomAndPan="magnify"><defs/><g><rect fill="none" height="27.6094" id="_title" style="stroke:none;stroke-width:1.0;" width="182" x="641.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="172" x="646.5" y="24.5332">Island Network Topology</text><!--MD5=[4f80334fb3381e44c6b0cccb474a8532]
-cluster subscriptionIsland--><g id="cluster_subscriptionIsland"><rect fill="#FFFFFF" height="606" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:1.0;" width="572" x="7" y="45.6094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="116" x="235" y="60.0664">«AzureSubscription»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="190" x="198" y="79.3125">Workload Subscription A</text><image height="70" width="70" x="258" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACrUlEQVR4Xu3awWrcMBAG4Dz+voJfIa9Q6LWXHHou5BR6KLSlh1B6KPwdKtaIGUsejf6xUugwLBtF1upb2eP1rh+QFt9//n7+9uvp5fXdpx/yKH/qHjnxoBtIIYzb+88qtw9fLoDxSbIyMnXr2VO0ehtqkEnisQabqSomyenJVtFIQ55UFYd06JEjStpLPZDHw4KRoSKQWh7dD5BSbnvSVbOk4qlLXHneKtaPH79mq6ZIu6dk/Vx3vcfhknJVcZLy1ClLoXvfQ1avbJWnCpLK+bSVHVK9YZIqQup7Supt7iGT3j31I1E1TPJ4tsZCyV5ne9LXaozk9JQUVV33pILbPiW5azVAOnyPPSk222iTtVZeUtjjT9ZaeUl2Bkmp1kp2dT2Vs3CROocBPdVabe3i2QoXyb5waqqFGt39zklDVY6VNenwfNCJc9LpXqfe1Fh2ht0G9703Siot+3/1nLrxRkn1sBt9lS44I7WykPjlAY6KZ9/1obQD1iOPnppcpH7Rs1MMpB22jDxa7uAkoXtE2fkF0g5bUs/DEV4S/n5tYF8ynB5P6wuMfgyQwFb1M+bBKAlXqcIeBEjIV814ECMhUzXpQZiEHNXoKegw4iSwVRQPJkngqVgezJPAUBE9oJAwp+J6wCIhqqJ7QCRhXJXhAZcEx2VItgerSIFLBn+sIW2MTwmtWEbKU2WR+hdCqarFpC103dqPxaSMOrGSlOHBQlKSBwtJekteLCP9e58eTkl5qpWkJNVi0pZwUC0mPb286iGmYyVp9FcWZywglfYkD64nlfZb+x7E+SCTCmOf974mqv0W+uHIGXySP5NUK0lJqv+ks7CT7mSGB3TS49E904eZ5AGd9Ny4Z/oyD+gkOFSpHmSQ0FVle5BEQkN1gQd5JBjVNR6kklCpLvNI/AFVdMr52fsbFwAAAABJRU5ErkJggg==" y="82.8281"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="8" x="289" y="165.2852">[]</text></g><!--MD5=[6a6dfeeb3653cbfb709c9a533a96c1cd]
-cluster nameResolution--><g id="cluster_nameResolution"><rect fill="none" height="400" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="257" x="39" y="200.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="185" x="75" y="217.1426">Name Resolution Services</text></g><!--MD5=[874d2f2ba8edd7664b15b448ce929b47]
-cluster subscriptionInfrastructure--><g id="cluster_subscriptionInfrastructure"><rect fill="#FFFFFF" height="361" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:1.0;" width="554" x="639" y="152.6094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="116" x="858" y="167.0664">«AzureSubscription»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="205" x="813.5" y="186.3125">Infrastructure Subscription</text><image height="70" width="70" x="881" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACrUlEQVR4Xu3awWrcMBAG4Dz+voJfIa9Q6LWXHHou5BR6KLSlh1B6KPwdKtaIGUsejf6xUugwLBtF1upb2eP1rh+QFt9//n7+9uvp5fXdpx/yKH/qHjnxoBtIIYzb+88qtw9fLoDxSbIyMnXr2VO0ehtqkEnisQabqSomyenJVtFIQ55UFYd06JEjStpLPZDHw4KRoSKQWh7dD5BSbnvSVbOk4qlLXHneKtaPH79mq6ZIu6dk/Vx3vcfhknJVcZLy1ClLoXvfQ1avbJWnCpLK+bSVHVK9YZIqQup7Supt7iGT3j31I1E1TPJ4tsZCyV5ne9LXaozk9JQUVV33pILbPiW5azVAOnyPPSk222iTtVZeUtjjT9ZaeUl2Bkmp1kp2dT2Vs3CROocBPdVabe3i2QoXyb5waqqFGt39zklDVY6VNenwfNCJc9LpXqfe1Fh2ht0G9703Siot+3/1nLrxRkn1sBt9lS44I7WykPjlAY6KZ9/1obQD1iOPnppcpH7Rs1MMpB22jDxa7uAkoXtE2fkF0g5bUs/DEV4S/n5tYF8ynB5P6wuMfgyQwFb1M+bBKAlXqcIeBEjIV814ECMhUzXpQZiEHNXoKegw4iSwVRQPJkngqVgezJPAUBE9oJAwp+J6wCIhqqJ7QCRhXJXhAZcEx2VItgerSIFLBn+sIW2MTwmtWEbKU2WR+hdCqarFpC103dqPxaSMOrGSlOHBQlKSBwtJekteLCP9e58eTkl5qpWkJNVi0pZwUC0mPb286iGmYyVp9FcWZywglfYkD64nlfZb+x7E+SCTCmOf974mqv0W+uHIGXySP5NUK0lJqv+ks7CT7mSGB3TS49E904eZ5AGd9Ny4Z/oyD+gkOFSpHmSQ0FVle5BEQkN1gQd5JBjVNR6kklCpLvNI/AFVdMr52fsbFwAAAABJRU5ErkJggg==" y="189.8281"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="8" x="912" y="272.2852">[]</text></g><!--MD5=[59a58b1e555f596f3ae3b558401dd421]
-cluster subscriptionSpoke--><g id="cluster_subscriptionSpoke"><rect fill="#FFFFFF" height="331" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:1.0;" width="220" x="1253" y="167.6094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="116" x="1305" y="182.0664">«AzureSubscription»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="191" x="1267.5" y="201.3125">Workload Subscription B</text><image height="70" width="70" x="1328" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACrUlEQVR4Xu3awWrcMBAG4Dz+voJfIa9Q6LWXHHou5BR6KLSlh1B6KPwdKtaIGUsejf6xUugwLBtF1upb2eP1rh+QFt9//n7+9uvp5fXdpx/yKH/qHjnxoBtIIYzb+88qtw9fLoDxSbIyMnXr2VO0ehtqkEnisQabqSomyenJVtFIQ55UFYd06JEjStpLPZDHw4KRoSKQWh7dD5BSbnvSVbOk4qlLXHneKtaPH79mq6ZIu6dk/Vx3vcfhknJVcZLy1ClLoXvfQ1avbJWnCpLK+bSVHVK9YZIqQup7Supt7iGT3j31I1E1TPJ4tsZCyV5ne9LXaozk9JQUVV33pILbPiW5azVAOnyPPSk222iTtVZeUtjjT9ZaeUl2Bkmp1kp2dT2Vs3CROocBPdVabe3i2QoXyb5waqqFGt39zklDVY6VNenwfNCJc9LpXqfe1Fh2ht0G9703Siot+3/1nLrxRkn1sBt9lS44I7WykPjlAY6KZ9/1obQD1iOPnppcpH7Rs1MMpB22jDxa7uAkoXtE2fkF0g5bUs/DEV4S/n5tYF8ynB5P6wuMfgyQwFb1M+bBKAlXqcIeBEjIV814ECMhUzXpQZiEHNXoKegw4iSwVRQPJkngqVgezJPAUBE9oJAwp+J6wCIhqqJ7QCRhXJXhAZcEx2VItgerSIFLBn+sIW2MTwmtWEbKU2WR+hdCqarFpC103dqPxaSMOrGSlOHBQlKSBwtJekteLCP9e58eTkl5qpWkJNVi0pZwUC0mPb286iGmYyVp9FcWZywglfYkD64nlfZb+x7E+SCTCmOf974mqv0W+uHIGXySP5NUK0lJqv+ks7CT7mSGB3TS49E904eZ5AGd9Ny4Z/oyD+gkOFSpHmSQ0FVle5BEQkN1gQd5JBjVNR6kklCpLvNI/AFVdMr52fsbFwAAAABJRU5ErkJggg==" y="204.8281"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="8" x="1359" y="287.2852">[]</text></g><!--MD5=[b112037bf681ddd4b63dd5e0fb3149a9]
-entity dnsIslandPrivateZones--><g id="elem_dnsIslandPrivateZones"><rect fill="#FFFFFF" height="208.2344" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="209" x="63" y="244.6094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="73" x="131" y="267.0664">«AzureDNS»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="143" x="96" y="286.3125">Private DNS Zones</text><image height="70" width="70" x="132.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAGQElEQVR4Xt2bTY7jNhCF57R9BV1BV9AVnG12BrLNphdZB+hFEGQxwMTIIgiyCMAU9FrP5XrFH8nqCTLEg9Gmyar3kRT1Y/en8s2VT7Hi/1/OR7r99c/rr39efvqy/Ph5/uG36ftfTC/fvdmrvbVK++j68x9vv/8de55UTkMyi+YV7sdlkKfjPYtkc2Ke9pKksgk8he0pJJsWdQZhmTXEBRlkH9m6jZn2lINIllXdEMPG28uTpB8pm9XY5MesY2U3kq00M6FDq15r85C2RxdtZumig17Zh2Qjp1kDA95yl6sJHf3fKZh9uncdjiLZaIUhDzC+knht+ZZwXwOzmmioXoaQAg9ze5i9PNM2OdqeYNNj8GirUvpItrH6AWNK5gtWgr+2al24BKb9VB2kwOPHNfDUhryrRi+lWgZWYAvJ1luDp5Z+r9odmXScqoXkA4XQtcTqqatu371UVSR/ZYCgjcRooPWDakSe3HHlqRon4hzJH0JMibhpetSrm0HVRiQkRRu6iqa3kiP5np4h5EA9KpUTDRoK1hkNb30iNMNbelsqyy9BsqacIh8lOAjyFkd4gjSgxiQV7aVX7hHJ73LIFHiCafUBKyPSjuyu6ZgUDbiIgv+iSH5XCJ1TMUfDYluesAETMtKk7hMRaXCKqGDrGSGUplAhI30GhAckTpHvphE1+inyo6OJvNCYox9uQB6QpscLarzViCG0mjusQaTpcaJsJjzFHcnfqPoOGo5STydK04XUfqIckUMKq27qTRHifqg0oxdNmvxt4h1pdgccBkCjeKmDoGV9ZIcHeqn4rC/taFsZGmhqCH3pOUHiJCKuIlkOOxCD7GSHB5HqjO1TKqtE9wBjNZpCeaZtTGk7IvGiDvRTturM+m19ksoBNtOoZL0354dgBIk89mp9Gd+kPECi1Re3770jjRxIcI8HkenQ2iuoYNojAThFQpd5m1Vr6YPPzSPKI/Fwekea5UBqIIWUEKi8dc4qqMLyUyRE0DWsJB6Jzi/bVv6ORFYiaf82kvUK1omEP+A+RYKzJ5GW7cL8HQm1QEIj7d9GoiccBh6JtH4OA9LiFiqMjiDRLZyfj8SDQZF091OkeRsUjgsjq5mvikSXHml53EJqSOwFvW5bhZpRpGm70TgfKZ0lMnAGUiTIPvJgS/1s+5WQ0mPJ18BlAwli+7f13KV+OkiT2/HQSPt3kRrbAwUkVLaRfMzL+v2iCm3o/GQkritaTJH8PjGCxMWsfqb2Jr5sp9f50Hlp2Y5+TlENiS25qBo8RLqulywqjxRPtZc9F0Q1Hiz6LhLnk0iMo0hoBksqWn3RC6LX7f6vi+QtXt1lK+aH5hpI6KhIeGsfXdfbCraprTokItItXLbeHp91zdnhRPdBMB1Gl75TpCW70k3j15YckOATVgFyRyrybEiROPzLdnOhJB7JN0t1WW8QQy/MD+dcSSg0gOfFPXm9I+nh1JZiqBSD0sYqTeoFk/B8dU/z7khv7tE+B0ADeamJVMd45iYSwtLwm3uSfEcqcouhgYJ2+RtRiKYZfeo5O5BKQLpuvwHwfTQcpSaelI+m6ULeKVt1JSCFfQ8zqxFDaHWG+q7SXvhDc3mhWTpFJSAV+SYGPTUoROuDDCPq8iDXVJmiokg6URoUcRUjDPm4doHhU5oM/osilez7mAATcrONet2lETDU0x6v63xJkErli01mhQNP6HOr1640DuoDGGq8t+h7LTmSP0dxbBojp5XquyYGgV2Nw7ye50W+g2HJkcrjPoFwTJ9m1XrfAK9kCKHa8Sd3AqQl3RVYqkil8lMOzYeUtY9GVJsiiKm9mejVlRZScQdVm6rtqS2ErXVXHqusLTmUDtLt8Wdrbaq0vqtGzJTHX86lpYNUhGqqzAnSq622ajx+6sbnB6WPVOpUwYrWdNUYnWM8ZRCpZL/SZWJi1Ia8Jh2XEPMATxlHQvEXFimYuqzJt5zlxOpTLOsTv2ilXvYhlfUsHFLCEwxRbSptn8JM+39+XA4goSzuRBzY1C4qKf0okEDp9dtIOYhU1qNL1yHZiFcT2mhfdO/u1I1yHIkFz6XU2QEtZ/wnyQlIKHiquDzuvINa1od4MeLRchqSL3ikiENFAaD5A/5zCeVDkP7b8g0i/Qt9zTFjrVsbLAAAAABJRU5ErkJggg==" y="289.8281"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="183" x="74.5" y="372.2852">[storage, event hub, AppServices,</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="25" x="155" y="387.3789">etc..]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="165.5" y="404.5488"> </text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="181" x="77" y="422.1582">Automated support for Azure</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="159" x="88" y="439.7676">servcies with private links</text></g><!--MD5=[01b3b70f2db638f756c722fee7cd1807]
-entity dnsPrivateResolver--><g id="elem_dnsPrivateResolver"><rect fill="#F1F1F1" height="70.3125" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156" x="89.5" y="487.6094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="123" x="106" y="510.0664">«PrivateDnsResolver»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="136" x="99.5" y="527.2363">DNS Private Resolver</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80" x="127.5" y="544.8457">contoso.com</text></g><!--MD5=[fcae704fdc49b60d5a89b38f66ebe55c]
-entity vnetIslandA--><g id="elem_vnetIslandA"><rect fill="#FFFFFF" height="190.625" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:2.0;" width="186" x="353" y="209.1094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="47" x="422.5" y="231.5664">«island»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="84" x="404" y="250.8125">workload a</text><image height="70" width="70" x="411" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACv0lEQVR4Xu3XvY7UMBQF4LzkvAKvMK/AK1DSLi3dSLQ0FLQgbYEQBRIgCoQokM6ezV15PffaiX+yib3ykYvd5I59v8TKTCY8u0z6QP8ZpB4ySD1kkHrIIPWQQeohg9RDykk3H3+c33759fe/PlEXTshpObk+kZxCknhkbKgSj4xiVQnJ92yo8j01qmyS9cjQdfmxc5ap8kgxz6v333VpfjiJnblAlUF6Uo9kE1UqaQePpF6VRNrNI6lUrZN29khqVCukQzySYtUS6UCPpEwVJR3ukRSowqRGPJJcVYDUlEeSpdKkBj2SdNUVqVmPJFH1SMr13P78d/n8+8PXP6s/w1nAMhbzI/qciVTGpk1RPZBipUEPF3v57tuLN7ccp9efOOzdd+Epv5IfDPaK+RrxrL86YbooodV70mqRCk/5XcrgpdV1AA/aynPoTcR/WZKPyAje2OWGp9z9FuySg0d0KRCsDPr9NnwS75uqlCyoJnuUIzYR5rmCXXKoK8p/Y5V2o8qW8zHucqhKF7VL3QiQWGqXdCHJthgj2RoZdv4gSYpVpQsnCaom7gHr4bB7Q8LjtsVTZOPZMhl2crn51hPbL5xB+lQqHr9/PDiV8yyr3HrLXWK+kLbyHH88KM/J3HmJ8yiV9PDwEOc/yrOg4jL8vN/ljdlILkq1/BAXlVTyj+BDXHmcyrX6+FXLlWxpTIW5Azkba9FFvpQvaV+1Mm2sMujh8Hu4+kGUq9o5KR7Yn63NqhI9sCQ0qUr3IEhCY6osD2IkNKPK9WCBhAZUBR4sk3CoqsyDVRIOUhV7kELC7qoaDxJJ2FFV6UE6Cbuo6j3IIuGJVZt4kEtCXJW7sMqG02aTEFo++BaQG05S70EZCdeqTTwSX1XmQTEJs+qS9gqUFXm5KvaghtRsBqmHDFIPGaQeMkg9ZJB6yCD1kGdIugMnhHOf6nE9fwAAAABJRU5ErkJggg==" y="254.3281"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="163" x="363" y="336.7852">[AKS, Azure Functions, Virtual</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="55" x="418.5" y="351.8789">Machines]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="444" y="369.0488"> </text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="96" x="400" y="386.6582">192.168.0.0/20</text></g><!--MD5=[61d4ba4c33d76f1084cbd93e321717dd]
-entity vnetIslandB--><g id="elem_vnetIslandB"><rect fill="#FFFFFF" height="175.5313" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:2.0;" width="140" x="376" y="435.6094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="47" x="422.5" y="458.0664">«island»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="85" x="403.5" y="477.3125">workload b</text><image height="70" width="70" x="411" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACv0lEQVR4Xu3XvY7UMBQF4LzkvAKvMK/AK1DSLi3dSLQ0FLQgbYEQBRIgCoQokM6ezV15PffaiX+yib3ykYvd5I59v8TKTCY8u0z6QP8ZpB4ySD1kkHrIIPWQQeohg9RDykk3H3+c33759fe/PlEXTshpObk+kZxCknhkbKgSj4xiVQnJ92yo8j01qmyS9cjQdfmxc5ap8kgxz6v333VpfjiJnblAlUF6Uo9kE1UqaQePpF6VRNrNI6lUrZN29khqVCukQzySYtUS6UCPpEwVJR3ukRSowqRGPJJcVYDUlEeSpdKkBj2SdNUVqVmPJFH1SMr13P78d/n8+8PXP6s/w1nAMhbzI/qciVTGpk1RPZBipUEPF3v57tuLN7ccp9efOOzdd+Epv5IfDPaK+RrxrL86YbooodV70mqRCk/5XcrgpdV1AA/aynPoTcR/WZKPyAje2OWGp9z9FuySg0d0KRCsDPr9NnwS75uqlCyoJnuUIzYR5rmCXXKoK8p/Y5V2o8qW8zHucqhKF7VL3QiQWGqXdCHJthgj2RoZdv4gSYpVpQsnCaom7gHr4bB7Q8LjtsVTZOPZMhl2crn51hPbL5xB+lQqHr9/PDiV8yyr3HrLXWK+kLbyHH88KM/J3HmJ8yiV9PDwEOc/yrOg4jL8vN/ljdlILkq1/BAXlVTyj+BDXHmcyrX6+FXLlWxpTIW5Azkba9FFvpQvaV+1Mm2sMujh8Hu4+kGUq9o5KR7Yn63NqhI9sCQ0qUr3IEhCY6osD2IkNKPK9WCBhAZUBR4sk3CoqsyDVRIOUhV7kELC7qoaDxJJ2FFV6UE6Cbuo6j3IIuGJVZt4kEtCXJW7sMqG02aTEFo++BaQG05S70EZCdeqTTwSX1XmQTEJs+qS9gqUFXm5KvaghtRsBqmHDFIPGaQeMkg9ZJB6yCD1kGdIugMnhHOf6nE9fwAAAABJRU5ErkJggg==" y="480.8281"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="120" x="386" y="563.2852">[Databricks, Synapse]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="444" y="580.4551"> </text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="104" x="396" y="598.0645">192.168.16.0/20</text></g><!--MD5=[91731e06f16d30c0683ac1f11fb29b5a]
-entity vnetHub--><g id="elem_vnetHub"><rect fill="#FFFFFF" height="205.7188" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="216" x="961" y="291.6094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="127" x="1005.5" y="314.0664">«AzureVirtualNetwork»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="32" x="1053" y="333.3125">Hub</text><image height="70" width="70" x="1034" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACv0lEQVR4Xu3XvY7UMBQF4LzkvAKvMK/AK1DSLi3dSLQ0FLQgbYEQBRIgCoQokM6ezV15PffaiX+yib3ykYvd5I59v8TKTCY8u0z6QP8ZpB4ySD1kkHrIIPWQQeohg9RDykk3H3+c33759fe/PlEXTshpObk+kZxCknhkbKgSj4xiVQnJ92yo8j01qmyS9cjQdfmxc5ap8kgxz6v333VpfjiJnblAlUF6Uo9kE1UqaQePpF6VRNrNI6lUrZN29khqVCukQzySYtUS6UCPpEwVJR3ukRSowqRGPJJcVYDUlEeSpdKkBj2SdNUVqVmPJFH1SMr13P78d/n8+8PXP6s/w1nAMhbzI/qciVTGpk1RPZBipUEPF3v57tuLN7ccp9efOOzdd+Epv5IfDPaK+RrxrL86YbooodV70mqRCk/5XcrgpdV1AA/aynPoTcR/WZKPyAje2OWGp9z9FuySg0d0KRCsDPr9NnwS75uqlCyoJnuUIzYR5rmCXXKoK8p/Y5V2o8qW8zHucqhKF7VL3QiQWGqXdCHJthgj2RoZdv4gSYpVpQsnCaom7gHr4bB7Q8LjtsVTZOPZMhl2crn51hPbL5xB+lQqHr9/PDiV8yyr3HrLXWK+kLbyHH88KM/J3HmJ8yiV9PDwEOc/yrOg4jL8vN/ljdlILkq1/BAXlVTyj+BDXHmcyrX6+FXLlWxpTIW5Azkba9FFvpQvaV+1Mm2sMujh8Hu4+kGUq9o5KR7Yn63NqhI9sCQ0qUr3IEhCY6osD2IkNKPK9WCBhAZUBR4sk3CoqsyDVRIOUhV7kELC7qoaDxJJ2FFV6UE6Cbuo6j3IIuGJVZt4kEtCXJW7sMqG02aTEFo++BaQG05S70EZCdeqTTwSX1XmQTEJs+qS9gqUFXm5KvaghtRsBqmHDFIPGaQeMkg9ZJB6yCD1kGdIugMnhHOf6nE9fwAAAABJRU5ErkJggg==" y="336.8281"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="156" x="989.5" y="419.2852">[Azure Firewall, DNS servers</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="193" x="971" y="434.3789">(contoso.com), Private Link Service</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="58" x="1040" y="449.4727">Endpoints]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1067" y="466.6426"> </text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80" x="1031" y="484.252">10.10.0.0/20</text></g><!--MD5=[20f20457c675c4c7da862e2a74080129]
-entity vnetBridge--><g id="elem_vnetBridge"><rect fill="#FFFFFF" height="205.7188" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:2.0;" width="218" x="655" y="291.6094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="47" x="740.5" y="314.0664">«island»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="51" x="738.5" y="333.3125">Bridge</text><image height="70" width="70" x="729" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACv0lEQVR4Xu3XvY7UMBQF4LzkvAKvMK/AK1DSLi3dSLQ0FLQgbYEQBRIgCoQokM6ezV15PffaiX+yib3ykYvd5I59v8TKTCY8u0z6QP8ZpB4ySD1kkHrIIPWQQeohg9RDykk3H3+c33759fe/PlEXTshpObk+kZxCknhkbKgSj4xiVQnJ92yo8j01qmyS9cjQdfmxc5ap8kgxz6v333VpfjiJnblAlUF6Uo9kE1UqaQePpF6VRNrNI6lUrZN29khqVCukQzySYtUS6UCPpEwVJR3ukRSowqRGPJJcVYDUlEeSpdKkBj2SdNUVqVmPJFH1SMr13P78d/n8+8PXP6s/w1nAMhbzI/qciVTGpk1RPZBipUEPF3v57tuLN7ccp9efOOzdd+Epv5IfDPaK+RrxrL86YbooodV70mqRCk/5XcrgpdV1AA/aynPoTcR/WZKPyAje2OWGp9z9FuySg0d0KRCsDPr9NnwS75uqlCyoJnuUIzYR5rmCXXKoK8p/Y5V2o8qW8zHucqhKF7VL3QiQWGqXdCHJthgj2RoZdv4gSYpVpQsnCaom7gHr4bB7Q8LjtsVTZOPZMhl2crn51hPbL5xB+lQqHr9/PDiV8yyr3HrLXWK+kLbyHH88KM/J3HmJ8yiV9PDwEOc/yrOg4jL8vN/ljdlILkq1/BAXlVTyj+BDXHmcyrX6+FXLlWxpTIW5Azkba9FFvpQvaV+1Mm2sMujh8Hu4+kGUq9o5KR7Yn63NqhI9sCQ0qUr3IEhCY6osD2IkNKPK9WCBhAZUBR4sk3CoqsyDVRIOUhV7kELC7qoaDxJJ2FFV6UE6Cbuo6j3IIuGJVZt4kEtCXJW7sMqG02aTEFo++BaQG05S70EZCdeqTTwSX1XmQTEJs+qS9gqUFXm5KvaghtRsBqmHDFIPGaQeMkg9ZJB6yCD1kGdIugMnhHOf6nE9fwAAAABJRU5ErkJggg==" y="336.8281"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="195" x="665" y="419.2852">[Azure Firewall, Bastion, Application</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="162" x="681.5" y="434.3789">Gateway, Private Link Service</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="58" x="735" y="449.4727">Endpoints]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="762" y="466.6426"> </text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="88" x="722" y="484.252">10.10.16.0/20</text></g><!--MD5=[7d1faec0bc72c6e1449dfd0e62b42952]
-entity vnetSpoke--><g id="elem_vnetSpoke"><rect fill="#FFFFFF" height="175.5313" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="188" x="1269" y="306.6094"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="127" x="1299.5" y="329.0664">«AzureVirtualNetwork»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="49" x="1338.5" y="348.3125">Spoke</text><image height="70" width="70" x="1328" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACv0lEQVR4Xu3XvY7UMBQF4LzkvAKvMK/AK1DSLi3dSLQ0FLQgbYEQBRIgCoQokM6ezV15PffaiX+yib3ykYvd5I59v8TKTCY8u0z6QP8ZpB4ySD1kkHrIIPWQQeohg9RDykk3H3+c33759fe/PlEXTshpObk+kZxCknhkbKgSj4xiVQnJ92yo8j01qmyS9cjQdfmxc5ap8kgxz6v333VpfjiJnblAlUF6Uo9kE1UqaQePpF6VRNrNI6lUrZN29khqVCukQzySYtUS6UCPpEwVJR3ukRSowqRGPJJcVYDUlEeSpdKkBj2SdNUVqVmPJFH1SMr13P78d/n8+8PXP6s/w1nAMhbzI/qciVTGpk1RPZBipUEPF3v57tuLN7ccp9efOOzdd+Epv5IfDPaK+RrxrL86YbooodV70mqRCk/5XcrgpdV1AA/aynPoTcR/WZKPyAje2OWGp9z9FuySg0d0KRCsDPr9NnwS75uqlCyoJnuUIzYR5rmCXXKoK8p/Y5V2o8qW8zHucqhKF7VL3QiQWGqXdCHJthgj2RoZdv4gSYpVpQsnCaom7gHr4bB7Q8LjtsVTZOPZMhl2crn51hPbL5xB+lQqHr9/PDiV8yyr3HrLXWK+kLbyHH88KM/J3HmJ8yiV9PDwEOc/yrOg4jL8vN/ljdlILkq1/BAXlVTyj+BDXHmcyrX6+FXLlWxpTIW5Azkba9FFvpQvaV+1Mm2sMujh8Hu4+kGUq9o5KR7Yn63NqhI9sCQ0qUr3IEhCY6osD2IkNKPK9WCBhAZUBR4sk3CoqsyDVRIOUhV7kELC7qoaDxJJ2FFV6UE6Cbuo6j3IIuGJVZt4kEtCXJW7sMqG02aTEFo++BaQG05S70EZCdeqTTwSX1XmQTEJs+qS9gqUFXm5KvaghtRsBqmHDFIPGaQeMkg9ZJB6yCD1kGdIugMnhHOf6nE9fwAAAABJRU5ErkJggg==" y="351.8281"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="168" x="1279" y="434.2852">[Custom API: api.contoso.com]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1361" y="451.4551"> </text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="88" x="1321" y="469.0645">10.10.32.0/20</text></g><!--MD5=[34401b1b2b1c65c3065057acf9755362]
-link nameResolution to vnetIslandA--><g id="link_nameResolution_vnetIslandA"><path d="M296.4338,585.6903 C296.6431,585.5676 296.8519,585.4439 297.0602,585.3193 C297.4766,585.07 297.8908,584.8171 298.3027,584.5603 C299.9501,583.5334 301.5602,582.446 303.1283,581.2954 C306.2647,578.9943 309.2338,576.44 312,573.6094 C336.37,548.6694 313.72,448.9594 329,417.6094 C334.49,406.3394 341.59,395.5694 349.57,385.4694 " fill="none" id="nameResolution-to-vnetIslandA" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="352.79,381.4794,344.0282,385.9772,349.6526,385.3726,350.2573,390.997,352.79,381.4794" style="stroke:#666666;stroke-width:1.0;"/></g><!--MD5=[c6904f40d4a4b3c1860b6590efb950c1]
-link nameResolution to vnetIslandB--><g id="link_nameResolution_vnetIslandB"><path d="M296.5694,577.1635 C296.8185,577.1107 297.0674,577.0578 297.3161,577.0047 C298.3111,576.7924 299.3035,576.5773 300.2929,576.3594 C304.2505,575.4879 308.1606,574.5719 312,573.6094 C331.52,568.7194 352.11,561.8594 371.1,554.7994 " fill="none" id="nameResolution-to-vnetIslandB" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="375.89,552.9994,366.058,552.4241,371.2101,554.7597,368.8745,559.9119,375.89,552.9994" style="stroke:#666666;stroke-width:1.0;"/></g><!--MD5=[76c8a48be149c5f0682e251f10739ca2]
-link vnetIslandA to vnetBridge--><g id="link_vnetIslandA_vnetBridge"><path d="M544.37,332.3394 C577.68,341.8294 615.22,352.5194 649.68,362.3294 " fill="none" id="vnetIslandA-vnetBridge" style="stroke:#008000;stroke-width:2.0;"/><polygon fill="#008000" points="654.74,363.7794,647.1802,357.4667,649.9313,362.4095,644.9885,365.1606,654.74,363.7794" style="stroke:#008000;stroke-width:2.0;"/><polygon fill="#008000" points="539.25,330.8794,546.8098,337.192,544.0587,332.2492,549.0015,329.4981,539.25,330.8794" style="stroke:#008000;stroke-width:2.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="26" x="596" y="344.0664">Peer</text></g><!--MD5=[23afb38ca48cc1fe34d4ae0fbabfa7c5]
-link vnetIslandB to vnetBridge--><g id="link_vnetIslandB_vnetBridge"><path d="M521.16,493.3394 C559.62,477.6394 607.41,458.1294 650.32,440.6094 " fill="none" id="vnetIslandB-vnetBridge" style="stroke:#008000;stroke-width:2.0;"/><polygon fill="#008000" points="654.99,438.6994,645.146,438.3907,650.3595,440.5859,648.1644,445.7994,654.99,438.6994" style="stroke:#008000;stroke-width:2.0;"/><polygon fill="#008000" points="516.35,495.2994,526.194,495.6081,520.9805,493.4129,523.1756,488.1993,516.35,495.2994" style="stroke:#008000;stroke-width:2.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="26" x="596" y="450.0664">Peer</text></g><!--MD5=[a525e6a3c036eff42b2df02c55c27f88]
-link vnetBridge to vnetHub--><g id="link_vnetBridge_vnetHub"><path d="M878.15,394.6094 C903.57,394.6094 930.53,394.6094 955.9,394.6094 " fill="none" id="vnetBridge-vnetHub" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="960.95,394.6094,951.95,390.6094,955.95,394.6094,951.95,398.6094,960.95,394.6094" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="873.11,394.6094,882.11,398.6094,878.11,394.6094,882.11,390.6094,873.11,394.6094" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="26" x="904" y="391.0664">Peer</text></g><!--MD5=[93dc89ee0a6d8eeaa56e587f43ef3075]
-link vnetHub to vnetSpoke--><g id="link_vnetHub_vnetSpoke"><path d="M1182.39,394.6094 C1209.19,394.6094 1237.6,394.6094 1263.71,394.6094 " fill="none" id="vnetHub-vnetSpoke" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="1268.9,394.6094,1259.9,390.6094,1263.9,394.6094,1259.9,398.6094,1268.9,394.6094" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="1177.07,394.6094,1186.07,398.6094,1182.07,394.6094,1186.07,390.6094,1177.07,394.6094" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="26" x="1210" y="391.0664">Peer</text></g><!--MD5=[7aa395a70455e8cada550ffcfb0d55f6]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="933.3333px" preserveAspectRatio="none" style="width:2071px;height:933px;background:#282A36;" version="1.1" viewBox="0 0 2071 933" width="2071.875px" zoomAndPan="magnify"><defs/><g><rect fill="#282A36" height="51.7415" id="_title" rx="4.1667" ry="4.1667" style="stroke:#282A36;stroke-width:0.0;" width="288.5417" x="886.9792" y="20.8333"/><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="265.625" x="898.4375" y="56.0811">Island Network Topology</text><!--MD5=[4f80334fb3381e44c6b0cccb474a8532]
+cluster subscriptionIsland--><g id="cluster_subscriptionIsland"><rect fill="#44475A" height="831.25" rx="4.1667" ry="4.1667" style="stroke:#F1FA8C;stroke-width:2.0833333333333335;" width="808.3333" x="17.7083" y="91.3249"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="120.8333" x="361.4583" y="111.5926">«AzureSubscription»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="288.5417" x="277.6042" y="150.708">Cloud Native Workloads</text><image height="72.9167" width="72.9167" x="385.4167" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAB/klEQVR4Xu3ZS2rEMBCE4TlcQe4QCOQGWQ45QA6gbHPZGLwxtB7dUpUazMBPFomF9CHbY08eeHvX9fH5dfT8/jl+2r+KethfUToY5ffPZo+kxycdG2Il1w6tHUWMTBp6NqiYJKdHraKRQh6pikNqea43uuoNQ6EikFoe55F01Sqpusqq52zDXi2RWp4OqTWEqJontRY3XJ893jPK3ySp4+kvbnqgvxlSf1lndtRZ9Vq6tq4KkzyezsrskbbWWGcxktNTXdnK2FAxkp3b0/BkqzatCpDsrOrmVF6SnW9P10cqZy5S6DKgZ9fTz0Wy0+wsevqNSblbVG5JKsFz70VKyq6q05iE+90ekE2KfjS5SInnXnSL4CQhT2VXMsxLguNVh55dg6cACXtVdnZnMRJ2qey8/sIk6FV2xlAzJChVdq5okyRoVNGPoGrzJLBVFA8WSeCpWB6sk8BQET2gkLCm4nrAImFWRfeASEJcpfCAS0LkNUTkQRZp4pXBXw6pMJ4SWqWRdKpMkkiVTCoCVTJJcZ/IJCk8SCSJPEgk2bGs0kh3e3qQqjJJIlUyqQguqmTS3XZJdB9PI4k8SCTZsazSSDfcJZ0qkyRSvUij7KI7KTygk/xf5Yk8oJOc/6XWeUAnwaGSeqAgoatSeyAioaHa4IGOBKPa44GUhItqm+foH1luJtVLBa1xAAAAAElFTkSuQmCC" y="156.2012"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="13.5417" x="415.1042" y="248.5819">[]</text></g><!--MD5=[6a6dfeeb3653cbfb709c9a533a96c1cd]
+cluster nameResolution--><g id="cluster_nameResolution"><rect fill="#282A36" height="568.75" rx="4.1667" ry="4.1667" style="stroke:#F8F8F2;stroke-width:2.0833333333333335;" width="383.3333" x="51.0417" y="291.3249"/><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="280.2083" x="102.6042" y="322.406">Name Resolution Services</text></g><!--MD5=[874d2f2ba8edd7664b15b448ce929b47]
+cluster subscriptionInfrastructure--><g id="cluster_subscriptionInfrastructure"><rect fill="#44475A" height="502.0833" rx="4.1667" ry="4.1667" style="stroke:#F1FA8C;stroke-width:2.0833333333333335;" width="765.625" x="898.9583" y="240.2832"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="120.8333" x="1221.3542" y="260.5509">«AzureSubscription»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="333.3333" x="1115.1042" y="299.6663">Core Infrastructure Services</text><image height="72.9167" width="72.9167" x="1245.3125" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAB/klEQVR4Xu3ZS2rEMBCE4TlcQe4QCOQGWQ45QA6gbHPZGLwxtB7dUpUazMBPFomF9CHbY08eeHvX9fH5dfT8/jl+2r+KethfUToY5ffPZo+kxycdG2Il1w6tHUWMTBp6NqiYJKdHraKRQh6pikNqea43uuoNQ6EikFoe55F01Sqpusqq52zDXi2RWp4OqTWEqJontRY3XJ893jPK3ySp4+kvbnqgvxlSf1lndtRZ9Vq6tq4KkzyezsrskbbWWGcxktNTXdnK2FAxkp3b0/BkqzatCpDsrOrmVF6SnW9P10cqZy5S6DKgZ9fTz0Wy0+wsevqNSblbVG5JKsFz70VKyq6q05iE+90ekE2KfjS5SInnXnSL4CQhT2VXMsxLguNVh55dg6cACXtVdnZnMRJ2qey8/sIk6FV2xlAzJChVdq5okyRoVNGPoGrzJLBVFA8WSeCpWB6sk8BQET2gkLCm4nrAImFWRfeASEJcpfCAS0LkNUTkQRZp4pXBXw6pMJ4SWqWRdKpMkkiVTCoCVTJJcZ/IJCk8SCSJPEgk2bGs0kh3e3qQqjJJIlUyqQguqmTS3XZJdB9PI4k8SCTZsazSSDfcJZ0qkyRSvUij7KI7KTygk/xf5Yk8oJOc/6XWeUAnwaGSeqAgoatSeyAioaHa4IGOBKPa44GUhItqm+foH1luJtVLBa1xAAAAAElFTkSuQmCC" y="305.1595"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="13.5417" x="1275" y="397.5403">[]</text></g><!--MD5=[59a58b1e555f596f3ae3b558401dd421]
+cluster subscriptionSpoke--><g id="cluster_subscriptionSpoke"><rect fill="#44475A" height="454.1667" rx="4.1667" ry="4.1667" style="stroke:#F1FA8C;stroke-width:2.0833333333333335;" width="322.9167" x="1737.5" y="264.2415"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="120.8333" x="1838.5417" y="284.5093">«AzureSubscription»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="201.0417" x="1798.4375" y="323.6247">Hybrid Workload</text><image height="72.9167" width="72.9167" x="1862.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAB/klEQVR4Xu3ZS2rEMBCE4TlcQe4QCOQGWQ45QA6gbHPZGLwxtB7dUpUazMBPFomF9CHbY08eeHvX9fH5dfT8/jl+2r+KethfUToY5ffPZo+kxycdG2Il1w6tHUWMTBp6NqiYJKdHraKRQh6pikNqea43uuoNQ6EikFoe55F01Sqpusqq52zDXi2RWp4OqTWEqJontRY3XJ893jPK3ySp4+kvbnqgvxlSf1lndtRZ9Vq6tq4KkzyezsrskbbWWGcxktNTXdnK2FAxkp3b0/BkqzatCpDsrOrmVF6SnW9P10cqZy5S6DKgZ9fTz0Wy0+wsevqNSblbVG5JKsFz70VKyq6q05iE+90ekE2KfjS5SInnXnSL4CQhT2VXMsxLguNVh55dg6cACXtVdnZnMRJ2qey8/sIk6FV2xlAzJChVdq5okyRoVNGPoGrzJLBVFA8WSeCpWB6sk8BQET2gkLCm4nrAImFWRfeASEJcpfCAS0LkNUTkQRZp4pXBXw6pMJ4SWqWRdKpMkkiVTCoCVTJJcZ/IJCk8SCSJPEgk2bGs0kh3e3qQqjJJIlUyqQguqmTS3XZJdB9PI4k8SCTZsazSSDfcJZ0qkyRSvUij7KI7KTygk/xf5Yk8oJOc/6XWeUAnwaGSeqAgoatSeyAioaHa4IGOBKPa44GUhItqm+foH1luJtVLBa1xAAAAAElFTkSuQmCC" y="329.1178"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="13.5417" x="1892.1875" y="421.4986">[]</text></g><!--MD5=[b112037bf681ddd4b63dd5e0fb3149a9]
+entity dnsIslandPrivateZones--><g id="elem_dnsIslandPrivateZones"><rect fill="#282A36" height="305.8757" rx="4.1667" ry="4.1667" style="stroke:#8BE9FD;stroke-width:2.0833333333333335;" width="333.3333" x="76.0417" y="357.9915"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="76.0417" x="204.6875" y="386.5926">«AzureDNS»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="221.875" x="131.7708" y="425.708">Private DNS Zones</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="241.6667" y="439.8519"> </text><image height="72.9167" width="72.9167" x="206.25" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAEi0lEQVR4Xt2Z0ZHbOBBEHQ7KATgCXQKIQBFcAhfCBXAhXJpmGbut0byZASiBdtlV/SECg+l+JEituF/a129/mL5w6HfXJUjf/uq3+9/9n38P3f/7Xxojx9Sho4YLt2gb0sCwACsahHvxNiC9QBLqwNvC9hZSDTO2WSbWa9WbYC8iHa5MM8XIxD6HjvNF3xW9gsQQTMmaaT2XHCN0n+ocEncaA4XhKC7JwM7uwxNIYSYXgiOFWBn2HOPMk2kVKUxDYw4WyurD8XWqORKfBPSrxwtlS96hmiA5ntBpOlWrWMWpFaoJEg3W7RdVL6TplKpCco0K73q21nQtC2qqFMk+r9U0My6mVlQvD92LL+IYKbuF2NoWuMF1ZctrX8aukNi38Aj9wmKudZXZKiYZh0weI9HMBs1cXRlnX1NorcPwD4sAKVsfdr9ItHOmGmF+j8SnAvuGHrtEi9BRh3xOeKRsZSZmelO0oGxlxx31hHT2Eqlsu2hEUx1WSNmaTIyyS/QKrcdnt/ceSPa76FTfi0Q7WuswRnK7jl0o5tgrOjp3fbZP8weSKlbaqazWeGXHcc1y0C4cBbS2AfQ5QApLrfi4bD+2q30R6WKNmmL2WOvG+e3JH2xhTtV/ILkbievvnxd3hBgpb+atIsPZU+CmNOtWycL2fxHptnAjDb9R6fJZWskiZcB2nCNDTCLZWZ3cDyTNFV2E5CyHSKURnTVbT4CsP5NItkBn8AMpLHLKLCUXXUik7Rcg9c8AO5FcgSUZLhaASDrNri2ThGnlshPJpbRIiqvlRNISujAM0/afjMTDEEllQ5plmDDtz0ZyFypDGlMWrCd5mPYqJBU4JI2MlAWSqx81zMO0+5FcAZH683OCs5R6Mo9Lq+bbkLSvXBoX2m4/zlIqYx6XtjskO6HPTjUSZ0MkOx7OOmkzM49Lq5P1yh9ENA7zhYPdXKhw1mmU9SSSHR92DyR7ZbP1jHgzjyaist4uJNI4vH3+rLA1DDNydjwbHkht4XZSeqcwtHJnswQO+2dbjjm15ASSDcRrEqouG5ciHNQ4Y4Q5e/gT0J6PupfteKlo6gLos3bpE5K7naYdVXad6OisdWg37QOpLew9J4bYKzo6ax1aiickt/fqpqq5SLRzvjq0u84jtZMXijl2iV701aFD8Ei2dNqdUbaIRjTVobtEAVJbu1DMsV00DVMxf4BU31H0Vg0H31fNw0sUIzVzoWyX0IzermxF7MMCm0Ri8hTJ/VkVGrjZcHBFRRP2sVOMXSG16DkRWmqW47ZAZfrMDkUTFoRbboLUtlLVqpfTuuM/f1YVUotuqtA7G19R0TabZU6rCVK7nmra002Fv0Gs5kjtmUpOK4NThaGLcWajlpBaQuUsOTJVuCRsfl/jaetIDS8AZKzxLEom1rOnxDyZTiC16GezC5EFosJV4dpePt+oc0gN38IuX5FsWh8umT4MqNNIQ6F9kbUW+9zLL9NaLyINcR+u47He6oWLI72FNFSDnVJPXn2d0gakofFWcXr6Q20hkbYhOU1fxHX8H2mXrkL6hfoDkb4DJQ4DO/OBfrgAAAAASUVORK5CYII=" y="441.6829"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="282.2917" x="98.9583" y="534.0637">[storage, event hub, AppServices,</text><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="40.625" x="222.3958" y="557.6477">etc..]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="6.25" x="239.5833" y="585.557"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="289.5833" x="97.9167" y="614.3819">Automated support for Azure</text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="251.0417" x="117.1875" y="643.2068">servcies with private links</text></g><!--MD5=[01b3b70f2db638f756c722fee7cd1807]
+entity dnsPrivateResolver--><g id="elem_dnsPrivateResolver"><rect fill="#282A36" height="115.0391" rx="4.1667" ry="4.1667" style="stroke:#8BE9FD;stroke-width:2.0833333333333335;" width="253.125" x="116.1458" y="700.6999"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="128.125" x="178.6458" y="729.3009">«PrivateDnsResolver»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="221.875" x="131.7708" y="766.2537">DNS Private Resolver</text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="131.25" x="177.0833" y="795.0785">contoso.com</text></g><!--MD5=[fcae704fdc49b60d5a89b38f66ebe55c]
+entity vnetIslandA--><g id="elem_vnetIslandA"><rect fill="#282A36" height="277.0508" rx="4.1667" ry="4.1667" style="stroke:#FF0000;stroke-width:2.0833333333333335;" width="290.625" x="493.75" y="313.1999"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="132.2917" x="572.9167" y="341.8009">«AzureVirtualNetwork»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="131.25" x="573.4375" y="380.9163">workload a</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="638.0208" y="395.0602"> </text><image height="72.9167" width="72.9167" x="602.6042" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACf0lEQVR4Xu2XQU7DMBBFexyLA3ADxJY7wI5TwIJjBHGPcDfcThmC/4zjGbtpXFl6QiKZ/PmvDW04hLv7G+OAh3pnKPXAUOqBodQDQ6kHhlIPDKUe8Cs9v7xOn194vJ4YG8PxeCFOJfIh8GwNHOu28igtfdpaJbE+K7MS+rSywkyflU1J83l7/8BhKzEEkx1WBqWL+hBNrEqVNvAh6q2KlDbzISqt1pU29iFqrFaUruJDuK1ySlf0IXxWqtLVfQiHlay0Ex/CaiUo7cqHMFmlSjv0Icqt/int1ocotPpTsvo8PD7FS+JPPIWUD+cnS6zOStqo5sPz8/ccwXef4VeKJrXAcJJJaohiq1WPSqtDCTxALTNWiQ8xKf+JYIHJZXWw3m9iS62oOCn6W2tkrA54NBPEWdgykryi8VdtEpW0inEYO+QvEZTiKK5cBmFFTQlnCMwX+9EwdiBiiHhVeuORD4EpFIQVZ+XGwzECw7EcTWr3C5dMLoxHjh8PbLX0yVjxvnxLSsZJUZ5iE58Z3nmOXcJW1OH8IU4nklHNCv9IxDFOXk5qrzrHcvKkfNxhQy5PA+nTgwjmht/vRO2sOClWFIe1SeyGHYRnPBFM3x5sJXZLlcqv3Bjso7USlEzXbwM2yfSRlawpFwU75JuoSsGedQlw+2qHnFJwJTYE95ZsX1EK3tx6cGPh3nWlUJHuBneVbyxSCnU7rOAW065SpVC9qRDMt24xKIUW+/JgsiPfphQabRXBTF+yWSkou3HMCmb6Yj1KAdZrD84m+IG9xie4lcLCqokPsbTCs4X4lcLJqqEPQVZ4vJwqpX0ylHpgKPXAUOqBodQDQ6kHhlIP3KDSDyMt0OzJRHUdAAAAAElFTkSuQmCC" y="396.8913"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="254.1667" x="509.375" y="489.2721">[AKS, Azure Functions, Virtual</text><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="87.5" x="595.3125" y="512.856">Machines]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="6.25" x="635.9375" y="540.7654"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="150" x="567.1875" y="569.5903">192.168.0.0/20</text></g><!--MD5=[61d4ba4c33d76f1084cbd93e321717dd]
+entity vnetIslandB--><g id="elem_vnetIslandB"><rect fill="#282A36" height="253.4668" rx="4.1667" ry="4.1667" style="stroke:#FF0000;stroke-width:2.0833333333333335;" width="214.5833" x="531.7708" y="627.2624"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="132.2917" x="572.9167" y="655.8634">«AzureVirtualNetwork»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="133.3333" x="572.3958" y="694.9788">workload b</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="638.0208" y="709.1227"> </text><image height="72.9167" width="72.9167" x="602.6042" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACf0lEQVR4Xu2XQU7DMBBFexyLA3ADxJY7wI5TwIJjBHGPcDfcThmC/4zjGbtpXFl6QiKZ/PmvDW04hLv7G+OAh3pnKPXAUOqBodQDQ6kHhlIPDKUe8Cs9v7xOn194vJ4YG8PxeCFOJfIh8GwNHOu28igtfdpaJbE+K7MS+rSywkyflU1J83l7/8BhKzEEkx1WBqWL+hBNrEqVNvAh6q2KlDbzISqt1pU29iFqrFaUruJDuK1ySlf0IXxWqtLVfQiHlay0Ex/CaiUo7cqHMFmlSjv0Icqt/int1ocotPpTsvo8PD7FS+JPPIWUD+cnS6zOStqo5sPz8/ccwXef4VeKJrXAcJJJaohiq1WPSqtDCTxALTNWiQ8xKf+JYIHJZXWw3m9iS62oOCn6W2tkrA54NBPEWdgykryi8VdtEpW0inEYO+QvEZTiKK5cBmFFTQlnCMwX+9EwdiBiiHhVeuORD4EpFIQVZ+XGwzECw7EcTWr3C5dMLoxHjh8PbLX0yVjxvnxLSsZJUZ5iE58Z3nmOXcJW1OH8IU4nklHNCv9IxDFOXk5qrzrHcvKkfNxhQy5PA+nTgwjmht/vRO2sOClWFIe1SeyGHYRnPBFM3x5sJXZLlcqv3Bjso7USlEzXbwM2yfSRlawpFwU75JuoSsGedQlw+2qHnFJwJTYE95ZsX1EK3tx6cGPh3nWlUJHuBneVbyxSCnU7rOAW065SpVC9qRDMt24xKIUW+/JgsiPfphQabRXBTF+yWSkou3HMCmb6Yj1KAdZrD84m+IG9xie4lcLCqokPsbTCs4X4lcLJqqEPQVZ4vJwqpX0ylHpgKPXAUOqBodQDQ6kHhlIP3KDSDyMt0OzJRHUdAAAAAElFTkSuQmCC" y="710.9538"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="183.3333" x="547.3958" y="803.3346">[Databricks, Synapse]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="6.25" x="635.9375" y="831.2439"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="162.5" x="560.9375" y="860.0688">192.168.16.0/20</text></g><!--MD5=[91731e06f16d30c0683ac1f11fb29b5a]
+entity vnetHub--><g id="elem_vnetHub"><rect fill="#282A36" height="300.6348" rx="4.1667" ry="4.1667" style="stroke:#FFFFFF;stroke-width:2.0833333333333335;" width="334.375" x="1313.5417" y="424.1374"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="132.2917" x="1414.5833" y="452.7384">«AzureVirtualNetwork»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="48.9583" x="1456.25" y="491.8538">Hub</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="1479.6875" y="505.9977"> </text><image height="72.9167" width="72.9167" x="1444.2708" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACf0lEQVR4Xu2XQU7DMBBFexyLA3ADxJY7wI5TwIJjBHGPcDfcThmC/4zjGbtpXFl6QiKZ/PmvDW04hLv7G+OAh3pnKPXAUOqBodQDQ6kHhlIPDKUe8Cs9v7xOn194vJ4YG8PxeCFOJfIh8GwNHOu28igtfdpaJbE+K7MS+rSywkyflU1J83l7/8BhKzEEkx1WBqWL+hBNrEqVNvAh6q2KlDbzISqt1pU29iFqrFaUruJDuK1ySlf0IXxWqtLVfQiHlay0Ex/CaiUo7cqHMFmlSjv0Icqt/int1ocotPpTsvo8PD7FS+JPPIWUD+cnS6zOStqo5sPz8/ccwXef4VeKJrXAcJJJaohiq1WPSqtDCTxALTNWiQ8xKf+JYIHJZXWw3m9iS62oOCn6W2tkrA54NBPEWdgykryi8VdtEpW0inEYO+QvEZTiKK5cBmFFTQlnCMwX+9EwdiBiiHhVeuORD4EpFIQVZ+XGwzECw7EcTWr3C5dMLoxHjh8PbLX0yVjxvnxLSsZJUZ5iE58Z3nmOXcJW1OH8IU4nklHNCv9IxDFOXk5qrzrHcvKkfNxhQy5PA+nTgwjmht/vRO2sOClWFIe1SeyGHYRnPBFM3x5sJXZLlcqv3Bjso7USlEzXbwM2yfSRlawpFwU75JuoSsGedQlw+2qHnFJwJTYE95ZsX1EK3tx6cGPh3nWlUJHuBneVbyxSCnU7rOAW065SpVC9qRDMt24xKIUW+/JgsiPfphQabRXBTF+yWSkou3HMCmb6Yj1KAdZrD84m+IG9xie4lcLCqokPsbTCs4X4lcLJqqEPQVZ4vJwqpX0ylHpgKPXAUOqBodQDQ6kHhlIP3KDSDyMt0OzJRHUdAAAAAElFTkSuQmCC" y="507.8288"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="242.7083" x="1356.7708" y="600.2096">[Azure Firewall, DNS servers</text><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="297.9167" x="1329.1667" y="623.7935">(contoso.com), Private Link Service</text><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="89.5833" x="1435.9375" y="647.3775">Endpoints]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="6.25" x="1477.6042" y="675.2869"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="125" x="1421.3542" y="704.1117">10.10.0.0/20</text></g><!--MD5=[20f20457c675c4c7da862e2a74080129]
+entity vnetBridge--><g id="elem_vnetBridge"><rect fill="#282A36" height="300.6348" rx="4.1667" ry="4.1667" style="stroke:#FF0000;stroke-width:2.0833333333333335;" width="341.6667" x="915.625" y="424.1374"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="132.2917" x="1020.3125" y="452.7384">«AzureVirtualNetwork»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="79.1667" x="1046.875" y="491.8538">Bridge</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="1085.4167" y="505.9977"> </text><image height="72.9167" width="72.9167" x="1050" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACf0lEQVR4Xu2XQU7DMBBFexyLA3ADxJY7wI5TwIJjBHGPcDfcThmC/4zjGbtpXFl6QiKZ/PmvDW04hLv7G+OAh3pnKPXAUOqBodQDQ6kHhlIPDKUe8Cs9v7xOn194vJ4YG8PxeCFOJfIh8GwNHOu28igtfdpaJbE+K7MS+rSywkyflU1J83l7/8BhKzEEkx1WBqWL+hBNrEqVNvAh6q2KlDbzISqt1pU29iFqrFaUruJDuK1ySlf0IXxWqtLVfQiHlay0Ex/CaiUo7cqHMFmlSjv0Icqt/int1ocotPpTsvo8PD7FS+JPPIWUD+cnS6zOStqo5sPz8/ccwXef4VeKJrXAcJJJaohiq1WPSqtDCTxALTNWiQ8xKf+JYIHJZXWw3m9iS62oOCn6W2tkrA54NBPEWdgykryi8VdtEpW0inEYO+QvEZTiKK5cBmFFTQlnCMwX+9EwdiBiiHhVeuORD4EpFIQVZ+XGwzECw7EcTWr3C5dMLoxHjh8PbLX0yVjxvnxLSsZJUZ5iE58Z3nmOXcJW1OH8IU4nklHNCv9IxDFOXk5qrzrHcvKkfNxhQy5PA+nTgwjmht/vRO2sOClWFIe1SeyGHYRnPBFM3x5sJXZLlcqv3Bjso7USlEzXbwM2yfSRlawpFwU75JuoSsGedQlw+2qHnFJwJTYE95ZsX1EK3tx6cGPh3nWlUJHuBneVbyxSCnU7rOAW065SpVC9qRDMt24xKIUW+/JgsiPfphQabRXBTF+yWSkou3HMCmb6Yj1KAdZrD84m+IG9xie4lcLCqokPsbTCs4X4lcLJqqEPQVZ4vJwqpX0ylHpgKPXAUOqBodQDQ6kHhlIP3KDSDyMt0OzJRHUdAAAAAElFTkSuQmCC" y="507.8288"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="305.2083" x="931.25" y="600.2096">[Azure Firewall, Bastion, Application</text><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="253.125" x="957.2917" y="623.7935">Gateway, Private Link Service</text><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="89.5833" x="1041.6667" y="647.3775">Endpoints]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="6.25" x="1083.3333" y="675.2869"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="137.5" x="1020.8333" y="704.1117">10.10.16.0/20</text></g><!--MD5=[7d1faec0bc72c6e1449dfd0e62b42952]
+entity vnetSpoke--><g id="elem_vnetSpoke"><rect fill="#282A36" height="253.4668" rx="4.1667" ry="4.1667" style="stroke:#FFFFFF;stroke-width:2.0833333333333335;" width="289.5833" x="1754.1667" y="448.0957"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="132.2917" x="1832.8125" y="476.6968">«AzureVirtualNetwork»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="75" x="1861.4583" y="515.8122">Spoke</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="1897.9167" y="529.9561"> </text><image height="72.9167" width="72.9167" x="1862.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACf0lEQVR4Xu2XQU7DMBBFexyLA3ADxJY7wI5TwIJjBHGPcDfcThmC/4zjGbtpXFl6QiKZ/PmvDW04hLv7G+OAh3pnKPXAUOqBodQDQ6kHhlIPDKUe8Cs9v7xOn194vJ4YG8PxeCFOJfIh8GwNHOu28igtfdpaJbE+K7MS+rSywkyflU1J83l7/8BhKzEEkx1WBqWL+hBNrEqVNvAh6q2KlDbzISqt1pU29iFqrFaUruJDuK1ySlf0IXxWqtLVfQiHlay0Ex/CaiUo7cqHMFmlSjv0Icqt/int1ocotPpTsvo8PD7FS+JPPIWUD+cnS6zOStqo5sPz8/ccwXef4VeKJrXAcJJJaohiq1WPSqtDCTxALTNWiQ8xKf+JYIHJZXWw3m9iS62oOCn6W2tkrA54NBPEWdgykryi8VdtEpW0inEYO+QvEZTiKK5cBmFFTQlnCMwX+9EwdiBiiHhVeuORD4EpFIQVZ+XGwzECw7EcTWr3C5dMLoxHjh8PbLX0yVjxvnxLSsZJUZ5iE58Z3nmOXcJW1OH8IU4nklHNCv9IxDFOXk5qrzrHcvKkfNxhQy5PA+nTgwjmht/vRO2sOClWFIe1SeyGHYRnPBFM3x5sJXZLlcqv3Bjso7USlEzXbwM2yfSRlawpFwU75JuoSsGedQlw+2qHnFJwJTYE95ZsX1EK3tx6cGPh3nWlUJHuBneVbyxSCnU7rOAW065SpVC9qRDMt24xKIUW+/JgsiPfphQabRXBTF+yWSkou3HMCmb6Yj1KAdZrD84m+IG9xie4lcLCqokPsbTCs4X4lcLJqqEPQVZ4vJwqpX0ylHpgKPXAUOqBodQDQ6kHhlIP3KDSDyMt0OzJRHUdAAAAAElFTkSuQmCC" y="531.7871"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="258.3333" x="1769.7917" y="624.1679">[Custom API: api.contoso.com]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="6.25" x="1895.8333" y="652.0772"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" lengthAdjust="spacing" textLength="137.5" x="1833.3333" y="680.9021">10.10.32.0/20</text></g><!--MD5=[34401b1b2b1c65c3065057acf9755362]
+link nameResolution to vnetIslandA--><g id="link_nameResolution_vnetIslandA"><path d="M277.0484,860.0945 C277.3032,860.1461 277.559,860.1978 277.816,860.2494 C278.8438,860.4559 279.8893,860.6618 280.9517,860.8664 C285.2013,861.6852 289.7208,862.485 294.459,863.229 C303.9355,864.717 314.2871,865.9818 325.1042,866.7285 C368.3724,869.7155 419.0885,864.4134 451.0417,831.9499 C485.8958,796.5332 447.1042,653.7624 468.75,609.0332 C474.6875,596.7624 482.0313,584.9707 490.3125,573.7624 " fill="none" id="nameResolution-to-vnetIslandA" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><polygon fill="#F8F8F2" points="493.6563,569.3249,484.678,574.289,490.5146,573.479,491.3246,579.3156,493.6563,569.3249" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/></g><!--MD5=[c6904f40d4a4b3c1860b6590efb950c1]
+link nameResolution to vnetIslandB--><g id="link_nameResolution_vnetIslandB"><path d="M435.2581,835.5949 C435.6137,835.5193 435.9691,835.4433 436.3242,835.3669 C437.0343,835.2142 437.7433,835.0601 438.451,834.9046 C439.8665,834.5935 441.277,834.2769 442.682,833.9544 C445.492,833.3095 448.2799,832.6416 451.0417,831.9499 C476.1563,825.6582 502.2813,816.5228 526.7708,806.7103 " fill="none" id="nameResolution-to-vnetIslandB" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><polygon fill="#F8F8F2" points="531.6354,804.7415,521.3812,804.42,526.812,806.7066,524.5254,812.1374,531.6354,804.7415" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/></g><!--MD5=[76c8a48be149c5f0682e251f10739ca2]
+link vnetIslandA to vnetBridge--><g id="link_vnetIslandA_vnetBridge"><path d="M789.7917,493.054 C828.3854,503.7103 870.2708,515.2728 910.0417,526.252 " fill="none" id="vnetIslandA-vnetBridge" style="stroke:#FF0000;stroke-width:2.0833333333333335;"/><polygon fill="#FF0000" points="915.3854,527.7207,907.4746,521.1884,910.3686,526.3214,905.2356,529.2153,915.3854,527.7207" style="stroke:#FF0000;stroke-width:2.0833333333333335;"/><polygon fill="#FF0000" points="784.375,491.5645,792.3087,498.0689,789.3967,492.9462,794.5195,490.0342,784.375,491.5645" style="stroke:#FF0000;stroke-width:2.0833333333333335;"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="27.0833" x="848.9583" y="501.1759">Peer</text></g><!--MD5=[23afb38ca48cc1fe34d4ae0fbabfa7c5]
+link vnetIslandB to vnetBridge--><g id="link_vnetIslandB_vnetBridge"><path d="M751.5521,708.9811 C799.6771,689.627 857.125,666.5124 910.6875,644.9603 " fill="none" id="vnetIslandB-vnetBridge" style="stroke:#FF0000;stroke-width:2.0833333333333335;"/><polygon fill="#FF0000" points="915.5208,643.0124,905.2679,642.6527,910.6902,644.9595,908.3833,650.3817,915.5208,643.0124" style="stroke:#FF0000;stroke-width:2.0833333333333335;"/><polygon fill="#FF0000" points="746.4896,711.0228,756.7425,711.3825,751.3203,709.0757,753.6271,703.6534,746.4896,711.0228" style="stroke:#FF0000;stroke-width:2.0833333333333335;"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="27.0833" x="848.9583" y="650.1343">Peer</text></g><!--MD5=[a525e6a3c036eff42b2df02c55c27f88]
+link vnetBridge to vnetHub--><g id="link_vnetBridge_vnetHub"><path d="M1262.7396,574.6582 C1277.7292,574.6582 1292.875,574.6582 1307.8333,574.6582 " fill="none" id="vnetBridge-vnetHub" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><polygon fill="#F8F8F2" points="1313.3333,574.6582,1303.9583,570.4915,1308.125,574.6582,1303.9583,578.8249,1313.3333,574.6582" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><polygon fill="#F8F8F2" points="1257.5208,574.6582,1266.8958,578.8249,1262.7292,574.6582,1266.8958,570.4915,1257.5208,574.6582" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="27.0833" x="1271.875" y="565.7593">Peer</text></g><!--MD5=[93dc89ee0a6d8eeaa56e587f43ef3075]
+link vnetHub to vnetSpoke--><g id="link_vnetHub_vnetSpoke"><path d="M1653.3958,574.6582 C1685.0208,574.6582 1717.8125,574.6582 1748.7083,574.6582 " fill="none" id="vnetHub-vnetSpoke" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><polygon fill="#F8F8F2" points="1754.0521,574.6582,1744.6771,570.4915,1748.8438,574.6582,1744.6771,578.8249,1754.0521,574.6582" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><polygon fill="#F8F8F2" points="1648.0417,574.6582,1657.4167,578.8249,1653.25,574.6582,1657.4167,570.4915,1648.0417,574.6582" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="27.0833" x="1687.5" y="565.7593">Peer</text></g><!--MD5=[af44d6627d4a0633866e4f225ca54f48]
 @startuml diagram-topology
 
+' !define AzurePuml https://raw.githubusercontent.com/travisnielsen/Azure-PlantUML/themesupport/dist
 !define AzurePuml https://raw.githubusercontent.com/travisnielsen/Azure-PlantUML/themesupport/dist
 
 ' Theme
 ' !includeurl AzurePuml/themes/blueprint.puml
-!includeurl AzurePuml/AzureCommon.puml
+' !includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/themes/dracula.puml
 
 ' C4
 ' !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
@@ -38,43 +40,67 @@ LAYOUT_LEFT_RIGHT
 TITLE: Island Network Topology
 
 skinparam Rectangle {
-    BorderColor<<island>> green
-    BorderThickness<<island>> 2
-    BackgroundColor<<island>> white
-
+    BorderColor<<island>> GREEN
+    BorderThickness<<island>> 6
 }
 
-AzureSubscription(subscriptionIsland, "Workload Subscription A", "") {
+skinparam rectangle<<e_stereo>> {
+    BackgroundColor<<Region>> BACKGROUND
+	BorderColor<<Region>> RED
+	BackgroundColor<<AzureSubscription>> SELECTION
+	BorderColor<<AzureSubscription>> YELLOW
+    BackgroundColor<<AzureVirtualNetwork>> BACKGROUND
+    BorderColor<<AzureVirtualNetwork>> ORANGE
+    BackgroundColor<<AzureSubnet>> SELECTION
+    BorderColor<<AzureSubnet>> ORANGE
+    BorderColor<<AzureRouteTable>> ORANGE
+    BorderColor<<AzurePrivateLink>> ORANGE
+	BorderColor<<AzureExpressRoute>> ORANGE
+	BorderColor<<AzureVPNGateway>> ORANGE
+    BorderColor<<AzureVirtualMachine>> PURPLE
+    BorderColor<<AzureFunction>> PURPLE
+    BorderColor<<AzureDataLakeStorage>> CYAN
+    BorderColor<<AzureSqlDataWarehouse>> CYAN
+    BorderColor<<AzureDataFactory>> CYAN
+    BorderColor<<AzureFirewall>> RED
+    BorderColor<<AzureNSG>> RED
+    BorderColor<<AzureDNS>> CYAN
+    BorderColor<<PrivateDnsResolver>> CYAN
+}
+
+
+
+AzureSubscription(subscriptionIsland, "Cloud Native Workloads", "") {
 
     Rectangle "Name Resolution Services" as nameResolution {
-        AzureDNS(dnsIslandPrivateZones, "Private DNS Zones", "storage, event hub, AppServices, etc..", "Automated support for Azure servcies with private links")
+        AzureDNS(dnsIslandPrivateZones, "Private DNS Zones", "storage, event hub, AppServices, etc..", "Automated support for Azure servcies with private links", CYAN)
         Rectangle "DNS Private Resolver\ncontoso.com" <<PrivateDnsResolver>> as dnsPrivateResolver
     } 
 
     together {
-        AzureVirtualNetwork(vnetIslandA, "workload a", "AKS, Azure Functions, Virtual Machines", "192.168.0.0/20") <<island>> {
+        AzureVirtualNetwork(vnetIslandA, "workload a", "AKS, Azure Functions, Virtual Machines", "192.168.0.0/20") #line:red {
         }
-        AzureVirtualNetwork(vnetIslandB, "workload b", "Databricks, Synapse", "192.168.16.0/20") <<island>> {
+        AzureVirtualNetwork(vnetIslandB, "workload b", "Databricks, Synapse", "192.168.16.0/20") #line:red {
         }
     }
 
     nameResolution -down-> vnetIslandA
-    nameResolution-> vnetIslandB
+    nameResolution -> vnetIslandB
 }
 
-AzureSubscription(subscriptionInfrastructure, "Infrastructure Subscription", "") {
-    AzureVirtualNetwork(vnetBridge, "Bridge", "Azure Firewall, Bastion, Application Gateway, Private Link Service Endpoints", "10.10.16.0/20") <<island>> {
+AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", "") {
+    AzureVirtualNetwork(vnetBridge, "Bridge", "Azure Firewall, Bastion, Application Gateway, Private Link Service Endpoints", "10.10.16.0/20") #line:red;line.bold {
     }
-    AzureVirtualNetwork(vnetHub, "Hub", "Azure Firewall, DNS servers (contoso.com), Private Link Service Endpoints", "10.10.0.0/20")
+    AzureVirtualNetwork(vnetHub, "Hub", "Azure Firewall, DNS servers (contoso.com), Private Link Service Endpoints", "10.10.0.0/20") #line:white
 }
 
-AzureSubscription(subscriptionSpoke, "Workload Subscription B", "") {
-    AzureVirtualNetwork(vnetSpoke, "Spoke", "Custom API: api.contoso.com", "10.10.32.0/20")
+AzureSubscription(subscriptionSpoke, "Hybrid Workload", "") {
+    AzureVirtualNetwork(vnetSpoke, "Spoke", "Custom API: api.contoso.com", "10.10.32.0/20") #line:white
 
 }
 
-vnetIslandA <-[thickness=2,#green]down-> vnetBridge : "Peer"
-vnetIslandB <-[thickness=2,#green]down-> vnetBridge : "Peer"
+vnetIslandA <-[thickness=2,#red]down-> vnetBridge : "Peer"
+vnetIslandB <-[thickness=2,#red]down-> vnetBridge : "Peer"
 vnetBridge <-down-> vnetHub : "Peer"
 vnetHub <-down-> vnetSpoke : "Peer"
 
@@ -87,19 +113,67 @@ vnetHub <-down-> vnetSpoke : "Peer"
 
 
 
-skinparam defaultTextAlignment center
 
-skinparam wrapWidth 200
-skinparam maxMessageSize 150
+
+skinparam defaultFontName        "Helvetica"
+skinparam defaultFontSize        12
+skinparam dpi                    100
+skinparam shadowing              false
+skinparam roundcorner            8
+skinparam ParticipantPadding     40
+skinparam BoxPadding             40
+skinparam Padding                5
+skinparam defaultTextAlignment  center
+skinparam wrapWidth             300
+skinparam maxMessageSize        150
+skinparam ranksep               1
+
+
+
+
+
+
+<style>
+  root {
+    BackgroundColor #282a36
+    FontColor #f8f8f2
+    FontName Helvetica
+    HyperLinkColor #f8f8f2
+    LineColor #f8f8f2
+    LineThickness 1
+    Margin 10
+    Padding 6
+    Shadowing 0.0
+  }
+  caption {
+    LineThickness 0
+  }
+  footer {
+    LineThickness 0
+  }
+  header {
+    LineThickness 0
+  }
+  node {
+    Padding 15
+    roundcorner 20
+    MaximumWidth 400
+  }
+  title {
+    FontSize 22
+    LineThickness 0
+  }
+</style>
+
 
 skinparam rectangle {
+	FontColor #f8f8f2
+	BorderColor #f8f8f2
+	BackgroundColor #282a36
+	BorderThickness 2
+	StereotypeFontColor #f8f8f2
     StereotypeFontSize 12
-}
-
-skinparam Arrow {
-    Color #666666
-    FontColor #666666
-    FontSize 12
+    EntityStereotypeFontSize 12
 }
 
 
@@ -108,68 +182,64 @@ skinparam Arrow {
 
 
 
-
-
-sprite $AzureSubscription [70x70/16z] {
-pTS5TeGX40JXmNhkV-9unSCFTAoUh7yFMujffRRUIdZrV4YEKvNKpn4860Cn612J0L4jKJhCAH8FjJEcfkwDP8S7p2OYfQHNGuFPGXuQmH5ExJ9LD5xV1REE
-4FTrAPM2sKCOJ96qDHeGc18HJK-jZgReGqElOZHx26sDHXSncZf3cgIbqSWOojhIL2qpOsb2-NdYGNaAA_FJOobQR7vYT34OqVJ0rBKPAKVCQckAOjwOdXAk
-bpXZ2CHYG2m6n690VAR6SiD4O4m4naHWJ0J6H60yX3uWlZB2KgWOYiMWP7vWN4NVeWnF0J4L45-9Rr6ghy3uYke_EY_jEvGUjf8WZfAPvL19PQRuBp9EbPSC
-9Xtc-nKVYM4XL4q4naTWG2m6n6D0J6ODkGK
+sprite $AzureSubscription [70x70/8z] {
+xTG5SiD050HHpUpzpnnEEfnVss6xYunFqjBnVabpoBfkCqRMGpK8rI1KWr054iQusyYJTpN8njs0eF11Tn3-n2TpXF-y_6YC4EC2ixzYNtmsGQXxgtYzg8k6
+p1fLWr06WpB8t0hLtefNw1SgVdIz4hTUk1NF7EzNWr0DGZK8rI3K0IAP7EDg4Af1g0QX6eHg4Af1I28er4Cef1HI2Yc5X49L2eXN-ejcEaQX68NoYzPBpkj5
+tCjNZWlrpvyC5GZ581I3K41C0J45n9GPSWa
 }
 
 skinparam rectangle<<AzureSubscription>> {
-    BackgroundColor #FFFFFF
-    BorderColor #3C7FC0
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
 }
-sprite $AzureVirtualNetwork [70x70/16z] {
-xTH9ikGW38JXH9QCuFu7RZTIuB3UbEiA_ol6h-R2f_VszcRUy6FDZKJymHJ4tJYaC0LX6FC8t-QHaSY9RpiBGo0ymoELOH2EuH6UgGZ9y0ZFL8HdU8HdAi8p
-1C8m3C8p5H4z6dRjKC7TaPkLEPz8wsFCQSZi_wmtHDBzwa2zM17uTUrAiTAO-VttCgwaCbQGl3O7LZbBr5BfA8n77TavPYIuafpbA-m-LXDPzoWHsyfyAFCx
-PMx5aj50J17fZ0PMCuljCv6EI2qOXIxaPXvl16pEnxkxa2aRMOm2q8LiHdo_WitSdxHVo3WsifYusEp1G4mRTg8gk1CJF11hG66uAa8m148m1C8mF58P7g4P
-7gaCZ_0CZrI6HtY6Hoh38pnJ4OffVsnIp85lEmWacOfKfe6fgU37H1i-lRUtjty
+sprite $AzureVirtualNetwork [70x70/8z] {
+xT99aiCm34DH2wRkV-KkcHsaWan_dH9sDCYNyVZrxEpig3wr9OXKVK2gn90Fp5MA81-OwWWYv-lwD8CHpd0a6O8mXYESIGGo7E5C8fpX26SIuGn024CGpYGo
+DBphCQTaJYDkvvJVvvfE6zVoSk8maLfdPjHJtSkNZ0BfCz-joMWkcxbpBcPdh6dS9ZrSpIEOVqH-FX-K-KgPLlJ_H8tencXsgiTK6l77LpCwr8YPyfbHcqSZ
+SnYvcBMh2p4poeYP-o-za3BIZ3msqncoqLF-w_8g7w3a3M000XY000OZMN04Lnp9aYEyvbkSyGvO8Hk00JrXG0iOM7vcnkjkD4AII387Io3173-VdPsTFm
 }
 
 skinparam rectangle<<AzureVirtualNetwork>> {
-    BackgroundColor #FFFFFF
-    BorderColor #3C7FC0
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
 }
-sprite $AzureDNS [70x70/16z] {
-rPZfdgGm2CINX5JX-x_m_aGmoYHpVPlQdKlfVtF5aFxtDoHzW6Q74KFRhn1jsF4MVqeI3KGLVW0QHyXuouBB_Zr6lmauHTw_N23Jhnb2DoLEfGVvD-AcV07H
-oym1W1sM8ioO7EkVEc8tu_n1U-WgUdBm1SGkHeLO_Wt0R-yWpPrr8xT-GUO59cOFeJiIRrq4JjukABaXQLarBn7SO7X1t96bA_FQ7ZEYEBEm7_MaE4ONIJ4G
-mIa15RIRUH4AnHmI1hoTvrI4H0BPapKcd55wgpedNM8HNEdk-Q9MwiExtwVrWb0oR2MrVcqQ4AWYtvKZtWbELr80rted7NosyF3KJeY1MmfPd96aM765u4uW
-YpCZ8BranVYfgZEFWDoL7MMFENkctok8M4Cm1a83UKa7QdwZGf5R5LVhWouL6G6Hvens6GI5p93Q8w0k7GFQHJf8ugHEYaEQGdkVAokgD5uKDOOr2AVqf81K
-wJnL4vDfkIcyrFpLNRh8c9Gc8oYrrkOKAnI83ATqQKd1ceAPt4fX4tKAH7fGF484PQQNMugduA9udOB29g8W-NrAkoYUwQIWd_b-K-mxlc28Q5B8SNBmVOe6
-1LraKaXqQQmK-oAxW2TuKhpW9IyRoX11KZp1GSbeQwMnwXUuAqb14s-RHxIbw-eAI4ZZWp94l7U38uAw0dfPZV3Lg20d1NfHfAaE5QchCROH9kLIZsfeKc9v
-ndsjXOvIumWsC6Ry_aTeZ7X6AHRBA1CpnOUGsZynTUxquEwv-u8K2dEJdJl95C2TyAAyzbWjkne_fqox6L1M2GiA7hefLbr9uPqP0iH6j8qhwKpUPBvtLU4W
-jf4oUeGV047ZIgXJq5XDP0J8d2PPTLqddJC7kp8TplVn7vNp6hyT4cF7Ey5S3Qeqzw8Cl3cfLl65oL_sm_VcA621sSwx15uGamL5tfZz19-GzkdnA2nt408s
-FTbZk7G6M43sHy_i1nO8eyORI6dYu00i42RZG85KDRSobgLtztuvmcw5ZwTopbDvMJjxoJW2jFY4O1RuQwaTQs73sAWfFf3G__r2ec3vzEKFw3y
+sprite $AzureDNS [70x70/8z] {
+rTY7jgmW30NGK_p_NtuDr6CkYm7VQfDRfk6U95R4bmHb7t_2blXIE4fuMqeYmtnZ-8fTXrMeaXOG9r6JwX-k5TF61z9Ut0wdI1Y7KpdDq_42SXGaNtzY6D_P
+7qio2mnZI4cbk3CcbyrKgjA7ZHaNPA1yPjG-orGcoVIH6ZVbSYPAZXisvHfmONVqEgvNKLCsfInOa8XCbwcKeYTHEno8KfaxjKsggImhoJXIMLViain6AfEQ
+r17kAJMPAAZKkyh4olOa5SazTBybb_wMjgZNIFKbWEiP_psoDw6Mn2Y8e6KHuAdWeH2KnP-A7eeEzz5TkJn6HgKnfIs4x6080hgLy_EVw_eOAWRqJsdSJF54
+OLUCg4N0dYAmAG8KtMqZTfN-BzSqdygnf0ZGfLW4iA7eNbDeIgo_HOMtOe067OpM-YBWiV4f5O6fpBOwdKfxV2gPYmPxm5rwA09I0LpsWBetzjKWfs8r1PIa
+qJwTZI5QC5TtUFrp7LFbSJXwlf3wW-eEC3vYUk-8gNT7xqmbkl1_okG4kuu8PrJbrRaHVZ8xYEgLn-OgobIoCsbCiP9AlIBhOzf0rsZlEsS9mwl3_9vqSiaS
+EBtSpLQt33oyu1MMcFsBx_xfM7cc4lLiCtMcmUdqg2Y9vEFQBAiogmWGixhnNCs1BCq-RHTaVHRBu_DC-20-XhTcvVjt22AHFQU6kNllvIrHGtRUVVcE-0q
 }
 
 skinparam rectangle<<AzureDNS>> {
-    BackgroundColor #FFFFFF
-    BorderColor #3C7FC0
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
 }
-sprite $AzureVPNGateway [70x70/16z] {
-xTXdOi8m38PXD3wP-v-uECNAKeILVnrlouO7cGsFB1PLCrCLVjoCrRRfBSWD3rGrnAAaYiIXY1IO0b9cnB9q3Y7Buoa5jWztxd0D7cgirJN5rqgmDQgCWc2X
-ayES40_pmt1orlbdWYRdbFIX5u-ThdRs4IVfSYbNyaVev0t3-SoOKoHNjAXeuUH_vLz1uUHVhX0pAvOCu2Y5lV_uLOJeZSwJ05K3e42vSkGAWKHAp1253AuL
-H4Z409a2d928mIS59-J408aIECBS3MQEa5W9n-bCC4YcU9SAAWfY1QWfGA2Whk2e03L5nPrLyLEc5NB6svwGA_R-Ko9Pzhapz4-ABGdtY3gpX3r2n4kvmkIf
-Ct34AogzeV2iejBZ3T9URHYMfKJnT8lqp1d1fbp1GBw1lZEOYh8YhQzY7KSBYXkhukEa2iV8LcbMKjnmPLHJMekLPWMbdHLlMcdj-GxZrLkUesPJIYSyeINU
-7jbInUSuCOuuaoi7epEERB942OpES71qkr1yCQVYeorIA33o6eBV2lHPRXtb2m
+sprite $AzureVPNGateway [70x70/8z] {
+xTG7hXin30PXpa_T_yef0WqGjfOHLqbU7NVB-9PoiogGt5q2kndod6v1ykTatV1L72AHciWvWr-d3dBEU1stFcBT6KQBhnhgCldb5tXh51KBswFesczyoiK1
+sDuGnH6qhPIxjRfoQFfAOxLvDBs9eZlBtug-bMy5a6OkiKhoE07O8jte_oleAlOLCmwLc9fJnMQSAHPneW3JuBOIKQ_rbM-5IuM6OcYTRIWU9vaHzvwGFoa-
+OvR-rrv_KxDQ8GttmkJ9Uqg6s5N4B905myQE8cKaEnYATXHb83CT9I6OaSPfA3dM7_fQeLIYKoKwLg9J9Mee8nBCHHYFtFUKaI9MyvDUA0d9aP3CrCfuZeGa
+frB68bWyxOKobldwsOjVmEZbahsaqGvxz1C
 }
 
 skinparam rectangle<<AzureVPNGateway>> {
-    BackgroundColor #FFFFFF
-    BorderColor #3C7FC0
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
 }
-sprite $AzureExpressRoute [70x70/16z] {
-xTO7RiOW30LWLXoRtF- -5GqnfbhkexkyVuzyOig4tvATdPsKSrer3ddDiM94qSGbP9qvhNAYuofJm34cQIaX51rXj4EdUOShXyxtkTeMHXLTSHGZwRXysnnn
-jKXb3BbgDKYz64AkpdJakXX1MfYRmSyd3A4so6rOIHa4qIW38JWp49on2CuC16SiWZC3mHcBuCn0OCOY41DJcX0dar8Ccd9lEL74nSXzLUdjuB7zE-9WQfKU
-Zc_AQEs8WwbpyMMn30LNo2B28Oi0DJtAbDohH8ndxvChzIaolThSpytdzofy5tDDrbBeLRHOcX4vyBPeb-x6430kJrEeo9ISNCaofSphXVmd91EUfvw3EomZ
-SHfbZdubyZp38PBE572WfcYFwH4u3-lX_gTaPsVd1G
+sprite $AzureExpressRoute [70x70/8z] {
+xTP5UWCm44FXQaQ-_v7B1eKZX-EtAUR_38lnnxEqMgq0ODO8_XPJ25jpo3oJ74eJ0INCB2Ng4SU4alATfTGLX2ZkMZYXHFrmFQ0xtX4BXmfDf0pCpmycqfc_
+7qn4bK8F-RbTuEVMAsCXDM4iH1a3CHb5J4OHar74P1Gn6KLCHX6JKSHZ045EP83jCQh8SKQ7Bsk276LOKuGKv0Z3dY9aHOupvCY0T6Ow9RGfaN-BEJ7-b6tQ
+z85rlgBl2gB-V9QIEhGOxbfqI_3EfIubWn9EZ5BedQNrMAFz1Dpy50n46CZomdZUo24OhtJvsAEqMgs-
 }
 
 skinparam rectangle<<AzureExpressRoute>> {
-    BackgroundColor #FFFFFF
-    BorderColor #3C7FC0
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
 }
 
 left to right direction
@@ -177,43 +247,67 @@ left to right direction
 TITLE: Island Network Topology
 
 skinparam Rectangle {
-    BorderColor<<island>> green
-    BorderThickness<<island>> 2
-    BackgroundColor<<island>> white
-
+    BorderColor<<island>> #50fa7b
+    BorderThickness<<island>> 6
 }
 
-rectangle "==Workload Subscription A\n<color:#0072C6><$AzureSubscription></color>\n//<size:12>[]</size>//" <<AzureSubscription>> as subscriptionIsland {
+skinparam rectangle<<e_stereo>> {
+    BackgroundColor<<Region>> #282a36
+	BorderColor<<Region>> #ff5555
+	BackgroundColor<<AzureSubscription>> #44475a
+	BorderColor<<AzureSubscription>> #f1fa8c
+    BackgroundColor<<AzureVirtualNetwork>> #282a36
+    BorderColor<<AzureVirtualNetwork>> #ffb86c
+    BackgroundColor<<AzureSubnet>> #44475a
+    BorderColor<<AzureSubnet>> #ffb86c
+    BorderColor<<AzureRouteTable>> #ffb86c
+    BorderColor<<AzurePrivateLink>> #ffb86c
+	BorderColor<<AzureExpressRoute>> #ffb86c
+	BorderColor<<AzureVPNGateway>> #ffb86c
+    BorderColor<<AzureVirtualMachine>> #bd93f9
+    BorderColor<<AzureFunction>> #bd93f9
+    BorderColor<<AzureDataLakeStorage>> #8be9fd
+    BorderColor<<AzureSqlDataWarehouse>> #8be9fd
+    BorderColor<<AzureDataFactory>> #8be9fd
+    BorderColor<<AzureFirewall>> #ff5555
+    BorderColor<<AzureNSG>> #ff5555
+    BorderColor<<AzureDNS>> #8be9fd
+    BorderColor<<PrivateDnsResolver>> #8be9fd
+}
+
+
+
+rectangle "==Cloud Native Workloads\n<color:#f8f8f2><$AzureSubscription></color>\n//<size:18>[]</size>//" <<AzureSubscription>> as subscriptionIsland {
 
     Rectangle "Name Resolution Services" as nameResolution {
-        rectangle "==Private DNS Zones\n<color:#0072C6><$AzureDNS></color>\n//<size:12>[storage, event hub, AppServices, etc..]</size>//\n\n Automated support for Azure servcies with private links" <<AzureDNS>> as dnsIslandPrivateZones
+        rectangle "==Private DNS Zones\n//<size:8> </size>//\n<color:#8be9fd><$AzureDNS></color>\n//<size:18>[storage, event hub, AppServices, etc..]</size>//\n\n Automated support for Azure servcies with private links" <<AzureDNS>> as dnsIslandPrivateZones
         Rectangle "DNS Private Resolver\ncontoso.com" <<PrivateDnsResolver>> as dnsPrivateResolver
     } 
 
     together {
-        rectangle "==workload a\n<color:#0072C6><$AzureVirtualNetwork></color>\n//<size:12>[AKS, Azure Functions, Virtual Machines]</size>//\n\n 192.168.0.0/20" <<AzureVirtualNetwork>> as vnetIslandA <<island>> {
+        rectangle "==workload a\n//<size:8> </size>//\n<color:#f8f8f2><$AzureVirtualNetwork></color>\n//<size:18>[AKS, Azure Functions, Virtual Machines]</size>//\n\n 192.168.0.0/20" <<AzureVirtualNetwork>> as vnetIslandA #line:red {
         }
-        rectangle "==workload b\n<color:#0072C6><$AzureVirtualNetwork></color>\n//<size:12>[Databricks, Synapse]</size>//\n\n 192.168.16.0/20" <<AzureVirtualNetwork>> as vnetIslandB <<island>> {
+        rectangle "==workload b\n//<size:8> </size>//\n<color:#f8f8f2><$AzureVirtualNetwork></color>\n//<size:18>[Databricks, Synapse]</size>//\n\n 192.168.16.0/20" <<AzureVirtualNetwork>> as vnetIslandB #line:red {
         }
     }
 
     nameResolution -down-> vnetIslandA
-    nameResolution-> vnetIslandB
+    nameResolution -> vnetIslandB
 }
 
-rectangle "==Infrastructure Subscription\n<color:#0072C6><$AzureSubscription></color>\n//<size:12>[]</size>//" <<AzureSubscription>> as subscriptionInfrastructure {
-    rectangle "==Bridge\n<color:#0072C6><$AzureVirtualNetwork></color>\n//<size:12>[Azure Firewall, Bastion, Application Gateway, Private Link Service Endpoints]</size>//\n\n 10.10.16.0/20" <<AzureVirtualNetwork>> as vnetBridge <<island>> {
+rectangle "==Core Infrastructure Services\n<color:#f8f8f2><$AzureSubscription></color>\n//<size:18>[]</size>//" <<AzureSubscription>> as subscriptionInfrastructure {
+    rectangle "==Bridge\n//<size:8> </size>//\n<color:#f8f8f2><$AzureVirtualNetwork></color>\n//<size:18>[Azure Firewall, Bastion, Application Gateway, Private Link Service Endpoints]</size>//\n\n 10.10.16.0/20" <<AzureVirtualNetwork>> as vnetBridge #line:red;line.bold {
     }
-    rectangle "==Hub\n<color:#0072C6><$AzureVirtualNetwork></color>\n//<size:12>[Azure Firewall, DNS servers (contoso.com), Private Link Service Endpoints]</size>//\n\n 10.10.0.0/20" <<AzureVirtualNetwork>> as vnetHub
+    rectangle "==Hub\n//<size:8> </size>//\n<color:#f8f8f2><$AzureVirtualNetwork></color>\n//<size:18>[Azure Firewall, DNS servers (contoso.com), Private Link Service Endpoints]</size>//\n\n 10.10.0.0/20" <<AzureVirtualNetwork>> as vnetHub #line:white
 }
 
-rectangle "==Workload Subscription B\n<color:#0072C6><$AzureSubscription></color>\n//<size:12>[]</size>//" <<AzureSubscription>> as subscriptionSpoke {
-    rectangle "==Spoke\n<color:#0072C6><$AzureVirtualNetwork></color>\n//<size:12>[Custom API: api.contoso.com]</size>//\n\n 10.10.32.0/20" <<AzureVirtualNetwork>> as vnetSpoke
+rectangle "==Hybrid Workload\n<color:#f8f8f2><$AzureSubscription></color>\n//<size:18>[]</size>//" <<AzureSubscription>> as subscriptionSpoke {
+    rectangle "==Spoke\n//<size:8> </size>//\n<color:#f8f8f2><$AzureVirtualNetwork></color>\n//<size:18>[Custom API: api.contoso.com]</size>//\n\n 10.10.32.0/20" <<AzureVirtualNetwork>> as vnetSpoke #line:white
 
 }
 
-vnetIslandA <-[thickness=2,#green]down-> vnetBridge : "Peer"
-vnetIslandB <-[thickness=2,#green]down-> vnetBridge : "Peer"
+vnetIslandA <-[thickness=2,#red]down-> vnetBridge : "Peer"
+vnetIslandB <-[thickness=2,#red]down-> vnetBridge : "Peer"
 vnetBridge <-down-> vnetHub : "Peer"
 vnetHub <-down-> vnetSpoke : "Peer"
 

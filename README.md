@@ -1,16 +1,34 @@
-# Isloated Networking
+# Isloated Networking Pattern
 
-This reference design introduces the "island networking" concept which enables application teams to implement secure, privately deployed workloads in a fully self-service manner without dependencies on enterprise networking. This model leverages Azure networking features such as Private Link, Private Endpoint, Private DNS Zones, and Private DNS Resolver which provide the necessary inbound and outbound integration with the corporate network while maintaining a high degree of isolation and service scalability. This type of design is useful for organizations that:
+This reference design introduces the "island networking" pattern which enables application teams to implement secure, privately deployed workloads in a fully self-service manner without constraints often imposed by traditional hybrid networking models. This pattern is achieved by levaraging Azure networking features such as Azure Firewall (SNAT), Private Link, Private Endpoint, Private DNS Zones, and Private DNS Resolver which provide the necessary inbound and outbound integration with the corporate network while maintaining a high degree of isolation and service scalability. This type of design is useful for organizations that:
 
 - Operate in a hub-and-spoke-model
 - Use hybrid connectivity to on-premises services
 - Are constrained in the amount of available, routable IP addresses
-- Wish to provide a faster time-to-value for application teams through self-service provisioning
+- Use Azure PaaS services that require dedicated IP address ranges
+- Need to achieve high scalability with those services
 - Have strict network security requirements
 
-The following diagram describe the basic networking concepts:
+## Topology
+
+The following diagram describes the high-level network design:
 
 <img src="media/diagram-topology.svg" alt="Network diagram"/>
+
+Business Units within an enterprise are delegated a large IP address space. In this example, its **192.168.0.0/16** (65,526 IP addresses). Cloud native workloads are then grouped into Business Unit subscriptions that include VNETs and name resolution services.
+
+### Outbound Connectivity
+
+Outbound connectivity from workload VNETs is managed through a centralized "bridge" VNET that is connected through peering. The bridge VNET is deployed into the routable coroprate network and hosts an Azure Fireall instance, which is used to forward traffic to three possible destinations: Internet (egress), workload (internal), and to the hybrid / on-premises network. The following diagram outlinse how this is achieved:
+
+<img src="media/diagram-outbound-flow.svg" alt="Outbound flow diagram"/>
+
+In this current design, seamless access to resources hosted on-premises or in the hybrid cloud network address space is achieved using two layers of SNAT provided by the Azure Fireall instances. Name resolution for resources hosted in self-hosted DNS zones is accomplished using Azure Private DNS resolver.
+
+### Inbound Connectivity
+
+### Name Resolution
+
 
 ## Deployment
 
