@@ -1,6 +1,7 @@
 param location string
 param resourcePrefix string
 
+//TODO: Refactor LAW out, collapse with appinsights.bicep file
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
   name: '${resourcePrefix}-law'
   location: location

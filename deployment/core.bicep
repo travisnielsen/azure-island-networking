@@ -13,7 +13,7 @@ param region string
 param orgPrefix string
 param appPrefix string
 param regionCode string
-param tags object = { }
+param tags object = {}
 
 var resourcePrefix = '${orgPrefix}-${appPrefix}-${regionCode}'
 
@@ -26,25 +26,26 @@ param vmAdminPwd string
 
 // HUB VNET IP SETTINGS
 param hubVnetAddressSpace string = '10.10.0.0/20'
-param hubFirewallSubnetAddressSpace string = '10.10.0.0/25'             // 123 addresses - 10.10.0.0 - 10.10.0.127
-param hubDnsSubnetAddressSpace string = '10.10.0.128/25'                // 123 addresses - 10.10.0.128 - 10.10.1.255
-param hubDnsResolverOutboundSubnetAddressSpace string = '10.10.1.0/26'  // 59 addresses - 10.10.1.0 - 10.10.1.63
+param hubFirewallSubnetAddressSpace string = '10.10.0.0/25' // 123 addresses - 10.10.0.0 - 10.10.0.127
+param hubDnsSubnetAddressSpace string = '10.10.0.128/25' // 123 addresses - 10.10.0.128 - 10.10.1.255
+param hubDnsResolverOutboundSubnetAddressSpace string = '10.10.1.0/26' // 59 addresses - 10.10.1.0 - 10.10.1.63
+param hubServicesSubnetAddressSpace string = '10.10.1.64/26' // 59 addresses - 10.10.1.64 - 10.10.1.127
 
 // BRIDGE VNET IP SETTINGS
 param bridgeVnetAddressSpace string = '10.10.16.0/20'
-param bridgeFirewallSubnetAddressSpace string = '10.10.16.0/25'       // 123 addresses - 10.10.16.0 - 10.10.16.127
-param bridgeBastionSubnetAddressSpace string = '10.10.16.128/25'      // 123 addresses - 10.10.16.128 - 10.10.0.255
-param bridgePrivateLinkSubnetAddressSpace string = '10.10.17.0/25'    // 123 addresses - 10.10.17.0 - 10.10.17.127
-param bridgeAppGatewaySubnetAddressSpace string = '10.10.17.128/25'   // 123 addresses - 10.10.17.128 - 10.10.17.255
+param bridgeFirewallSubnetAddressSpace string = '10.10.16.0/25' // 123 addresses - 10.10.16.0 - 10.10.16.127
+param bridgeBastionSubnetAddressSpace string = '10.10.16.128/25' // 123 addresses - 10.10.16.128 - 10.10.0.255
+param bridgePrivateLinkSubnetAddressSpace string = '10.10.17.0/25' // 123 addresses - 10.10.17.0 - 10.10.17.127
+param bridgeAppGatewaySubnetAddressSpace string = '10.10.17.128/25' // 123 addresses - 10.10.17.128 - 10.10.17.255
 
 // SPOKE VNET IP SETTINGS
 param spokeVnetAddressSpace string = '10.10.32.0/20'
-param spokeVnetVmAddressSpace string = '10.10.32.0/25'                // 123 addresses - 10.10.32.0 - 10.10.32.127
-param spokeVnetPrivateLinkAddressSpace string = '10.10.32.128/25'     // 123 addresses - 10.10.32.128 - 10.10.32.255
+param spokeVnetVmAddressSpace string = '10.10.32.0/25' // 123 addresses - 10.10.32.0 - 10.10.32.127
+param spokeVnetPrivateLinkAddressSpace string = '10.10.32.128/25' // 123 addresses - 10.10.32.128 - 10.10.32.255
 param spokeVnetIntegrationSubnetAddressSpace string = '10.10.33.0/25' // 123 addresses - 10.10.33.0 - 10.10.33.127
 
 // ISLAND NEtworks
-param islandNetworkAddressSpace string = '192.168.0.0/16'             // used by AZ FW for SNAT rules
+param islandNetworkAddressSpace string = '192.168.0.0/16' // used by AZ FW for SNAT rules
 
 resource netrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: '${orgPrefix}-${appPrefix}-network'
@@ -84,8 +85,8 @@ module hubVnet 'modules/vnet.bicep' = {
   params: {
     vnetName: '${resourcePrefix}-hub'
     location: region
-    addressSpaces: [ 
-      hubVnetAddressSpace 
+    addressSpaces: [
+      hubVnetAddressSpace
     ]
     subnets: [
       {
@@ -98,33 +99,37 @@ module hubVnet 'modules/vnet.bicep' = {
         name: 'dns'
         properties: {
           addressPrefix: hubDnsSubnetAddressSpace
-          networkSecurityGroup: { 
-            id: hubDnsNsg.outputs.id 
+          networkSecurityGroup: {
+            id: hubDnsNsg.outputs.id
           }
           privateEndpointNetworkPolicies: 'Enabled'
-          /*
-          routeTable: {
-            id: route.outputs.id
-          }
-          */
         }
       }
       {
         name: 'dns-resolver-outbound'
         properties: {
           addressPrefix: hubDnsResolverOutboundSubnetAddressSpace
-          networkSecurityGroup: { 
-            id: hubDnsNsg.outputs.id 
+          networkSecurityGroup: {
+            id: hubDnsNsg.outputs.id
           }
           privateEndpointNetworkPolicies: 'Enabled'
           delegations: [
             {
               name: 'dns-resolver'
-              properties: { 
-                serviceName: 'Microsoft.Network/dnsResolvers' 
+              properties: {
+                serviceName: 'Microsoft.Network/dnsResolvers'
               }
             }
           ]
+        }
+      }
+      {
+        name: 'services'
+        properties: {
+          addressPrefix: hubServicesSubnetAddressSpace
+          networkSecurityGroup: {
+            id: servicesNsg.outputs.id
+          }
         }
       }
     ]
@@ -137,8 +142,8 @@ module bridgeVnet 'modules/vnet.bicep' = {
   params: {
     vnetName: '${resourcePrefix}-bridge'
     location: region
-    addressSpaces: [ 
-      bridgeVnetAddressSpace 
+    addressSpaces: [
+      bridgeVnetAddressSpace
     ]
     subnets: [
       {
@@ -155,8 +160,8 @@ module bridgeVnet 'modules/vnet.bicep' = {
         name: 'AzureBastionSubnet'
         properties: {
           addressPrefix: bridgeBastionSubnetAddressSpace
-          networkSecurityGroup: { 
-            id: bastionNsg.outputs.id 
+          networkSecurityGroup: {
+            id: bastionNsg.outputs.id
           }
         }
       }
@@ -164,8 +169,8 @@ module bridgeVnet 'modules/vnet.bicep' = {
         name: 'privatelinks'
         properties: {
           addressPrefix: bridgePrivateLinkSubnetAddressSpace
-          networkSecurityGroup: { 
-            id: bridgePrivateLinkNsg.outputs.id 
+          networkSecurityGroup: {
+            id: bridgePrivateLinkNsg.outputs.id
           }
         }
       }
@@ -173,8 +178,8 @@ module bridgeVnet 'modules/vnet.bicep' = {
         name: 'appgateways'
         properties: {
           addressPrefix: bridgeAppGatewaySubnetAddressSpace
-          networkSecurityGroup: { 
-            id: bridgeAppGatewayNsg.outputs.id 
+          networkSecurityGroup: {
+            id: bridgeAppGatewayNsg.outputs.id
           }
         }
       }
@@ -190,18 +195,18 @@ module spokeVnet 'modules/vnet.bicep' = {
     vnetName: '${resourcePrefix}-spoke'
     location: region
     addressSpaces: [
-      spokeVnetAddressSpace 
+      spokeVnetAddressSpace
     ]
     subnets: [
       {
         name: 'iaas'
         properties: {
           addressPrefix: spokeVnetVmAddressSpace
-          routeTable: { 
-            id: route.outputs.id 
+          routeTable: {
+            id: route.outputs.id
           }
-          networkSecurityGroup: { 
-            id: spokeVirtualMachinesNsg.outputs.id 
+          networkSecurityGroup: {
+            id: spokeVirtualMachinesNsg.outputs.id
           }
         }
       }
@@ -209,11 +214,11 @@ module spokeVnet 'modules/vnet.bicep' = {
         name: 'privatelink'
         properties: {
           addressPrefix: spokeVnetPrivateLinkAddressSpace
-          routeTable: { 
-            id: route.outputs.id 
+          routeTable: {
+            id: route.outputs.id
           }
-          networkSecurityGroup: { 
-            id: spokePrivateLinkNsg.outputs.id 
+          networkSecurityGroup: {
+            id: spokePrivateLinkNsg.outputs.id
           }
           privateEndpointNetworkPolicies: 'Disabled'
         }
@@ -225,17 +230,17 @@ module spokeVnet 'modules/vnet.bicep' = {
           delegations: [
             {
               name: 'delegation'
-              properties: { 
-                serviceName: 'Microsoft.Web/serverfarms' 
+              properties: {
+                serviceName: 'Microsoft.Web/serverfarms'
               }
             }
           ]
           privateEndpointNetworkPolicies: 'Enabled'
-          routeTable: { 
-            id: route.outputs.id 
+          routeTable: {
+            id: route.outputs.id
           }
-          networkSecurityGroup: { 
-            id: spokeFuncIntegrationNsg.outputs.id 
+          networkSecurityGroup: {
+            id: spokeFuncIntegrationNsg.outputs.id
           }
         }
       }
@@ -243,6 +248,16 @@ module spokeVnet 'modules/vnet.bicep' = {
   }
 }
 
+// NSG for Services subnet (Private Endpoints from Islands)
+module servicesNsg 'modules/nsg.bicep' = {
+  name: '${resourcePrefix}-hub-services'
+  scope: resourceGroup(netrg.name)
+  params: {
+    name: '${resourcePrefix}-hub-services'
+    location: region
+    securityRules: [] //TODO: Create NSG rules
+  }
+}
 
 // NSG for DNS subnet (Linux server running BIND)
 module hubDnsNsg 'modules/nsg.bicep' = {
@@ -254,23 +269,23 @@ module hubDnsNsg 'modules/nsg.bicep' = {
     securityRules: [
       {
         name: 'allow-bastion'
-        properties: { 
-          priority: 100 
+        properties: {
+          priority: 100
           direction: 'Inbound'
           protocol: '*'
           access: 'Allow'
           sourceAddressPrefix: bridgeBastionSubnetAddressSpace
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
-          destinationPortRanges: [ 
+          destinationPortRanges: [
             '22'
-            '3389' 
-          ] 
-        } 
+            '3389'
+          ]
+        }
       }
       {
         name: 'allow-dns'
-        properties: { 
+        properties: {
           priority: 110
           direction: 'Inbound'
           protocol: '*'
@@ -281,27 +296,11 @@ module hubDnsNsg 'modules/nsg.bicep' = {
           ]
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
-          destinationPortRanges: [ 
-            '53' 
-          ] 
-        } 
-      }
-
-      /* Internet egress will be forced through Azure Firewall. Deny at the NSG level supercedes UDR flow 
-      {
-        name: 'deny-internet'
-        properties: {
-          priority: 1000
-          protocol: '*'
-          access: 'Deny'
-          direction: 'Outbound'
-          sourceAddressPrefix: '*'
-          sourcePortRange: '*'
-          destinationAddressPrefix: 'Internet'
-          destinationPortRange: '*'
+          destinationPortRanges: [
+            '53'
+          ]
         }
       }
-      */
     ]
   }
 }
@@ -520,7 +519,7 @@ module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
             '22'
           ]
         }
-      }   
+      }
       {
         name: 'allow-inbound-web'
         properties: {
@@ -564,22 +563,6 @@ module spokeFuncIntegrationNsg 'modules/nsg.bicep' = {
           destinationPortRange: '*'
         }
       }
-
-      /* Internet egress will be forced through Azure Fireall. Deny at the NSG level supercedes UDR flow
-      {
-        name: 'deny-internet'
-        properties: {
-          priority: 1000
-          protocol: '*'
-          access: 'Deny'
-          direction: 'Outbound'
-          sourceAddressPrefix: 'Internet'
-          sourcePortRange: '*'
-          destinationAddressPrefix: '*'
-          destinationPortRange: '*'
-        }
-      }
-      */
     ]
   }
 }
@@ -625,7 +608,6 @@ module spokePrivateLinkNsg 'modules/nsg.bicep' = {
   }
 }
 
-
 // Azure Fireall - HUB
 module hubAzFw 'modules/azfw.bicep' = {
   name: 'hub-azfw'
@@ -646,17 +628,17 @@ module hubAzFw 'modules/azfw.bicep' = {
             {
               description: 'Allow outbound web traffic'
               name: 'corp-to-internet'
-              protocols: [ 
-                'TCP' 
+              protocols: [
+                'TCP'
               ]
               sourceAddresses: [
                 spokeVnetAddressSpace
                 hubVnetAddressSpace
               ]
-              destinationAddresses: [ 
+              destinationAddresses: [
                 '*'
               ]
-              destinationPorts: [ 
+              destinationPorts: [
                 '80'
                 '443'
               ]
@@ -664,17 +646,17 @@ module hubAzFw 'modules/azfw.bicep' = {
             {
               description: 'Allow Island to Corp'
               name: 'bridge-to-spoke'
-              protocols: [ 
+              protocols: [
                 'TCP'
                 'UDP'
               ]
               sourceAddresses: [
                 bridgeVnetAddressSpace
               ]
-              destinationAddresses: [ 
+              destinationAddresses: [
                 spokeVnetAddressSpace
               ]
-              destinationPorts: [ 
+              destinationPorts: [
                 '*'
               ]
             }
@@ -705,16 +687,16 @@ module bridgeAzFw 'modules/azfw.bicep' = {
             {
               description: 'Allow outbound web traffic'
               name: 'island-to-internet'
-              protocols: [ 
+              protocols: [
                 'TCP'
               ]
               sourceAddresses: [
                 '192.160.0.0/16'
               ]
-              destinationAddresses: [ 
+              destinationAddresses: [
                 '*'
               ]
-              destinationPorts: [ 
+              destinationPorts: [
                 '80'
                 '443'
               ]
@@ -722,17 +704,17 @@ module bridgeAzFw 'modules/azfw.bicep' = {
             {
               description: 'Allow Island to Corp'
               name: 'island-to-corp'
-              protocols: [ 
+              protocols: [
                 'TCP'
                 'UDP'
               ]
               sourceAddresses: [
                 '192.168.0.0/16'
               ]
-              destinationAddresses: [ 
+              destinationAddresses: [
                 '10.0.0.0/8'
               ]
-              destinationPorts: [ 
+              destinationPorts: [
                 '*'
               ]
             }
@@ -742,7 +724,6 @@ module bridgeAzFw 'modules/azfw.bicep' = {
     ]
   }
 }
-
 
 // VNET peering
 module HubToSpokePeering 'modules/peering.bicep' = {
@@ -765,7 +746,6 @@ module SpokeToHubPeering 'modules/peering.bicep' = {
     remoteVnetId: hubVnet.outputs.id
   }
 }
-
 
 module HubToBridgePeering 'modules/peering.bicep' = {
   name: 'hub-to-bridge-peering'
@@ -833,7 +813,6 @@ module bridgeRoute 'modules/udr.bicep' = {
     ]
   }
 }
-
 
 // Bastion
 module bastion 'modules/bastion.bicep' = {
@@ -1055,7 +1034,6 @@ module hubVnetAzureZoneLink 'modules/dnszonelink.bicep' = {
   }
 }
 
-
 // TODO: THIS IS A HACK - need to find a better way to apply the UDR to the DNS server subnet
 module applyHubRoutes 'modules/vnet.bicep' = {
   name: 'hub-vnet-update'
@@ -1063,8 +1041,8 @@ module applyHubRoutes 'modules/vnet.bicep' = {
   params: {
     vnetName: '${resourcePrefix}-hub'
     location: region
-    addressSpaces: [ 
-      hubVnetAddressSpace 
+    addressSpaces: [
+      hubVnetAddressSpace
     ]
     subnets: [
       {
@@ -1077,8 +1055,8 @@ module applyHubRoutes 'modules/vnet.bicep' = {
         name: 'dns'
         properties: {
           addressPrefix: hubDnsSubnetAddressSpace
-          networkSecurityGroup: { 
-            id: hubDnsNsg.outputs.id 
+          networkSecurityGroup: {
+            id: hubDnsNsg.outputs.id
           }
           privateEndpointNetworkPolicies: 'Enabled'
           routeTable: {
@@ -1090,24 +1068,32 @@ module applyHubRoutes 'modules/vnet.bicep' = {
         name: 'dns-resolver-outbound'
         properties: {
           addressPrefix: hubDnsResolverOutboundSubnetAddressSpace
-          networkSecurityGroup: { 
-            id: hubDnsNsg.outputs.id 
+          networkSecurityGroup: {
+            id: hubDnsNsg.outputs.id
           }
           privateEndpointNetworkPolicies: 'Enabled'
           delegations: [
             {
               name: 'dns-resolver'
-              properties: { 
-                serviceName: 'Microsoft.Network/dnsResolvers' 
+              properties: {
+                serviceName: 'Microsoft.Network/dnsResolvers'
               }
             }
           ]
         }
       }
+      {
+        name: 'services'
+        properties: {
+          addressPrefix: hubServicesSubnetAddressSpace
+          networkSecurityGroup: {
+            id: servicesNsg.outputs.id
+          }
+        }
+      }
     ]
   }
 }
-
 
 // DNS server for contoso.com
 module dnsServer 'modules/virtualMachine.bicep' = {
@@ -1188,7 +1174,6 @@ module resolverLinkSpoke 'modules/dnsResolverLink.bicep' = {
     vnetId: spokeVnet.outputs.id
   }
 }
-
 
 // Test web server hosting http://api.contoso.com
 module webServer 'modules/virtualMachine.bicep' = {

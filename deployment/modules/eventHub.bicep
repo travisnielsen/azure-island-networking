@@ -1,6 +1,7 @@
 param eventHubNames array
 param location string
-param resourceGroupNameNetwork string
+param networkResourceGroupName string
+param dnsResourceGroupName string
 param resourcePrefix string
 param timeStamp string
 param vnetName string
@@ -29,12 +30,14 @@ resource eventHubs 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = [for e
 
 module privateEndpoint 'privateendpoint.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-pe-ehns'
+  scope: resourceGroup(networkResourceGroupName)
   params: {
     location: location
     privateEndpointName: '${resourcePrefix}-pe-ehns'
     serviceResourceId: eventHubNameSpace.id
     dnsZoneName: 'privatelink.servicebus.windows.net'
-    resourceGroupNameNetwork: resourceGroupNameNetwork
+    networkResourceGroupName: networkResourceGroupName
+    dnsResourceGroupName: dnsResourceGroupName
     vnetName: vnetName
     subnetName: 'privateEndpoints'
     groupId: 'namespace'
