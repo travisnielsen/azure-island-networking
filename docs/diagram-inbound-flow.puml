@@ -1,0 +1,96 @@
+@startuml diagram-inbound-flow
+
+!define AzurePuml https://raw.githubusercontent.com/travisnielsen/Azure-PlantUML/themesupport/dist
+
+' Theme
+!includeurl AzurePuml/themes/dracula.puml
+
+!includeurl AzurePuml/Compute/AzureVirtualMachine.puml
+!includeurl AzurePuml/Management/AzureSubscription.puml
+!includeurl AzurePuml/Networking/AzureVirtualNetwork.puml
+!includeurl AzurePuml/Networking/AzureSubnet.puml
+!includeurl AzurePuml/Networking/AzureDNS.puml
+!includeurl AzurePuml/Networking/AzureRouteTable.puml
+!includeurl AzurePuml/Networking/AzureVPNGateway.puml
+!includeurl AzurePuml/Networking/AzureExpressRoute.puml
+!includeurl AzurePuml/Networking/AzureFirewall.puml
+!includeurl AzurePuml/Networking/AzurePrivateLink.puml
+
+LAYOUT_LEFT_RIGHT
+
+TITLE: Inbound Traffic Flow
+
+skinparam Rectangle {
+    BorderColor<<island>> GREEN
+    BorderThickness<<island>> 6
+}
+
+skinparam rectangle<<e_stereo>> {
+    BackgroundColor<<Region>> BACKGROUND
+	BorderColor<<Region>> RED
+	BackgroundColor<<AzureSubscription>> SELECTION
+	BorderColor<<AzureSubscription>> YELLOW
+    BackgroundColor<<AzureVirtualNetwork>> BACKGROUND
+    BorderColor<<AzureVirtualNetwork>> ORANGE
+    BackgroundColor<<AzureSubnet>> SELECTION
+    BorderColor<<AzureSubnet>> ORANGE
+    BorderColor<<AzureRouteTable>> ORANGE
+    BorderColor<<AzurePrivateLink>> ORANGE
+	BorderColor<<AzureExpressRoute>> ORANGE
+	BorderColor<<AzureVPNGateway>> ORANGE
+    BorderColor<<AzureVirtualMachine>> PURPLE
+    BorderColor<<AzureFunction>> PURPLE
+    BorderColor<<AzureDataLakeStorage>> CYAN
+    BorderColor<<AzureSqlDataWarehouse>> CYAN
+    BorderColor<<AzureDataFactory>> CYAN
+    BorderColor<<AzureFirewall>> RED
+    BorderColor<<AzureNSG>> RED
+    BorderColor<<AzureDNS>> CYAN
+    BorderColor<<PrivateDnsResolver>> CYAN
+    BorderColor<<DNSForwardingRuleset>> CYAN
+}
+
+AzureSubscription(subscriptionIslandWorkload, "Business Unit A - INFRA", "") {
+
+}
+
+AzureSubscription(subscriptionIslandInfra, "Business Unit A - INFRA", "") {
+
+    Rectangle "Name Resolution Services" as nameResolution {
+        AzureDNS(dnsIslandPrivateZones, "Private DNS Zones", "storage, event hub, AppServices, etc..", "Automated support for Azure servcies with private links", CYAN)
+        Rectangle "Forward DNS for:\ncontoso.com" <<DNSForwardingRuleset>> as dnsPrivateResolver
+    } 
+
+    ' AzureVirtualNetwork(vnetIslandA, "workload a", "", "192.168.0.0/20") #line:white {
+    '    AzureSubnet(subnetIslandVM, "Compute Subnet", "", "192.168.4.0/22") #line:white {
+    '        AzureVirtualMachine(vmIsland, "API Client", "Standard DS4", "GET: api.contoso.com", PURPLE)
+    '        AzureRouteTable(rtISland, "Custom Routes", "", "0 / 0 ---> 10.10.16.4")
+    '    }      
+    ' }
+
+    AzureVirtualNetwork(vnetBridge, "Bridge - Business Unit A", "", "10.10.16.0/20")  {
+        AzureFirewall(fwBridge, "Bridge Fireawll", "Basic SKU", "Private IP: 10.10.16.4", RED)
+    }
+
+    dnsPrivateResolver <-[thickness=2,CYAN]down- vnetIslandA
+}
+
+AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", "") {
+
+
+    AzureVirtualNetwork(vnetHub, "Hub", "", "10.10.0.0/20") {
+        AzureFirewall(fwHub, "Hub Fireawll", "Basic SKU", "Private IP: 10.10.0.4", RED)
+    }
+}
+
+AzureSubscription(subscriptionSpoke, "Hybrid Workload", "") {
+    AzureVirtualNetwork(vnetSpoke, "Spoke", "", "10.10.32.0/20") {
+        AzureVirtualMachine(vmSpoke, "API Client", "Standard DS4", "api.contoso.com", PURPLE)
+    }
+}
+
+vmIsland --> fwBridge
+fwBridge <-- fwHub : <size:20>**SNAT**:</size>\n<size:20>10.10.16.4</size>
+fwHub <-- vmSpoke : Request
+
+@enduml
