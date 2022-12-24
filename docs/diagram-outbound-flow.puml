@@ -5,8 +5,8 @@
 ' Theme
 !includeurl AzurePuml/themes/dracula.puml
 
+' Icons
 !includeurl AzurePuml/Compute/AzureVirtualMachine.puml
-
 !includeurl AzurePuml/Management/AzureSubscription.puml
 !includeurl AzurePuml/Networking/AzureVirtualNetwork.puml
 !includeurl AzurePuml/Networking/AzureSubnet.puml
@@ -50,36 +50,35 @@ skinparam rectangle<<e_stereo>> {
     BorderColor<<DNSForwardingRuleset>> CYAN
 }
 
-AzureSubscription(subscriptionIsland, "Business Unit A", "") {
+AzureSubscription(subscriptionIsland, "Business Unit A", null, null, YELLOW) {
 
     Rectangle "Name Resolution Services" as nameResolution {
         AzureDNS(dnsIslandPrivateZones, "Private DNS Zones", "storage, event hub, AppServices, etc..", "Automated support for Azure servcies with private links", CYAN)
         Rectangle "Forward DNS for:\ncontoso.com" <<DNSForwardingRuleset>> as dnsPrivateResolver
     } 
 
-    AzureVirtualNetwork(vnetIslandA, "workload a", "", "192.168.0.0/20") #line:white {
-        AzureSubnet(subnetIslandVM, "Compute Subnet", "", "192.168.4.0/22") #line:white {
+    AzureVirtualNetwork(vnetIslandA, "workload a", null, "192.168.0.0/20") #line:white {
+        AzureSubnet(subnetIslandVM, "Compute Subnet", null, "192.168.4.0/22") #line:white {
             AzureVirtualMachine(vmIsland, "API Client", "Standard DS4", "GET: api.contoso.com", PURPLE)
-            AzureRouteTable(rtISland, "Custom Routes", "", "0 / 0 ---> 10.10.16.4")
+            AzureRouteTable(rtISland, "Custom Routes", null, "0 / 0 ---> 10.10.16.4")
         }
-        
     }
 
     dnsPrivateResolver <-[thickness=2,CYAN]down- vnetIslandA
 }
 
-AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", "") {
-    AzureVirtualNetwork(vnetBridge, "Bridge - Business Unit A", "", "10.10.16.0/20")  {
+AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", null, null, YELLOW) {
+    AzureVirtualNetwork(vnetBridge, "Bridge - Business Unit A", null, "10.10.16.0/20", ORANGE)  {
         AzureFirewall(fwBridge, "Bridge Fireawll", "Basic SKU", "Private IP: 10.10.16.4", RED)
     }
 
-    AzureVirtualNetwork(vnetHub, "Hub", "", "10.10.0.0/20") {
+    AzureVirtualNetwork(vnetHub, "Hub", null, "10.10.0.0/20", ORANGE) {
         AzureFirewall(fwHub, "Hub Fireawll", "Basic SKU", "Private IP: 10.10.0.4", RED)
     }
 }
 
-AzureSubscription(subscriptionSpoke, "Hybrid Workload", "") {
-    AzureVirtualNetwork(vnetSpoke, "Spoke", "", "10.10.32.0/20") {
+AzureSubscription(subscriptionSpoke, "Hybrid Workload", null, null, YELLOW) {
+    AzureVirtualNetwork(vnetSpoke, "Spoke", null, "10.10.32.0/20", ORANGE) {
         AzureVirtualMachine(vmSpoke, "API Server", "Standard DS4", "api.contoso.com", PURPLE)
     }
 

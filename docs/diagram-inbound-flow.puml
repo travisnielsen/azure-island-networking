@@ -50,11 +50,11 @@ skinparam rectangle<<e_stereo>> {
     BorderColor<<DNSForwardingRuleset>> CYAN
 }
 
-AzureSubscription(subscriptionIslandWorkload, "Business Unit A - INFRA", "") {
+AzureSubscription(subscriptionIslandWorkload, "Business Unit A - INFRA", null, null) {
 
 }
 
-AzureSubscription(subscriptionIslandInfra, "Business Unit A - INFRA", "") {
+AzureSubscription(subscriptionIslandInfra, "Business Unit A - INFRA", null, null) {
 
     Rectangle "Name Resolution Services" as nameResolution {
         AzureDNS(dnsIslandPrivateZones, "Private DNS Zones", "storage, event hub, AppServices, etc..", "Automated support for Azure servcies with private links", CYAN)
@@ -75,7 +75,7 @@ AzureSubscription(subscriptionIslandInfra, "Business Unit A - INFRA", "") {
     dnsPrivateResolver <-[thickness=2,CYAN]down- vnetIslandA
 }
 
-AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", "") {
+AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", null, null) {
 
 
     AzureVirtualNetwork(vnetHub, "Hub", "", "10.10.0.0/20") {
@@ -83,7 +83,7 @@ AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", ""
     }
 }
 
-AzureSubscription(subscriptionSpoke, "Hybrid Workload", "") {
+AzureSubscription(subscriptionSpoke, "Hybrid Workload", null, null) {
     AzureVirtualNetwork(vnetSpoke, "Spoke", "", "10.10.32.0/20") {
         AzureVirtualMachine(vmSpoke, "API Client", "Standard DS4", "api.contoso.com", PURPLE)
     }

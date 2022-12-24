@@ -52,7 +52,7 @@ skinparam rectangle<<e_stereo>> {
 
 
 
-AzureSubscription(subscriptionIsland, "Business Unit A", "") {
+AzureSubscription(subscriptionIsland, "Business Unit A", null, null, YELLOW) {
 
     Rectangle "Name Resolution Services" as nameResolution {
         AzureDNS(dnsIslandPrivateZones, "Private DNS Zones", "storage, event hub, AppServices, etc..", "Automated support for Azure servcies with private links", CYAN)
@@ -70,13 +70,13 @@ AzureSubscription(subscriptionIsland, "Business Unit A", "") {
     nameResolution -> vnetIslandB
 }
 
-AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", "") {
+AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", null, null, YELLOW) {
     AzureVirtualNetwork(vnetBridge, "Bridge - Business Unit A", "Azure Firewall, Bastion, Application Gateway, Private Link Service Endpoints", "10.10.16.0/20") #line:red;line.bold {
     }
     AzureVirtualNetwork(vnetHub, "Hub", "Azure Firewall, DNS servers (contoso.com), Private Link Service Endpoints", "10.10.0.0/20") #line:white
 }
 
-AzureSubscription(subscriptionSpoke, "Hybrid Workload", "") {
+AzureSubscription(subscriptionSpoke, "Hybrid Workload", null, null, YELLOW) {
     AzureVirtualNetwork(vnetSpoke, "Spoke", "Custom API: api.contoso.com", "10.10.32.0/20") #line:white
 
 }
