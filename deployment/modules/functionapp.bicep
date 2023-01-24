@@ -22,16 +22,13 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-09-01' e
   name: format('{0}cr', replace(resourcePrefix, '-', ''))
 }
 
-module storage 'storage.bicep' = {
-  name: '${timeStamp}-${resourcePrefix}-${functionAppNameSuffix}-storage'
-  params: {
-    functionAppName: functionAppNameSuffix
-    location: location
-    resourcePrefix: resourcePrefix
-    storageSkuName: storageSkuName
-    targetSubnetId: functionSubnetId
-  }
+var storageAccountName = '${format('{0}sa', replace(resourcePrefix, '-', ''))}${toLower(functionAppNameSuffix)}'
+var finalStorageAccountName = length(storageAccountName) > 24 ? substring(storageAccountName, 0, 24) : storageAccountName
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' existing = {
+  name: finalStorageAccountName
 }
+var storageConnString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
 
 module asp 'appServicePlan.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-${functionAppNameSuffix}-asp'
@@ -48,12 +45,24 @@ module asp 'appServicePlan.bicep' = {
 
 var baseAppSettings = [
   {
-    name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-    value: 'InstrumentationKey=${appInsights.properties.InstrumentationKey}'
+    name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+    value: appInsights.properties.InstrumentationKey
   }
   {
-    name: 'AzureWebJobsStorage__accountName'
-    value: storage.outputs.storageAccountName
+    name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+    value: appInsights.properties.ConnectionString
+  }
+  {
+    name: 'AzureWebJobsStorage'
+    value: storageConnString
+  }
+  {
+    name: 'DOCKER_REGISTRY_SERVER_URL'
+    value: 'https://${containerRegistry.name}.azurecr.io'
+  }
+  {
+    name: 'DOCKER_ENABLE_CI'
+    value: 'true'
   }
   {
     name: 'FUNCTIONS_EXTENSION_VERSION'
@@ -64,20 +73,16 @@ var baseAppSettings = [
     value: 'dotnet'
   }
   {
+    name: 'SCALE_CONTROLLER_LOGGING_ENABLED'
+    value: 'AppInsights:Verbose'
+  }
+  {
     name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
-    value: storage.outputs.connString
+    value: storageConnString
   }
   {
     name: 'WEBSITE_CONTENTSHARE'
     value: '${toLower(functionAppName)}-${substring(uniqueString(functionAppName), 0, 4)}'
-  }
-  {
-    name: 'DOCKER_REGISTRY_SERVER_URL'
-    value: 'https://${containerRegistry.name}.azurecr.io'
-  }
-  {
-    name: 'DOCKER_ENABLE_CI'
-    value: 'true'
   }
   {
     name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
@@ -96,14 +101,11 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
     siteConfig: {
       linuxFxVersion: 'DOCKER|${dockerImageAndTag}'
       vnetRouteAllEnabled: true
+      functionsRuntimeScaleMonitoringEnabled: true
       appSettings: concat(baseAppSettings, functionSpecificAppSettings)
     }
   }
   tags: tags
-
-  dependsOn: [
-    storage
-  ]
 }
 
 module privateEndpoint 'privateendpoint.bicep' = {
@@ -120,4 +122,22 @@ module privateEndpoint 'privateendpoint.bicep' = {
     subnetName: 'privateEndpoints'
     groupId: 'sites'
   }
+}
+
+//TODO: This is a total hack.  If you initially deploy a function app's storage account with a default action of
+// 'Deny', the deployment of the function app (with storage configuration) will fail.  So need to do the initial 
+// deployment of the storage account with networking open, then deploy the function app, then redeploy the same
+// storage account with networking locked down
+module networkLockedStorage 'storage.bicep' = {
+  name: '${timeStamp}-${resourcePrefix}-${functionAppNameSuffix}-lockedStorage'
+  params: {
+    defaultAction: 'Deny'
+    location: location
+    storageAccountName: finalStorageAccountName
+    storageSkuName: storageSkuName
+    targetSubnetId: functionSubnetId
+  }
+  dependsOn: [
+    functionApp
+  ]
 }

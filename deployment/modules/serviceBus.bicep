@@ -27,7 +27,7 @@ resource queues 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = [for queue
     requiresSession: true
     maxMessageSizeInKilobytes: 1024
     maxSizeInMegabytes: 10240
-    maxDeliveryCount: 2000
+    maxDeliveryCount: 3
   }
 }]
 

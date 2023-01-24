@@ -209,6 +209,8 @@ module vnet 'modules/vnet.bicep' = {
   }
 }
 
+//TODO: This route table isn't quite right, but allows for communcation to app insights.  Using for now until we figure out how to route AI
+// traffic correctly through the firewall
 module route 'modules/udr.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-udr'
   scope: resourceGroup(workloadNetworkRg.name)
@@ -220,6 +222,21 @@ module route 'modules/udr.bicep' = {
         name: '${resourcePrefix}-egress'
         properties: {
           addressPrefix: '0.0.0.0/0'
+          nextHopType: 'Internet'
+        }
+      }
+      {
+        name: '${resourcePrefix}-hub'
+        properties: {
+          addressPrefix: '192.168.0.0/16'
+          nextHopType: 'VirtualAppliance'
+          nextHopIpAddress: bridgeAzFw.properties.ipConfigurations[0].properties.privateIPAddress
+        }
+      }
+      {
+        name: '${resourcePrefix}-island'
+        properties: {
+          addressPrefix: '10.0.0.0/8'
           nextHopType: 'VirtualAppliance'
           nextHopIpAddress: bridgeAzFw.properties.ipConfigurations[0].properties.privateIPAddress
         }
@@ -448,7 +465,7 @@ module vnetServiceBusZoneLink 'modules/dnszonelink.bicep' = {
   }
 }
 
-// Private DNS zone for Key Vault and Event Hubs
+// Private DNS zone for Key Vault
 module privateZoneKeyVault 'modules/dnszoneprivate.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-private-keyvault'
   scope: resourceGroup(workloadDnsRg.name)
@@ -471,7 +488,7 @@ module vnetKeyVaultZoneLink 'modules/dnszonelink.bicep' = {
   }
 }
 
-// Private DNS zone for Key Vault and Event Hubs
+// Private DNS zone for Cosmos DB
 module privateZoneCosmos 'modules/dnszoneprivate.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-dns-private-acdb'
   scope: resourceGroup(workloadDnsRg.name)
