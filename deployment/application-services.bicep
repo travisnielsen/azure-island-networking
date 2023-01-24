@@ -3,6 +3,7 @@ param orgPrefix string
 param appPrefix string
 param regionCode string
 param location string = resourceGroup().location
+param storageSkuName string = 'Standard_LRS'
 param tags object = { }
 param zoneRedundant bool = false
 @maxLength(16)
@@ -187,6 +188,17 @@ module cosmos 'Modules/cosmos.bicep' = {
 }
 
 var functionAppsCount = length(functionApps)
+module storage 'Modules/storage.bicep' = [for i in range(0, functionAppsCount): {
+  name: '${timeStamp}-${resourcePrefix}-${functionApps[i].functionAppNameSuffix}-storage'
+  params: {
+    defaultAction: 'Allow'
+    location: location
+    storageAccountName: length('${format('{0}sa', replace(resourcePrefix, '-', ''))}${toLower(functionApps[i].functionAppNameSuffix)}') > 24 ? substring('${format('{0}sa', replace(resourcePrefix, '-', ''))}${toLower(functionApps[i].functionAppNameSuffix)}', 0, 24) : '${format('{0}sa', replace(resourcePrefix, '-', ''))}${toLower(functionApps[i].functionAppNameSuffix)}'
+    storageSkuName: storageSkuName
+    targetSubnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${networkResourceGroupName}/providers/Microsoft.Network/virtualNetworks/${workloadVnetName}/subnets/${functionApps[i].functionAppNameSuffix}'
+  }
+}]
+
 module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCount): {
   name: '${timeStamp}-${resourcePrefix}-${functionApps[i].functionAppNameSuffix}'
   params: {
@@ -198,7 +210,7 @@ module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCo
     networkResourceGroupName: networkResourceGroupName
     dnsResourceGroupName: dnsResourceGroupName
     resourcePrefix: resourcePrefix
-    storageSkuName: 'Standard_LRS'
+    storageSkuName: storageSkuName
     tags: tags
     timeStamp: timeStamp
     vnetName: workloadVnetName
@@ -206,6 +218,7 @@ module functions 'Modules/functionapp.bicep' = [for i in range(0, functionAppsCo
   }
   dependsOn: [
     monitoring
+    storage
   ]
 }]
 
