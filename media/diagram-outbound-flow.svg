@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="1196.875px" preserveAspectRatio="none" style="width:1963px;height:1196px;background:#282A36;" version="1.1" viewBox="0 0 1963 1196" width="1963.5417px" zoomAndPan="magnify"><defs/><g><rect fill="#282A36" height="45.8333" id="_title" rx="4.1667" ry="4.1667" style="stroke:#282A36;stroke-width:0.0;" width="261.4583" x="846.3542" y="20.8333"/><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="238.5417" x="857.8125" y="49.9379">Outbound Traffic Flow</text><!--MD5=[4f80334fb3381e44c6b0cccb474a8532]
+cluster subscriptionIsland--><g id="cluster_subscriptionIsland"><rect fill="#44475A" height="1100" rx="4.1667" ry="4.1667" style="stroke:#F1FA8C;stroke-width:2.0833333333333335;" width="796.875" x="17.7083" y="85.4167"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="118.75" x="356.7708" y="102.3336">«AzureSubscription»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="191.6667" x="320.3125" y="134.8755">Business Unit A</text><image height="72.9167" width="72.9167" x="379.6875" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACpElEQVR4Xu3aMYvcMBAF4PtxD1IGUuZISHFcYIvApUh3TTo3qbbKr80QgREeSx6N37MuEHiYPZ2s1beyx+vdfcC7j6K8//Dp8fOX59vT9x9fbWt/+j6KPPgmSoxx//2yyfLr2wUwPslWxqbuPWtM6/cihkwyjzf4SFVMUtCjVtFIQx6pikPa9dgZZe2lHth2t2AoVARSy+N7Win3Pemqs6TiqUtcedwq1q8/b2rVKdLqKakf+871Lj5EVZ608dSxpfD9S2z1yl46VZJUrqetdEj1jiJVhtT3lPi9SmzSq6feElXDpIhnaSyUHXW+J32txkhBT4mp6rpnFdz3KeGu1QBp9zWOxGy+0Ye1VlFS2hMPa62iJD8DUTZrZYe6n0w/IVLnNKBns1ZLu3i2EiL5J5Zms1Cjh98xaajKsVKTdq8HnRyTDo+6zYuaS2fYZfDYe6Ok0rL+18+qkzdKqodd6Kt0wRWplULilwcEKp5/1YfiB6xHHr00hUj9ouenmIgftow8Wu4QJKF7Rvn5JeKHLfEzOUyUhL8fG/inTCfiaX2A0c8ACWxVPzkPRkm4SpX2IEGCXnXGgxwJStVJD9IkaFSjl6Dd5ElgqygenCSBp2J5cJ4EhoroAYWEcyquBywSsiq6B0QSxlUKD7gkBG5D1B7MIiVuGeKZQ1oY7xJamUbSqVSk/o2QVDWZtKTuW/uZTFLUiZkkhQcTSSIPJpL8vqxMI/177x4OSTrVTJJINZm0CE6qyaTn25Mf5GRmkka/ZQlmAqm0izy4nlTa7+3fIJ4PmVQY67zXNdm031NfHAXDJ8UjUs0kiVT/SUfxk+5E4QGd9Lr3m+ndiDygkx4bv5m+zAM6CQGV1AMFCV2V2gMRCQ3VBR7oSHCqazyQklCpLvNY/gAMGwuvqeFbEQAAAABJRU5ErkJggg==" y="140.625"/></g><!--MD5=[6a6dfeeb3653cbfb709c9a533a96c1cd]
+cluster nameResolution--><g id="cluster_nameResolution"><rect fill="#282A36" height="400" rx="4.1667" ry="4.1667" style="stroke:#F8F8F2;stroke-width:2.0833333333333335;" width="376.0417" x="42.7083" y="760.4167"/><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="284.375" x="88.5417" y="785.3546">Name Resolution Services</text></g><!--MD5=[8442b1bd69ca0a7da0766704402afe07]
+cluster vnetIslandA--><g id="cluster_vnetIslandA"><rect fill="#282A36" height="898.9583" rx="4.1667" ry="4.1667" style="stroke:#FFFFFF;stroke-width:2.0833333333333335;" width="294.7917" x="486.4583" y="253.125"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="131.25" x="568.2292" y="270.0419">«AzureVirtualNetwork»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="131.25" x="568.2292" y="302.5838">workload a</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="2.0833" x="632.8125" y="314.7502"> </text><image height="72.9167" width="72.9167" x="597.3958" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACtElEQVR4Xu3Xv27UQBAGcD/OiD7Qg1IjRElxlGlCRQcNJUi0h0QNPMDlBflyX7TZ25m1949j70YrfcWdPR7Pz175zpO8ePnMMulNvWeQesgg9ZBB6iGD1EMGqYcMUg8pJ91++nz89fvq1Wu9qyZoiLZornclppBED7Oiih6mWFVC8j0rqnxPjSqbpD2MrsyN7lmmyiPFPF++ftPFuUET3blAlUF6Ug+ziiqVtIGHqVclkTbzMJWqZdLGHqZGtUDaxcMUq+ZIO3qYMlWUtLuHKVDZpEY8TK7KIDXlYbJUIalBD5OuuiA162ESVY+kXM+b67eHjzfv3n9Y/BuOApShGIfovUFYGWubonogxUpND072/cfPP3//Iae7O0TffRfs8itxoDmrnK8R9vpnB0yXLY56T1osCoJd/pQMLq2uxEZdebTeRPyXJR7CmDd2fuApd72ZUyLYoovNStPvj+GTcN90W5lVTXorEmvEXuaUSHBF8TVWqRcql5yPcZdDz+AfomOQUKpP6QKSHjFG0jWM7m+SWKxnYNDEVE1YA9qD6LXBYLse8RRZeLqM0c1587Untl7QgXMGKmy/fzw4lfPMq9z55qeU84XUlcf44yHwnNSdZ5wnUHGGh4c4vgSeGRVOg+P9KW/VQnIJVPMPcapYiQ/mQzzwOJUb9fGnFmfSpTGVnCfg3tiIfiXKDmk/tWwbqzQ9iD/DxR+iXNXGSfGI/tvarCrRI5okTarSPWKSpDFVlkdiJGlGleuRGZI0oCrwyDxJdlWVeWSRJDupij2SQpLNVTUeSSTJhqpKj6STZBNVvUeySPLEqlU8kkuSuCr3xEFWbJtNEuv05ltAbtCk3iNlJLlUreJhfFWZR4pJclYd0l6BssKXq2KP1JCazSD1kEHqIYPUQwaphwxSDxmkHvIMSf8BjwfSLEdmw1EAAAAASUVORK5CYII=" y="318.75"/><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="6.25" x="630.7292" y="409.3129"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="150" x="561.9792" y="432.2296">192.168.0.0/20</text></g><!--MD5=[9667de9cc7d0bbf9b8c5d7f085f23599]
+cluster subnetIslandVM--><g id="cluster_subnetIslandVM"><rect fill="#44475A" height="633.3333" rx="4.1667" ry="4.1667" style="stroke:#FFFFFF;stroke-width:2.0833333333333335;" width="228.125" x="519.7917" y="477.0833"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="88.5417" x="589.5833" y="494.0002">«AzureSubnet»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="201.0417" x="533.3333" y="526.5422">Compute Subnet</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="2.0833" x="632.8125" y="538.7085"> </text><image height="72.9167" width="72.9167" x="597.3958" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACQUlEQVR4Xu3ZP0/DQAyHYT7cT2JFjAgxMSAGpqpiRJ3LimBjCBMLDGwgvhpWXV1b+669s9Mkh056p/xx8zRNCO0JTi/+WSd6Ue01Ug01Ug01Ug01Ug01Ug01Ug010m6z+eJhsdTLPdFAGquX52cn0Wt3b+/U8vFJr7VFo3im550ykoKnR1XwOFUWkvBwN7f3esv8ojNtqmJS9LWpy6s7vXF+tLueaVOVkVIe5yniaIiebFAVkI7q4XpR5ZIG8HB+VRZpMA/nVB0mDezhPKoDpFE8nFm1jzSih7OpkqTRPZxBFSdNxMOVqiKkSXm4IpUk9e6hJx16Hn1+ee1WT7fmOfmqHZJ4FvZ7osehDyKz6LRO/R+wIfXuOTu/1tOcM3NUa1LvnzekZ3J6+8xSqnDy1yS9RefzUHz9pKJzqHfJLKXitUmS51LmiPTx+ZXKSYpeJrx2TRJu2oHOI+VR0RAt4cLLG6JD4mMTqnCom9vDbL4QHqeKbt8aw5m/AwoeodoeuHMTpxXC41TRwO+fX5H5uxfhCSrxBsk/tfQR17t5VHSu6KJijHg7i4p6KH1NShKOoPKX70GUhImpijxIkTAZVakHe0iYgMrgwX4SRlXZPDhIwkgqswc5JAyu8niQScKAKqcH+SQMovJ7UETCkVW9eFBKQlrl/zFGzzR4YCAhoTI/vHH8s6/fAxsJSuX0cEJl88BMwpaqFw8XVGYPPCSsVL3cGLajgR4PnKRp1kg11Eg11Eg11Eg11Eg11Eg11Eg19AcreHFCHL+/IwAAAABJRU5ErkJggg==" y="542.7083"/><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="6.25" x="630.7292" y="633.2713"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="150" x="561.9792" y="656.1879">192.168.4.0/22</text></g><!--MD5=[874d2f2ba8edd7664b15b448ce929b47]
+cluster subscriptionInfrastructure--><g id="cluster_subscriptionInfrastructure"><rect fill="#44475A" height="604.1667" rx="4.1667" ry="4.1667" style="stroke:#F1FA8C;stroke-width:2.0833333333333335;" width="721.875" x="848.9583" y="317.7083"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="118.75" x="1150.5208" y="334.6252">«AzureSubscription»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="333.3333" x="1043.2292" y="367.1672">Core Infrastructure Services</text><image height="72.9167" width="72.9167" x="1173.4375" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACpElEQVR4Xu3aMYvcMBAF4PtxD1IGUuZISHFcYIvApUh3TTo3qbbKr80QgREeSx6N37MuEHiYPZ2s1beyx+vdfcC7j6K8//Dp8fOX59vT9x9fbWt/+j6KPPgmSoxx//2yyfLr2wUwPslWxqbuPWtM6/cihkwyjzf4SFVMUtCjVtFIQx6pikPa9dgZZe2lHth2t2AoVARSy+N7Win3Pemqs6TiqUtcedwq1q8/b2rVKdLqKakf+871Lj5EVZ608dSxpfD9S2z1yl46VZJUrqetdEj1jiJVhtT3lPi9SmzSq6feElXDpIhnaSyUHXW+J32txkhBT4mp6rpnFdz3KeGu1QBp9zWOxGy+0Ye1VlFS2hMPa62iJD8DUTZrZYe6n0w/IVLnNKBns1ZLu3i2EiL5J5Zms1Cjh98xaajKsVKTdq8HnRyTDo+6zYuaS2fYZfDYe6Ok0rL+18+qkzdKqodd6Kt0wRWplULilwcEKp5/1YfiB6xHHr00hUj9ouenmIgftow8Wu4QJKF7Rvn5JeKHLfEzOUyUhL8fG/inTCfiaX2A0c8ACWxVPzkPRkm4SpX2IEGCXnXGgxwJStVJD9IkaFSjl6Dd5ElgqygenCSBp2J5cJ4EhoroAYWEcyquBywSsiq6B0QSxlUKD7gkBG5D1B7MIiVuGeKZQ1oY7xJamUbSqVSk/o2QVDWZtKTuW/uZTFLUiZkkhQcTSSIPJpL8vqxMI/177x4OSTrVTJJINZm0CE6qyaTn25Mf5GRmkka/ZQlmAqm0izy4nlTa7+3fIJ4PmVQY67zXNdm031NfHAXDJ8UjUs0kiVT/SUfxk+5E4QGd9Lr3m+ndiDygkx4bv5m+zAM6CQGV1AMFCV2V2gMRCQ3VBR7oSHCqazyQklCpLvNY/gAMGwuvqeFbEQAAAABJRU5ErkJggg==" y="372.9167"/></g><!--MD5=[ae2f2cc754ea51a9f8f5477660cbe504]
+cluster vnetBridge--><g id="cluster_vnetBridge"><rect fill="#282A36" height="419.7917" rx="4.1667" ry="4.1667" style="stroke:#FFB86C;stroke-width:2.0833333333333335;" width="320.8333" x="873.9583" y="477.0833"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="131.25" x="968.75" y="494.0002">«AzureVirtualNetwork»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="293.75" x="887.5" y="526.5422">Bridge - Business Unit A</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="2.0833" x="1033.3333" y="538.7085"> </text><image height="72.9167" width="72.9167" x="997.9167" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACt0lEQVR4Xu3XTWrcQBAFYB2nyDZgCCTghQmBLAwJBOLdZB3wKttkm0VOMDfICeZ6fp5n2j1d1VL/yFK3aXiLGalUqk9qNKNJ3ly9skx6U+8ZpB4ySD1kkHrIIPWQQeohg9RDykn33z8df325evtO76oJGqItmutdiSkk0cOsqKKHKVaVkHzPiirfU6PKJmkPoytzo3uWqfJIMc/vH591cW7QRHcuUGWQXtTDrKJKJW3gYepVSaTNPEylapm0sYepUS2QdvEwxao50o4epkwVJe3uYQpUNqkRD5OrMkhNeZgsVUhq0MOkqy5IzXqYRNUzKddz8/7D4fbm68frxb/hKEAZinGI3huElbG2KaonUqzU9OBk/37e/v/zDTn9vUP03XfBLr8SB5qzyvkaYa9/dsB02eKoj6TFoiDY5U/J4NLqSmzUlUfrTcR/WeIhjHlj5weectebOSWCLbrYrDT9/hg+CfdNt5VZ1aS3IrFG7GVOiQRXFF9jlXqhcsn5GHc59Az+IToGCaX6lC4g6RFjJF3D6P4micV6BgZNTNWENaA9iF4bDLbrEU+RhafLGN2cN197YusFHThnoML2x8eDUznPvMqdb35KOV9IXXmMPx4Cz0ndecZ5AhVneHqI40vgmVHhNDjen/JeLSSXQDX/EKeKlfhgPsQDj1O5UZ9/anEmXRpTyXkC7o2N6Fei7JD2U8u2sUrTg/gzXPwhylVtnBSP6L+tzaoSPaJJ0qQq3SMmSRpTZXkkRpJmVLkemSFJA6oCj8yTZFdVmUcWSbKTqtgjKSTZXFXjkUSSbKiq9Eg6STZR1XskiyQvrFrFI7kkiatyTxxkxbbZJLFOb74F5AZN6j1SRpJL1SoexleVeaSYJGfVIe0VKCt8uSr2SA2p2QxSDxmkHjJIPWSQesgg9ZBB6iGvkPQA9WOor0tKYywAAAAASUVORK5CYII=" y="542.7083"/><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="6.25" x="1031.25" y="633.2713"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="137.5" x="968.75" y="656.1879">10.10.16.0/20</text></g><!--MD5=[86920c5596a23ff5af33eafb2fa79ebe]
+cluster vnetHub--><g id="cluster_vnetHub"><rect fill="#282A36" height="419.7917" rx="4.1667" ry="4.1667" style="stroke:#FFB86C;stroke-width:2.0833333333333335;" width="181.25" x="1364.5833" y="477.0833"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="131.25" x="1389.5833" y="494.0002">«AzureVirtualNetwork»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="48.9583" x="1430.7292" y="526.5422">Hub</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="2.0833" x="1454.1667" y="538.7085"> </text><image height="72.9167" width="72.9167" x="1418.75" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACt0lEQVR4Xu3XTWrcQBAFYB2nyDZgCCTghQmBLAwJBOLdZB3wKttkm0VOMDfICeZ6fp5n2j1d1VL/yFK3aXiLGalUqk9qNKNJ3ly9skx6U+8ZpB4ySD1kkHrIIPWQQeohg9RDykn33z8df325evtO76oJGqItmutdiSkk0cOsqKKHKVaVkHzPiirfU6PKJmkPoytzo3uWqfJIMc/vH591cW7QRHcuUGWQXtTDrKJKJW3gYepVSaTNPEylapm0sYepUS2QdvEwxao50o4epkwVJe3uYQpUNqkRD5OrMkhNeZgsVUhq0MOkqy5IzXqYRNUzKddz8/7D4fbm68frxb/hKEAZinGI3huElbG2KaonUqzU9OBk/37e/v/zDTn9vUP03XfBLr8SB5qzyvkaYa9/dsB02eKoj6TFoiDY5U/J4NLqSmzUlUfrTcR/WeIhjHlj5weectebOSWCLbrYrDT9/hg+CfdNt5VZ1aS3IrFG7GVOiQRXFF9jlXqhcsn5GHc59Az+IToGCaX6lC4g6RFjJF3D6P4micV6BgZNTNWENaA9iF4bDLbrEU+RhafLGN2cN197YusFHThnoML2x8eDUznPvMqdb35KOV9IXXmMPx4Cz0ndecZ5AhVneHqI40vgmVHhNDjen/JeLSSXQDX/EKeKlfhgPsQDj1O5UZ9/anEmXRpTyXkC7o2N6Fei7JD2U8u2sUrTg/gzXPwhylVtnBSP6L+tzaoSPaJJ0qQq3SMmSRpTZXkkRpJmVLkemSFJA6oCj8yTZFdVmUcWSbKTqtgjKSTZXFXjkUSSbKiq9Eg6STZR1XskiyQvrFrFI7kkiatyTxxkxbbZJLFOb74F5AZN6j1SRpJL1SoexleVeaSYJGfVIe0VKCt8uSr2SA2p2QxSDxmkHjJIPWSQesgg9ZBB6iGvkPQA9WOor0tKYywAAAAASUVORK5CYII=" y="542.7083"/><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="6.25" x="1452.0833" y="633.2713"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="125" x="1395.8333" y="656.1879">10.10.0.0/20</text></g><!--MD5=[59a58b1e555f596f3ae3b558401dd421]
+cluster subscriptionSpoke--><g id="cluster_subscriptionSpoke"><rect fill="#44475A" height="604.1667" rx="4.1667" ry="4.1667" style="stroke:#F1FA8C;stroke-width:2.0833333333333335;" width="247.9167" x="1704.1667" y="317.7083"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="118.75" x="1768.75" y="334.6252">«AzureSubscription»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="201.0417" x="1727.6042" y="367.1672">Hybrid Workload</text><image height="72.9167" width="72.9167" x="1791.6667" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACpElEQVR4Xu3aMYvcMBAF4PtxD1IGUuZISHFcYIvApUh3TTo3qbbKr80QgREeSx6N37MuEHiYPZ2s1beyx+vdfcC7j6K8//Dp8fOX59vT9x9fbWt/+j6KPPgmSoxx//2yyfLr2wUwPslWxqbuPWtM6/cihkwyjzf4SFVMUtCjVtFIQx6pikPa9dgZZe2lHth2t2AoVARSy+N7Win3Pemqs6TiqUtcedwq1q8/b2rVKdLqKakf+871Lj5EVZ608dSxpfD9S2z1yl46VZJUrqetdEj1jiJVhtT3lPi9SmzSq6feElXDpIhnaSyUHXW+J32txkhBT4mp6rpnFdz3KeGu1QBp9zWOxGy+0Ye1VlFS2hMPa62iJD8DUTZrZYe6n0w/IVLnNKBns1ZLu3i2EiL5J5Zms1Cjh98xaajKsVKTdq8HnRyTDo+6zYuaS2fYZfDYe6Ok0rL+18+qkzdKqodd6Kt0wRWplULilwcEKp5/1YfiB6xHHr00hUj9ouenmIgftow8Wu4QJKF7Rvn5JeKHLfEzOUyUhL8fG/inTCfiaX2A0c8ACWxVPzkPRkm4SpX2IEGCXnXGgxwJStVJD9IkaFSjl6Dd5ElgqygenCSBp2J5cJ4EhoroAYWEcyquBywSsiq6B0QSxlUKD7gkBG5D1B7MIiVuGeKZQ1oY7xJamUbSqVSk/o2QVDWZtKTuW/uZTFLUiZkkhQcTSSIPJpL8vqxMI/177x4OSTrVTJJINZm0CE6qyaTn25Mf5GRmkka/ZQlmAqm0izy4nlTa7+3fIJ4PmVQY67zXNdm031NfHAXDJ8UjUs0kiVT/SUfxk+5E4QGd9Lr3m+ndiDygkx4bv5m+zAM6CQGV1AMFCV2V2gMRCQ3VBR7oSHCqazyQklCpLvNY/gAMGwuvqeFbEQAAAABJRU5ErkJggg==" y="372.9167"/></g><!--MD5=[d6745d0c816834bdf6c5b116fa0e2153]
+cluster vnetSpoke--><g id="cluster_vnetSpoke"><rect fill="#282A36" height="419.7917" rx="4.1667" ry="4.1667" style="stroke:#FFB86C;stroke-width:2.0833333333333335;" width="197.9167" x="1729.1667" y="477.0833"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="131.25" x="1762.5" y="494.0002">«AzureVirtualNetwork»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="25" font-weight="bold" lengthAdjust="spacing" textLength="75" x="1790.625" y="526.5422">Spoke</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" font-weight="bold" lengthAdjust="spacing" textLength="2.0833" x="1827.0833" y="538.7085"> </text><image height="72.9167" width="72.9167" x="1791.6667" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACt0lEQVR4Xu3XTWrcQBAFYB2nyDZgCCTghQmBLAwJBOLdZB3wKttkm0VOMDfICeZ6fp5n2j1d1VL/yFK3aXiLGalUqk9qNKNJ3ly9skx6U+8ZpB4ySD1kkHrIIPWQQeohg9RDykn33z8df325evtO76oJGqItmutdiSkk0cOsqKKHKVaVkHzPiirfU6PKJmkPoytzo3uWqfJIMc/vH591cW7QRHcuUGWQXtTDrKJKJW3gYepVSaTNPEylapm0sYepUS2QdvEwxao50o4epkwVJe3uYQpUNqkRD5OrMkhNeZgsVUhq0MOkqy5IzXqYRNUzKddz8/7D4fbm68frxb/hKEAZinGI3huElbG2KaonUqzU9OBk/37e/v/zDTn9vUP03XfBLr8SB5qzyvkaYa9/dsB02eKoj6TFoiDY5U/J4NLqSmzUlUfrTcR/WeIhjHlj5weectebOSWCLbrYrDT9/hg+CfdNt5VZ1aS3IrFG7GVOiQRXFF9jlXqhcsn5GHc59Az+IToGCaX6lC4g6RFjJF3D6P4micV6BgZNTNWENaA9iF4bDLbrEU+RhafLGN2cN197YusFHThnoML2x8eDUznPvMqdb35KOV9IXXmMPx4Cz0ndecZ5AhVneHqI40vgmVHhNDjen/JeLSSXQDX/EKeKlfhgPsQDj1O5UZ9/anEmXRpTyXkC7o2N6Fei7JD2U8u2sUrTg/gzXPwhylVtnBSP6L+tzaoSPaJJ0qQq3SMmSRpTZXkkRpJmVLkemSFJA6oCj8yTZFdVmUcWSbKTqtgjKSTZXFXjkUSSbKiq9Eg6STZR1XskiyQvrFrFI7kkiatyTxxkxbbZJLFOb74F5AZN6j1SRpJL1SoexleVeaSYJGfVIe0VKCt8uSr2SA2p2QxSDxmkHjJIPWSQesgg9ZBB6iGvkPQA9WOor0tKYywAAAAASUVORK5CYII=" y="542.7083"/><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="6.25" x="1825" y="633.2713"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="22.9167" font-weight="bold" lengthAdjust="spacing" textLength="137.5" x="1762.5" y="656.1879">10.10.32.0/20</text></g><!--MD5=[b112037bf681ddd4b63dd5e0fb3149a9]
+entity dnsIslandPrivateZones--><g id="elem_dnsIslandPrivateZones"><rect fill="#282A36" height="214.5833" rx="4.1667" ry="4.1667" style="stroke:#8BE9FD;stroke-width:2.0833333333333335;" width="342.7083" x="59.375" y="813.5417"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="75" x="193.2292" y="838.7919">«AzureDNS»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="14.5833" font-weight="bold" lengthAdjust="spacing" textLength="132.2917" x="164.5833" y="863.3128">Private DNS Zones</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="229.6875" y="873.0835"> </text><image height="72.9167" width="72.9167" x="194.2708" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAGI0lEQVR4Xt2bvW7kRhCE73EIB8p0ibK9SBEvYkRHigznhnPDsQHHDvwCfkc3WGKpt6unZ0hRZ/iAwkI7O9Nd3/yRnF19mn74/J3pkxb933U90sPnL09ff3z+6df5l9+X3/5c//jb9PLXP/Zqb63QPrqtPz9++aptL9FlSGbRvML9uAzycrz3ItmYmKejJKlsAC9hexeSDYs6gzDNCnFCBtlHNm8117hOIllWdUMM628vT5J+pGxWYoOveUd0GMlmmpnQrlWvrXFI66OJVrN06qHWMSTrOc0aGPCWu1xLaOj/TsHs06PzcBTJeit0eYDxhcSr5WvCfQvMStRSS0NIgYe5PcxRnnUfHK1PsPU+uBpL1UeyjdV3GFMyX7AS/NVqNeEUWI9TdZACj+/XwNPq8q6KVko1D8zACsnmW8HTSn9UdUMmHaeqkHygELqVWD111W17lKqJ5O8MELRIjApaPqgi8urWlacqLsQ5kl9CTIm4aXqUq5tBtXokJEUdulLbFZJv6RlCDpSjUDlRoVCwzmh46xOhGt7S29yYfgmSVeUQ+SjBQZC3OMITpAE1JqloL71zj0h+l0OmwBNMqw9YGZE2ZHNNx6SowEnUR/K7QmicijkKi7U8YQETMtKk7hMRaXCIqGDrPUIoTaFCRvqskDhEvplG1OiXyPeOJvJCZfZ+eAC5Q1rvb6jxViOG0GrutAaR1vuBspHIkfyDqm+g4Sj1dKE0XUjtBypHCrNu7Q0R4n6oNKMXTZr8Y+Ib0uIWHDpAo3ipg6B5O7LDgV4qnvWlDW0rQwVNDaEtPSdIHETEVSTLYQsxyC52OIhUZ6yfUlkhmgcYK9EUyrPufUrbEYk3daBfs1ln1h+2k1R2sJlGIcu9Od8FI0jksVdry/gm5QESrb64fe8VaWQhwT0OItOutVdQwbRHAnCKhCbLPqpW0wdfyhXlkbicXpEWWUgFUkgJgcpb56iCKkw/RUIEncNK4pHo/Hnfyl+RyEokbV8jWatgnUj4A+5TJDh7J9K835i/IqEUSKik7WskesIy8Eik9WMYkGY3UWF0BIlu4fx6JC4GRdLdT5GWvVPYL4ysZr4pEl16pPl+C2khsRX0tG8VakaR1v1B43qkdJTIwBFIkSD7yIPN7avtN0JK15IvgcsCCWL9x+3apX46SKvb8VBJ23eRiu2BAhIKayQf83n7flGFOnR+MRLnFS2mSH6fGEHiZFY/a72Jz/vldTl1XZr31c8haiGxJidVwUOk23bLovJI8VL7fOSGqMWDSd9F4ngSiXEUCdVgSUWrL3pD9LQ//3WRvMWbu23F+NBcgYSGioS39tFte6xgndasQyIiPYTb1of7s64lW050HwTToXfpO0WaszvdNH5rygEJPmEVIG9Ik5wNKRK7f94fLpTEI/lqqZ63B8TQCuPDMVcSChXgeXYnr29IupxqKYZKMSitrNKkXjAJzzd3mveG9OiO9tkBGshLTaQ6x7OUSAhLw4/uJPkNaZJHDA0UdMjfiEI0zehTL9lCiki3/TcAvo2Go9TEO+WjabqQd81mXUQK+x5GViOG0OoM5V2lrfCH5vJCtXSIItIk38SgpQaFaH2QYURdHuRaG0OUIOlAaVDEVYzQ5eM6BIZPaTL4T5Cm7PuYABNys456PaQRMJTTHu/rOkhT44tNZoUDT+hzq9euNA7KAxhKvDd13kTy1yj2TdFzWqi+W2IQ2NU4zOt5XuQ7mA7SdL9PIBzTp1m13FfAKxlCqDr+6i6AtKS7Qh9pavyUQ/MhZeujEbWGCGJqb0bdUhXS5BZVTVV7qoWwrebKY4WtKQd1kB7uf7ZWU6XlXRUxUx5/O5eqgzQJ1doYE6RXW7VaPH7oxscH6iNNbapgRUu6KnrnHM80iDRlv9JlYmK0urwl7ZcQ8wTPNI4E+RuLFExdtuRrLnJh9Snm7cRPzbR0DGnarsIhJTzBEFVTaf0UZj3+8+PpBBI0uwtxYFO7KKT0o0ACpfdvIzqJNG2rS+ch2YjXEupoWzTv7tSFziNROJdSZyc0X/GfJBcgQThVnO933kHN2yGexjyny5C8cKSIpaIA0PIB/7kEfQjSf6vvEOlfxGQJ6Tm8Oe0AAAAASUVORK5CYII=" y="877.0833"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="281.25" x="87.5" y="964.4379">[storage, event hub, AppServices,</text><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="40.625" x="210.4167" y="983.1879">etc..]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="3.125" x="229.1667" y="997.1252"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="308.3333" x="78.125" y="1009.6252">Automated support for Azure servcies with private links</text></g><!--MD5=[01b3b70f2db638f756c722fee7cd1807]
+entity dnsPrivateResolver--><g id="elem_dnsPrivateResolver"><rect fill="#282A36" height="79.1667" rx="4.1667" ry="4.1667" style="stroke:#8BE9FD;stroke-width:2.0833333333333335;" width="181.25" x="140.1042" y="1064.5833"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="150" x="155.7292" y="1089.8336">«DNSForwardingRuleset»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="97.9167" x="181.7708" y="1112.7502">Forward DNS for:</text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="71.875" x="194.7917" y="1125.2502">contoso.com</text></g><!--MD5=[e60865092d1f805a4e6b996b8209d5aa]
+entity vmIsland--><g id="elem_vmIsland"><rect fill="#282A36" height="195.8333" rx="4.1667" ry="4.1667" style="stroke:#BD93F9;stroke-width:2.0833333333333335;" width="164.5833" x="551.0417" y="684.375"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="133.3333" x="566.6667" y="709.6252">«AzureVirtualMachine»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="14.5833" font-weight="bold" lengthAdjust="spacing" textLength="69.7917" x="598.4375" y="734.1461">API Client</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="632.2917" y="743.9168"> </text><image height="72.9167" width="72.9167" x="596.875" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACYElEQVR4Xu2av2rDMBCH8zilm5dSyNAhuFtxhy4hdKmnFjJ7LvQF+gJ9gb5kzzoQJj9ZkaU7VzKCjwy2ddYXnf7Y1u7m9q5pDtuAXIjd8WnoX762AbmMSniiaPb3z1tTah9eq1L2VKUSqEolsJ7SahP6GkokQ7ehGZB+VxBTV+oeP0hmCt0SLxNEUQllptBZLCKCipLNND9KeTgqnU/fUnBErL0HzkMMFY2YUn8t0/xwHmLYCGSUEn0YqeYSU6JAZLU06xguy/0Kgy9FUolZKsYyTKZKbBWSh1MZQSUKK690tblaM3wjuSs5xfgIyjAYOQJ1JSvmzLSClawYapSqxCnHVh4xjByButK0F1nmrDByBKPS8PaTiFMJR7kLUIwqhMGXoqJ0ITOnhGIZKZ3NnO3x8SixFYtlp4QagUpWLCOlweQeaixSoggYNgIxJaabX9qhg0Uq5RhhpWE+CdGklUu2KfJKDI+BHqXOPMZiwXS0lBjKKKcSHceLpdBVYriD2cbBC2RZQ2kwHUyj2zhZSWlNNqr0+f67JapSCVSlEqB5vCplz7gtqmkOnXmulCL8xUhvPnkIwvvXdryHTRBa0eGf54QqgcXTUVHCSd1JMUpd8HK7KoUir0TPRTgSOKErsXg6/6lUTCuFD+JHs7tWHBWlHnZYOClGCavuwW7uFkRYqV2460ljhBBWsp8hwsEgiUgqdfDJKATxcU9Gide+WN1A7IpThCQlqge/cJSiNa+d8UaLiFSSNUFSho0Ypb3ZxKBNdHPFKGk3ERPdUDFK068squCtQ4hRypyqVAIbVPoDfenX5JZAy+EAAAAASUVORK5CYII=" y="747.9167"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="128.125" x="569.2708" y="835.2712">[Standard DS4]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="3.125" x="631.7708" y="849.2086"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="123.9583" x="572.9167" y="861.7086">GET: api.contoso.com</text></g><!--MD5=[d824a5efb0dcf8a474a3748483aa3185]
+entity rtISland--><g id="elem_rtISland"><rect fill="#282A36" height="177.0833" rx="4.1667" ry="4.1667" style="stroke:#FFB86C;stroke-width:2.0833333333333335;" width="145.8333" x="560.4167" y="916.6667"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="114.5833" x="576.0417" y="941.9169">«AzureRouteTable»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="14.5833" font-weight="bold" lengthAdjust="spacing" textLength="110.4167" x="578.125" y="966.4378">Custom Routes</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="632.2917" y="976.2085"> </text><image height="72.9167" width="72.9167" x="596.875" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAADZ0lEQVR4Xu2asW4UMRCG8zgWPdATUSNESXGUNKFKZxrKRaIFifrgORmtuYnPvz32jGcvm+ikT1Gyt5mbzx7PeZ3chBevnhk3eOmpc1VaiV+/Ld9/5Lx8/QZveywsSsc/fwtu377D2x6Lq9LKVakCrT0GX53kckqU/fsPH+++3FN3KaCL9NJIkBEuoUQyh0+f0QQhNznUCJsr0fBj6jIkhnHG2VapWmYj0C+al9mGSmafhNlqK6XBxSNjq8BNlAzrpwUNDSYgs4nSZMkVaMvPX8lxihLa8usopaDFRVkJc5pHNVGSEsWidOnZobguKNE3mNA8NPOYXoumUlx9tEoujQ5R1V5dKZ58tEq+jSEHk2xRUYqZz3NQiuc+SYkyzhGUMJUR6C3yr1Uw9RZnShF8BhlRkjPugqm3eFAy+xzPCw+zcQFTb/FfacbneN7xMJt5omEteSnRBwgmNI9qp+dceAQmNE8ev4tze0hBMKdJMG8BSxMvKDZg9CPmNINqNxRQKYDVohyk4N33ML5MRSn0NkRdHCdKtYoSdaUgbltHUFn9/PU7/8poSy7RVAonq8WkFLKG3spYRtW4cySlcGpfeH2QNFeYbhfb/CQ6SmFNCy8OwuesmHSLRd/iCvpKNmhZ84MGpZg2SihQyNBtfHRB39tG018Jz/LTSXeCH3vTMuMb0jF/foNZzFOJ3rv1CIgf0C3wd6PX2YMW+dSBXsXsESHIeAP0UWpNDpPXnoAc527slNxBSc6D4dXSYvBMs2s1qySUSkG39sZDYRo5U0qD48qgRg7e30I+1rMrUQHgm8kIE6UdHaEH2pUGl1AByminiGktKqOSdlCZVpPAO0fAxIJZCaMPUu3m442hoFp+FiV+ajAQa7UXrccVsTZRFiVzBomiScwM0FLbtquVKAmMq6KYqMmDCpwotdJkBom8SeCrWm7PzyfUShjRANfewePAudjR6pRcBnXJam9yWTJ5kjoll0FNHNYHWLxuI689nZLXoBK0Jl2WZSKvPZ0SxtoJed9TKHktpI3gPBVKjqW/BbycFEpUr3hStR94G6FQotWMgfYDPxcqlKLm0PTyLKflpFDa+Sxx01MoUbFioP1gKbywfi5hrJ3Az+06JWqUGGsP5E9NOqWg+T/2y3CAvwOolfbPVekp8A92DRpDXdjQnAAAAABJRU5ErkJggg==" y="980.2083"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="3.125" x="631.7708" y="1062.7502"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="110.4167" x="579.6875" y="1075.2502">0 / 0 ---&gt; 10.10.16.4</text></g><!--MD5=[3b31818db3ddc11132b7d92d8de2da82]
+entity fwBridge--><g id="elem_fwBridge"><rect fill="#282A36" height="195.8333" rx="4.1667" ry="4.1667" style="stroke:#FF5555;stroke-width:2.0833333333333335;" width="155.2083" x="956.25" y="684.375"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="92.7083" x="987.5" y="709.6252">«AzureFirewall»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="14.5833" font-weight="bold" lengthAdjust="spacing" textLength="106.25" x="980.7292" y="734.1461">Bridge Fireawll</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="1032.8125" y="743.9168"> </text><image height="72.9167" width="72.9167" x="997.3958" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAC+klEQVR4Xu2a4W3cIBiGPY5VVapUqVHUVlHURlFbRf3TCTpBN/AEmSAbZIKbIBt0oL7wuQ7HCxxgbINl6dEpMTbwHB8fHHdd/+ZqZ3R8qXUOpRY4lBK5env96/1n8PvDjQmu3L37yPcXYREldBf9Hj59ucif61vocQ1zKKyE/nG/YygoVkwJMYa3nPuaRJFoLKOUPTjM/OEqoBQ5beJBhdxKPHOV5gebkzlWs5QW8hGyIzBfqeD88ZFnlamE/MY9WAI0xK2HyVTithcCsc2th8lRWiHkTFIXqxwlbnVRUgcqWWnlIRKSZlSUEmrEQrFoyg6TlPouKCGOYfJ4c7ctSbHnVZJtKNe+CRgo7qEPtxLCjOvdFu6kD4dSPYNjEp8hzpRkT8DV1YB8/o1Zo86UqvWxCO/TX5XqjLcAvsw+KmFA+Zn6cSb3UamVkGMG2lsopUaHyMS0UkrtDtGEuRYrJb6jRaY02CFvcHGjSPh1SBpPt/f7QBJghyjksnZRShgvLmgXzKO9KSH29qYEnb3NJaW0p4wnqHWJr7aLGiVkPS5oF8yjcY/HZczz129/H35uAprm/jhRGa/Xhydcxpzuf3Bj64CmuT9O1LokWz0uYyYl/BHg5fuD3MN7MBMZc9zMNThr4/44GXfivT4W5mKLU5yS3IZX68TUAhUWVxr3eKLU648YfJOJ9LVmpXEnPinh/yedA3xI7Zso4ZX7YzGdQ7wq9foTO986UbPSo3Ece6bU60nFDwiT0vqElaaQcyuJlTMCA0ooCsOPBOAHX/xK6Kp1BOtQ6vW8kjzrVLJiDHBcWcizHFcWXNvz/1zPMuLDZ+VuJcEartqUBs83NCElQc5bqlJCfwLn/ZeVJiRHbaJ00nuRQf8QhyPNIkEJNfqUeNWz4AedcG1ycfDEmJMcpfVZXMlMsk7kHp7QJvL287Nc1RpKHDAcP6eiu4dDiS75OJSaUoohsq+RLKWEZY4bW4fwV+gWCUr9Aj82jiHJp09VaoJDqQUOpRb4B1VsQVALqVmqAAAAAElFTkSuQmCC" y="747.9167"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="100" x="983.8542" y="835.2712">[Basic SKU]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="3.125" x="1032.2917" y="849.2086"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="120.8333" x="975" y="861.7086">Private IP: 10.10.16.4</text></g><!--MD5=[de9dea1b64ad8afd8109c4419b4b66d5]
+entity fwHub--><g id="elem_fwHub"><rect fill="#282A36" height="195.8333" rx="4.1667" ry="4.1667" style="stroke:#FF5555;stroke-width:2.0833333333333335;" width="147.9167" x="1381.25" y="684.375"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="92.7083" x="1408.8542" y="709.6252">«AzureFirewall»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="14.5833" font-weight="bold" lengthAdjust="spacing" textLength="88.5417" x="1410.9375" y="734.1461">Hub Fireawll</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="1454.1667" y="743.9168"> </text><image height="72.9167" width="72.9167" x="1418.75" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAC+klEQVR4Xu2a4W3cIBiGPY5VVapUqVHUVlHURlFbRf3TCTpBN/AEmSAbZIKbIBt0oL7wuQ7HCxxgbINl6dEpMTbwHB8fHHdd/+ZqZ3R8qXUOpRY4lBK5env96/1n8PvDjQmu3L37yPcXYREldBf9Hj59ucif61vocQ1zKKyE/nG/YygoVkwJMYa3nPuaRJFoLKOUPTjM/OEqoBQ5beJBhdxKPHOV5gebkzlWs5QW8hGyIzBfqeD88ZFnlamE/MY9WAI0xK2HyVTithcCsc2th8lRWiHkTFIXqxwlbnVRUgcqWWnlIRKSZlSUEmrEQrFoyg6TlPouKCGOYfJ4c7ctSbHnVZJtKNe+CRgo7qEPtxLCjOvdFu6kD4dSPYNjEp8hzpRkT8DV1YB8/o1Zo86UqvWxCO/TX5XqjLcAvsw+KmFA+Zn6cSb3UamVkGMG2lsopUaHyMS0UkrtDtGEuRYrJb6jRaY02CFvcHGjSPh1SBpPt/f7QBJghyjksnZRShgvLmgXzKO9KSH29qYEnb3NJaW0p4wnqHWJr7aLGiVkPS5oF8yjcY/HZczz129/H35uAprm/jhRGa/Xhydcxpzuf3Bj64CmuT9O1LokWz0uYyYl/BHg5fuD3MN7MBMZc9zMNThr4/44GXfivT4W5mKLU5yS3IZX68TUAhUWVxr3eKLU648YfJOJ9LVmpXEnPinh/yedA3xI7Zso4ZX7YzGdQ7wq9foTO986UbPSo3Ece6bU60nFDwiT0vqElaaQcyuJlTMCA0ooCsOPBOAHX/xK6Kp1BOtQ6vW8kjzrVLJiDHBcWcizHFcWXNvz/1zPMuLDZ+VuJcEartqUBs83NCElQc5bqlJCfwLn/ZeVJiRHbaJ00nuRQf8QhyPNIkEJNfqUeNWz4AedcG1ycfDEmJMcpfVZXMlMsk7kHp7QJvL287Nc1RpKHDAcP6eiu4dDiS75OJSaUoohsq+RLKWEZY4bW4fwV+gWCUr9Aj82jiHJp09VaoJDqQUOpRb4B1VsQVALqVmqAAAAAElFTkSuQmCC" y="747.9167"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="100" x="1405.2083" y="835.2712">[Basic SKU]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="3.125" x="1453.6458" y="849.2086"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="113.5417" x="1400" y="861.7086">Private IP: 10.10.0.4</text></g><!--MD5=[3e2d65d462fc09478c40833332bf2898]
+entity vmSpoke--><g id="elem_vmSpoke"><rect fill="#282A36" height="195.8333" rx="4.1667" ry="4.1667" style="stroke:#BD93F9;stroke-width:2.0833333333333335;" width="164.5833" x="1745.8333" y="684.375"/><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="133.3333" x="1761.4583" y="709.6252">«AzureVirtualMachine»</text><text fill="#F8F8F2" font-family="Helvetica" font-size="14.5833" font-weight="bold" lengthAdjust="spacing" textLength="72.9167" x="1791.6667" y="734.1461">API Server</text><text fill="#F8F8F2" font-family="Helvetica" font-size="8.3333" font-style="italic" lengthAdjust="spacing" textLength="2.0833" x="1827.0833" y="743.9168"> </text><image height="72.9167" width="72.9167" x="1791.6667" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACYElEQVR4Xu2av2rDMBCH8zilm5dSyNAhuFtxhy4hdKmnFjJ7LvQF+gJ9gb5kzzoQJj9ZkaU7VzKCjwy2ddYXnf7Y1u7m9q5pDtuAXIjd8WnoX762AbmMSniiaPb3z1tTah9eq1L2VKUSqEolsJ7SahP6GkokQ7ehGZB+VxBTV+oeP0hmCt0SLxNEUQllptBZLCKCipLNND9KeTgqnU/fUnBErL0HzkMMFY2YUn8t0/xwHmLYCGSUEn0YqeYSU6JAZLU06xguy/0Kgy9FUolZKsYyTKZKbBWSh1MZQSUKK690tblaM3wjuSs5xfgIyjAYOQJ1JSvmzLSClawYapSqxCnHVh4xjByButK0F1nmrDByBKPS8PaTiFMJR7kLUIwqhMGXoqJ0ITOnhGIZKZ3NnO3x8SixFYtlp4QagUpWLCOlweQeaixSoggYNgIxJaabX9qhg0Uq5RhhpWE+CdGklUu2KfJKDI+BHqXOPMZiwXS0lBjKKKcSHceLpdBVYriD2cbBC2RZQ2kwHUyj2zhZSWlNNqr0+f67JapSCVSlEqB5vCplz7gtqmkOnXmulCL8xUhvPnkIwvvXdryHTRBa0eGf54QqgcXTUVHCSd1JMUpd8HK7KoUir0TPRTgSOKErsXg6/6lUTCuFD+JHs7tWHBWlHnZYOClGCavuwW7uFkRYqV2460ljhBBWsp8hwsEgiUgqdfDJKATxcU9Gide+WN1A7IpThCQlqge/cJSiNa+d8UaLiFSSNUFSho0Ypb3ZxKBNdHPFKGk3ERPdUDFK068squCtQ4hRypyqVAIbVPoDfenX5JZAy+EAAAAASUVORK5CYII=" y="747.9167"/><text fill="#F8F8F2" font-family="Helvetica" font-size="18.75" font-style="italic" lengthAdjust="spacing" textLength="128.125" x="1764.0625" y="835.2712">[Standard DS4]</text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="3.125" x="1826.5625" y="849.2086"> </text><text fill="#F8F8F2" font-family="Helvetica" font-size="12.5" lengthAdjust="spacing" textLength="92.7083" x="1783.3333" y="861.7086">api.contoso.com</text></g><!--MD5=[b13568073abf1e1dd956bd9abea8ddd1]
+reverse link dnsPrivateResolver to vnetIslandA--><g id="link_dnsPrivateResolver_vnetIslandA"><path d="M328.1979,1113.6979 C357.3542,1116.5781 390.5703,1119.86 424.084,1123.1717 C440.8408,1124.8276 457.672,1126.4908 474.1073,1128.1151 C478.2162,1128.5212 482.3002,1128.9248 486.3522,1129.3252 " fill="none" id="dnsPrivateResolver-backto-vnetIslandA" style="stroke:#8BE9FD;stroke-width:2.0833333333333335;"/><polygon fill="#8BE9FD" points="323.2292,1113.2083,332.1546,1118.2669,328.4128,1113.7148,332.9649,1109.973,323.2292,1113.2083" style="stroke:#8BE9FD;stroke-width:2.0833333333333335;"/></g><!--MD5=[783244098dcfe96be793019f5a4f23ca]
+link vmIsland to fwBridge--><g id="link_vmIsland_fwBridge"><path d="M715.9688,782.2917 C784.1146,782.2917 880.8854,782.2917 949.5104,782.2917 " fill="none" id="vmIsland-to-fwBridge" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><polygon fill="#F8F8F2" points="954.4896,782.2917,945.1146,778.125,949.2813,782.2917,945.1146,786.4583,954.4896,782.2917" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/></g><!--MD5=[5778699aeead376d5864b395626f41b4]
+link fwBridge to fwHub--><g id="link_fwBridge_fwHub"><path d="M1111.7917,782.2917 C1186.2604,782.2917 1298.6875,782.2917 1374.1771,782.2917 " fill="none" id="fwBridge-to-fwHub" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><polygon fill="#F8F8F2" points="1379.3333,782.2917,1369.9583,778.125,1374.125,782.2917,1369.9583,786.4583,1379.3333,782.2917" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><text fill="#F8F8F2" font-family="Helvetica" font-size="20.8333" font-weight="bold" lengthAdjust="spacing" textLength="55.2083" x="1261.4583" y="750.4171">SNAT</text><text fill="#F8F8F2" font-family="Helvetica" font-size="20.8333" lengthAdjust="spacing" textLength="6.25" x="1316.6667" y="750.4171">:</text><text fill="#F8F8F2" font-family="Helvetica" font-size="20.8333" lengthAdjust="spacing" textLength="98.9583" x="1242.7083" y="771.2504">10.10.16.4</text></g><!--MD5=[749a6085d8289fe29779a14c6f9bae4d]
+link fwHub to vmSpoke--><g id="link_fwHub_vmSpoke"><path d="M1529.5104,782.2917 C1589.7188,782.2917 1675.1771,782.2917 1739.0833,782.2917 " fill="none" id="fwHub-to-vmSpoke" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><polygon fill="#F8F8F2" points="1744.0104,782.2917,1734.6354,778.125,1738.8021,782.2917,1734.6354,786.4583,1744.0104,782.2917" style="stroke:#F8F8F2;stroke-width:1.0416666666666667;"/><text fill="#F8F8F2" font-family="Helvetica" font-size="20.8333" font-weight="bold" lengthAdjust="spacing" textLength="55.2083" x="1606.7708" y="750.4171">SNAT</text><text fill="#F8F8F2" font-family="Helvetica" font-size="20.8333" lengthAdjust="spacing" textLength="6.25" x="1661.9792" y="750.4171">:</text><text fill="#F8F8F2" font-family="Helvetica" font-size="20.8333" lengthAdjust="spacing" textLength="87.5" x="1593.75" y="771.2504">10.10.0.4</text></g><!--MD5=[ddc4f7fdf60069efdd26ee7595cb9f18]
+@startuml diagram-outbound-flow
+
+!define AzurePuml https://raw.githubusercontent.com/travisnielsen/Azure-PlantUML/themesupport/dist
+
+' Theme
+!includeurl AzurePuml/themes/dracula.puml
+
+' Icons
+!includeurl AzurePuml/Compute/AzureVirtualMachine.puml
+!includeurl AzurePuml/Management/AzureSubscription.puml
+!includeurl AzurePuml/Networking/AzureVirtualNetwork.puml
+!includeurl AzurePuml/Networking/AzureSubnet.puml
+!includeurl AzurePuml/Networking/AzureDNS.puml
+!includeurl AzurePuml/Networking/AzureRouteTable.puml
+!includeurl AzurePuml/Networking/AzureVPNGateway.puml
+!includeurl AzurePuml/Networking/AzureExpressRoute.puml
+!includeurl AzurePuml/Networking/AzureFirewall.puml
+
+LAYOUT_LEFT_RIGHT
+
+TITLE: Outbound Traffic Flow
+
+skinparam Rectangle {
+    BorderColor<<island>> GREEN
+    BorderThickness<<island>> 6
+}
+
+skinparam rectangle<<e_stereo>> {
+    BackgroundColor<<Region>> BACKGROUND
+	BorderColor<<Region>> RED
+	BackgroundColor<<AzureSubscription>> SELECTION
+	BorderColor<<AzureSubscription>> YELLOW
+    BackgroundColor<<AzureVirtualNetwork>> BACKGROUND
+    BorderColor<<AzureVirtualNetwork>> ORANGE
+    BackgroundColor<<AzureSubnet>> SELECTION
+    BorderColor<<AzureSubnet>> ORANGE
+    BorderColor<<AzureRouteTable>> ORANGE
+    BorderColor<<AzurePrivateLink>> ORANGE
+	BorderColor<<AzureExpressRoute>> ORANGE
+	BorderColor<<AzureVPNGateway>> ORANGE
+    BorderColor<<AzureVirtualMachine>> PURPLE
+    BorderColor<<AzureFunction>> PURPLE
+    BorderColor<<AzureDataLakeStorage>> CYAN
+    BorderColor<<AzureSqlDataWarehouse>> CYAN
+    BorderColor<<AzureDataFactory>> CYAN
+    BorderColor<<AzureFirewall>> RED
+    BorderColor<<AzureNSG>> RED
+    BorderColor<<AzureDNS>> CYAN
+    BorderColor<<PrivateDnsResolver>> CYAN
+    BorderColor<<DNSForwardingRuleset>> CYAN
+}
+
+AzureSubscription(subscriptionIsland, "Business Unit A", null, null, YELLOW) {
+
+    Rectangle "Name Resolution Services" as nameResolution {
+        AzureDNS(dnsIslandPrivateZones, "Private DNS Zones", "storage, event hub, AppServices, etc..", "Automated support for Azure servcies with private links", CYAN)
+        Rectangle "Forward DNS for:\ncontoso.com" <<DNSForwardingRuleset>> as dnsPrivateResolver
+    } 
+
+    AzureVirtualNetwork(vnetIslandA, "workload a", null, "192.168.0.0/20") #line:white {
+        AzureSubnet(subnetIslandVM, "Compute Subnet", null, "192.168.4.0/22") #line:white {
+            AzureVirtualMachine(vmIsland, "API Client", "Standard DS4", "GET: api.contoso.com", PURPLE)
+            AzureRouteTable(rtISland, "Custom Routes", null, "0 / 0 - - -> 10.10.16.4")
+        }
+    }
+
+    dnsPrivateResolver <-[thickness=2,CYAN]down- vnetIslandA
+}
+
+AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", null, null, YELLOW) {
+    AzureVirtualNetwork(vnetBridge, "Bridge - Business Unit A", null, "10.10.16.0/20", ORANGE)  {
+        AzureFirewall(fwBridge, "Bridge Fireawll", "Basic SKU", "Private IP: 10.10.16.4", RED)
+    }
+
+    AzureVirtualNetwork(vnetHub, "Hub", null, "10.10.0.0/20", ORANGE) {
+        AzureFirewall(fwHub, "Hub Fireawll", "Basic SKU", "Private IP: 10.10.0.4", RED)
+    }
+}
+
+AzureSubscription(subscriptionSpoke, "Hybrid Workload", null, null, YELLOW) {
+    AzureVirtualNetwork(vnetSpoke, "Spoke", null, "10.10.32.0/20", ORANGE) {
+        AzureVirtualMachine(vmSpoke, "API Server", "Standard DS4", "api.contoso.com", PURPLE)
+    }
+
+}
+
+vmIsland - -> fwBridge
+fwBridge - -> fwHub : <size:20>**SNAT**:</size>\n<size:20>10.10.16.4</size>
+fwHub - -> vmSpoke : <size:20>**SNAT**:</size>\n<size:20>10.10.0.4</size>
+
+@enduml
+
+@startuml diagram-outbound-flow
+
+
+
+
+
+
+
+skinparam defaultFontName        "Helvetica"
+skinparam defaultFontSize        12
+skinparam dpi                    100
+skinparam shadowing              false
+skinparam roundcorner            8
+skinparam ParticipantPadding     40
+skinparam BoxPadding             40
+skinparam Padding                5
+skinparam defaultTextAlignment  center
+skinparam wrapWidth             300
+skinparam maxMessageSize        150
+skinparam ranksep               1
+
+
+
+
+
+<style>
+  root {
+    BackgroundColor #282a36
+    FontColor #f8f8f2
+    FontName Helvetica
+    HyperLinkColor #f8f8f2
+    LineColor #f8f8f2
+    LineThickness 1
+    Margin 10
+    Padding 6
+    Shadowing 0.0
+  }
+  caption {
+    LineThickness 0
+  }
+  footer {
+    LineThickness 0
+  }
+  header {
+    LineThickness 0
+  }
+  node {
+    Padding 15
+    roundcorner 20
+    MaximumWidth 400
+  }
+  title {
+    FontSize 22
+    LineThickness 0
+  }
+</style>
+
+
+skinparam rectangle {
+	FontColor #f8f8f2
+	BorderColor #f8f8f2
+	BackgroundColor #282a36
+	BorderThickness 2
+	StereotypeFontColor #f8f8f2
+    StereotypeFontSize 12
+    EntityStereotypeFontSize 12
+}
+
+
+
+
+
+
+
+
+
+sprite $AzureVirtualMachine [70x70/16z] {
+xSy9TiGm28DX1mdCtF_0tSjpcf0Pa-xjVu3lIMqvNsjgvzDcxv7OUuJVeFmh-WwAGg1d5SfZA2fXlCIoef3e-1Pwba7MmNeMCeEoZPc32IIRaoiWjWPrLi76
+eMf10RasSeMvCiw1QbK91zINUaq1A65KbEWz5078aug8n9m3nNUpC9wKSBhlTgJ8StY9qqf78A60d5Oa0YBEAMwxYdccP76ZQFTf9LuTlWabpn0ApNrMYVH5
+KVUA4b40kXULgBDxGIdqJihbFVfNzjDlfBI5QTh7Z6bBEqWkOsornCUg2h-HWZw6Tr5OLBIFQLMniQfYwvOI0bk7ag9lgo3SA9ms5kesBbC4c0MvqG2Fmos8
+y5fIc58R8zThD_RVFG
+}
+
+skinparam rectangle<<AzureVirtualMachine>> {
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
+}
+
+
+
+
+sprite $AzureSubscription [70x70/16z] {
+pTS5TeGX40JXmNhkV-9unSCFTAoUh7yFMujffRRUIdZrV4YEKvNKpn4860Cn612J0L4jKJhCAH8FjJEcfkwDP8S7p2OYfQHNGuFPGXuQmH5ExJ9LD5xV1REE
+4FTrAPM2sKCOJ96qDHeGc18HJK-jZgReGqElOZHx26sDHXSncZf3cgIbqSWOojhIL2qpOsb2-NdYGNaAA_FJOobQR7vYT34OqVJ0rBKPAKVCQckAOjwOdXAk
+bpXZ2CHYG2m6n690VAR6SiD4O4m4naHWJ0J6H60yX3uWlZB2KgWOYiMWP7vWN4NVeWnF0J4L45-9Rr6ghy3uYke_EY_jEvGUjf8WZfAPvL19PQRuBp9EbPSC
+9Xtc-nKVYM4XL4q4naTWG2m6n6D0J6ODkGK
+}
+
+skinparam rectangle<<AzureSubscription>> {
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
+}
+
+
+
+
+sprite $AzureVirtualNetwork [70x70/16z] {
+xTH9ikGW38JXH9QCuFu7RZTIuB3UbEiA_ol6h-R2f_VszcRUy6FDZKJymHJ4tJYaC0LX6FC8t-QHaSY9RpiBGo0ymoELOH2EuH6UgGZ9y0ZFL8HdU8HdAi8p
+1C8m3C8p5H4z6dRjKC7TaPkLEPz8wsFCQSZi_wmtHDBzwa2zM17uTUrAiTAO-VttCgwaCbQGl3O7LZbBr5BfA8n77TavPYIuafpbA-m-LXDPzoWHsyfyAFCx
+PMx5aj50J17fZ0PMCuljCv6EI2qOXIxaPXvl16pEnxkxa2aRMOm2q8LiHdo_WitSdxHVo3WsifYusEp1G4mRTg8gk1CJF11hG66uAa8m148m1C8mF58P7g4P
+7gaCZ_0CZrI6HtY6Hoh38pnJ4OffVsnIp85lEmWacOfKfe6fgU37H1i-lRUtjty
+}
+
+skinparam rectangle<<AzureVirtualNetwork>> {
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
+}
+
+
+
+
+sprite $AzureSubnet [70x70/16z] {
+xT7PaOOm30JXnPQ4blpptKDL_ws62S3zEjG7s5zIgzLgPSwRcuXuPj0McQuYnG2YCPxLFDbSHN9quqXW09dzF9bXH6SOqHb6T8OHdM54PtI46G7H6KPqXX6T
+qP0HUyPKcBWX-B0p4zV8beyDcSipyRnrTJQ0L7lUsawOXnAzydshLUAXb1Zk7HCt93l4FHv_OOMqpBWfrYB5t2Ohf6NigA95YdducoCpzkD8GyJhl8ZX6656
+HvZH4MPqX1aTOKP7cD4HdM54PnZH6KOaPdJZ00GPwpO319X2W2b4O0e1fX2DERjf4LcjLgjV
+}
+
+skinparam rectangle<<AzureSubnet>> {
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
+}
+
+
+
+
+sprite $AzureDNS [70x70/16z] {
+rPZfdgGm2CINX5JX-x_m_aGmoYHpVPlQdKlfVtF5aFxtDoHzW6Q74KFRhn1jsF4MVqeI3KGLVW0QHyXuouBB_Zr6lmauHTw_N23Jhnb2DoLEfGVvD-AcV07H
+oym1W1sM8ioO7EkVEc8tu_n1U-WgUdBm1SGkHeLO_Wt0R-yWpPrr8xT-GUO59cOFeJiIRrq4JjukABaXQLarBn7SO7X1t96bA_FQ7ZEYEBEm7_MaE4ONIJ4G
+mIa15RIRUH4AnHmI1hoTvrI4H0BPapKcd55wgpedNM8HNEdk-Q9MwiExtwVrWb0oR2MrVcqQ4AWYtvKZtWbELr80rted7NosyF3KJeY1MmfPd96aM765u4uW
+YpCZ8BranVYfgZEFWDoL7MMFENkctok8M4Cm1a83UKa7QdwZGf5R5LVhWouL6G6Hvens6GI5p93Q8w0k7GFQHJf8ugHEYaEQGdkVAokgD5uKDOOr2AVqf81K
+wJnL4vDfkIcyrFpLNRh8c9Gc8oYrrkOKAnI83ATqQKd1ceAPt4fX4tKAH7fGF484PQQNMugduA9udOB29g8W-NrAkoYUwQIWd_b-K-mxlc28Q5B8SNBmVOe6
+1LraKaXqQQmK-oAxW2TuKhpW9IyRoX11KZp1GSbeQwMnwXUuAqb14s-RHxIbw-eAI4ZZWp94l7U38uAw0dfPZV3Lg20d1NfHfAaE5QchCROH9kLIZsfeKc9v
+ndsjXOvIumWsC6Ry_aTeZ7X6AHRBA1CpnOUGsZynTUxquEwv-u8K2dEJdJl95C2TyAAyzbWjkne_fqox6L1M2GiA7hefLbr9uPqP0iH6j8qhwKpUPBvtLU4W
+jf4oUeGV047ZIgXJq5XDP0J8d2PPTLqddJC7kp8TplVn7vNp6hyT4cF7Ey5S3Qeqzw8Cl3cfLl65oL_sm_VcA621sSwx15uGamL5tfZz19-GzkdnA2nt408s
+FTbZk7G6M43sHy_i1nO8eyORI6dYu00i42RZG85KDRSobgLtztuvmcw5ZwTopbDvMJjxoJW2jFY4O1RuQwaTQs73sAWfFf3G__r2ec3vzEKFw3y
+}
+
+skinparam rectangle<<AzureDNS>> {
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
+}
+
+
+
+
+sprite $AzureRouteTable [70x70/16z] {
+tTK7SeD038LXrIVx_WTsBo2GXjrach_qze-rn8X-7-AEwM_E3_Bp5RxvMuNLyU0ginKsBBXCLHI9JrGS6ywZ5GV6CxbYsEL35KN1HYgE2X-lA4fE5I1LqE0g
+SevrHT3GAf8hXePNaLnnT8h8P2L7pY5tdmesulxoKaI-SYKGMrKaLpmwLIHNB1euMj5esD69A1foz7G9xR7qL_g1wOQZfDJyroKU5Tg7lGetfz8z6_lCwVvo
+erJ2JeNq-wTVHWq4RN6SCgKMqnORrerG6YKEgCMYOGeOqm1rtBY86101k3u-7Ucm0m-oak-xFSERoO8TNMnvGRii-CYsTYpeDw9OuAFZv94CIzHIh7qhUIar
+68bj1ZfmfHoPl23ZRfvCgmgeWYtVETj-9eqjo0EQZP8WTfZSwF4xi4HK3yQRzPPux58H6RW7npuJiTXb_K1v91pVAXO5qv5b6mNtiayRCGxDiGoWJ6E2K6Ad
+2Kg9prIS4inKubyU2oZHkOcocAWmPJ9tYJ8s336cdtG5
+}
+
+skinparam rectangle<<AzureRouteTable>> {
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
+}
+
+
+
+
+sprite $AzureVPNGateway [70x70/16z] {
+xTXdOi8m38PXD3wP-v-uECNAKeILVnrlouO7cGsFB1PLCrCLVjoCrRRfBSWD3rGrnAAaYiIXY1IO0b9cnB9q3Y7Buoa5jWztxd0D7cgirJN5rqgmDQgCWc2X
+ayES40_pmt1orlbdWYRdbFIX5u-ThdRs4IVfSYbNyaVev0t3-SoOKoHNjAXeuUH_vLz1uUHVhX0pAvOCu2Y5lV_uLOJeZSwJ05K3e42vSkGAWKHAp1253AuL
+H4Z409a2d928mIS59-J408aIECBS3MQEa5W9n-bCC4YcU9SAAWfY1QWfGA2Whk2e03L5nPrLyLEc5NB6svwGA_R-Ko9Pzhapz4-ABGdtY3gpX3r2n4kvmkIf
+Ct34AogzeV2iejBZ3T9URHYMfKJnT8lqp1d1fbp1GBw1lZEOYh8YhQzY7KSBYXkhukEa2iV8LcbMKjnmPLHJMekLPWMbdHLlMcdj-GxZrLkUesPJIYSyeINU
+7jbInUSuCOuuaoi7epEERB942OpES71qkr1yCQVYeorIA33o6eBV2lHPRXtb2m
+}
+
+skinparam rectangle<<AzureVPNGateway>> {
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
+}
+
+
+
+
+sprite $AzureExpressRoute [70x70/16z] {
+xTO7RiOW30LWLXoRtF- -5GqnfbhkexkyVuzyOig4tvATdPsKSrer3ddDiM94qSGbP9qvhNAYuofJm34cQIaX51rXj4EdUOShXyxtkTeMHXLTSHGZwRXysnnn
+jKXb3BbgDKYz64AkpdJakXX1MfYRmSyd3A4so6rOIHa4qIW38JWp49on2CuC16SiWZC3mHcBuCn0OCOY41DJcX0dar8Ccd9lEL74nSXzLUdjuB7zE-9WQfKU
+Zc_AQEs8WwbpyMMn30LNo2B28Oi0DJtAbDohH8ndxvChzIaolThSpytdzofy5tDDrbBeLRHOcX4vyBPeb-x6430kJrEeo9ISNCaofSphXVmd91EUfvw3EomZ
+SHfbZdubyZp38PBE572WfcYFwH4u3-lX_gTaPsVd1G
+}
+
+skinparam rectangle<<AzureExpressRoute>> {
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
+}
+
+
+
+
+sprite $AzureFirewall [70x70/16z] {
+xT9N0jmW34NH9uIARVQ_tVG8fel1wJcVBfUAN-S_OgwVSS6xIjM1CDx0UcEwGwBtbDM9p4-dwaCLMQ9FrFL8Vb6ikfuXVOdmahucI-l9NnlDaCnKbdQ6gcWI
+uu4YbYUuYyHcAEwfDWbtYCqYN2ErQS85bzJUKzUM4nZV5LiWI-i9IZ6L9RGybRY0jgm2REi8uki4wYU0-Gdub8gSKZ4zfI9-1lOJ6Fm42lN1rf8s7mcg3_QM
+jFk8WQlA7ewsMzZQSV76Hm3ukXBQhi6VL0IVs6g5y0dvzjsHhHnR9_YYB5KCtt2l9FMA4oBZLvMZQo7U31KlwCZ65RMctH6BZ3TRL68cVJhp5SKDjicA5Tpb
+sSfkMWaFwFUAToqgyMPlYYUqvRoi7Druj_RnnQjAykx-WvNH-EF46TMMLF5CrPIAd-U_Zm
+}
+
+skinparam rectangle<<AzureFirewall>> {
+    BackgroundColor #282a36
+    BorderColor #f8f8f2
+    FontColor #f8f8f2
+}
+
+
+
+
+
+left to right direction
+
+TITLE: Outbound Traffic Flow
+
+skinparam Rectangle {
+    BorderColor<<island>> #50fa7b
+    BorderThickness<<island>> 6
+}
+
+skinparam rectangle<<e_stereo>> {
+    BackgroundColor<<Region>> #282a36
+	BorderColor<<Region>> #ff5555
+	BackgroundColor<<AzureSubscription>> #44475a
+	BorderColor<<AzureSubscription>> #f1fa8c
+    BackgroundColor<<AzureVirtualNetwork>> #282a36
+    BorderColor<<AzureVirtualNetwork>> #ffb86c
+    BackgroundColor<<AzureSubnet>> #44475a
+    BorderColor<<AzureSubnet>> #ffb86c
+    BorderColor<<AzureRouteTable>> #ffb86c
+    BorderColor<<AzurePrivateLink>> #ffb86c
+	BorderColor<<AzureExpressRoute>> #ffb86c
+	BorderColor<<AzureVPNGateway>> #ffb86c
+    BorderColor<<AzureVirtualMachine>> #bd93f9
+    BorderColor<<AzureFunction>> #bd93f9
+    BorderColor<<AzureDataLakeStorage>> #8be9fd
+    BorderColor<<AzureSqlDataWarehouse>> #8be9fd
+    BorderColor<<AzureDataFactory>> #8be9fd
+    BorderColor<<AzureFirewall>> #ff5555
+    BorderColor<<AzureNSG>> #ff5555
+    BorderColor<<AzureDNS>> #8be9fd
+    BorderColor<<PrivateDnsResolver>> #8be9fd
+    BorderColor<<DNSForwardingRuleset>> #8be9fd
+}
+
+rectangle "==Business Unit A\n<color:#f1fa8c><$AzureSubscription></color>" <<AzureSubscription>> as subscriptionIsland {
+
+    Rectangle "Name Resolution Services" as nameResolution {
+rectangle "==Private DNS Zones\n//<size:8> </size>//\n<color:#8be9fd><$AzureDNS></color>\n//<size:18>[storage, event hub, AppServices, etc..]</size>//\n\n Automated support for Azure servcies with private links" <<AzureDNS>> as dnsIslandPrivateZones
+        Rectangle "Forward DNS for:\ncontoso.com" <<DNSForwardingRuleset>> as dnsPrivateResolver
+    } 
+
+rectangle "==workload a\n//<size:8> </size>//\n<color:#f8f8f2><$AzureVirtualNetwork></color>\n\n 192.168.0.0/20" <<AzureVirtualNetwork>> as vnetIslandA #line:white {
+rectangle "==Compute Subnet\n//<size:8> </size>//\n<color:#f8f8f2><$AzureSubnet></color>\n\n 192.168.4.0/22" <<AzureSubnet>> as subnetIslandVM #line:white {
+rectangle "==API Client\n//<size:8> </size>//\n<color:#bd93f9><$AzureVirtualMachine></color>\n//<size:18>[Standard DS4]</size>//\n\n GET: api.contoso.com" <<AzureVirtualMachine>> as vmIsland
+rectangle "==Custom Routes\n//<size:8> </size>//\n<color:#f8f8f2><$AzureRouteTable></color>\n\n 0 / 0 - - -> 10.10.16.4" <<AzureRouteTable>> as rtISland
+        }
+    }
+
+    dnsPrivateResolver <-[thickness=2,#8be9fd]down- vnetIslandA
+}
+
+rectangle "==Core Infrastructure Services\n<color:#f1fa8c><$AzureSubscription></color>" <<AzureSubscription>> as subscriptionInfrastructure {
+rectangle "==Bridge - Business Unit A\n//<size:8> </size>//\n<color:#ffb86c><$AzureVirtualNetwork></color>\n\n 10.10.16.0/20" <<AzureVirtualNetwork>> as vnetBridge  {
+rectangle "==Bridge Fireawll\n//<size:8> </size>//\n<color:#ff5555><$AzureFirewall></color>\n//<size:18>[Basic SKU]</size>//\n\n Private IP: 10.10.16.4" <<AzureFirewall>> as fwBridge
+    }
+
+rectangle "==Hub\n//<size:8> </size>//\n<color:#ffb86c><$AzureVirtualNetwork></color>\n\n 10.10.0.0/20" <<AzureVirtualNetwork>> as vnetHub {
+rectangle "==Hub Fireawll\n//<size:8> </size>//\n<color:#ff5555><$AzureFirewall></color>\n//<size:18>[Basic SKU]</size>//\n\n Private IP: 10.10.0.4" <<AzureFirewall>> as fwHub
+    }
+}
+
+rectangle "==Hybrid Workload\n<color:#f1fa8c><$AzureSubscription></color>" <<AzureSubscription>> as subscriptionSpoke {
+rectangle "==Spoke\n//<size:8> </size>//\n<color:#ffb86c><$AzureVirtualNetwork></color>\n\n 10.10.32.0/20" <<AzureVirtualNetwork>> as vnetSpoke {
+rectangle "==API Server\n//<size:8> </size>//\n<color:#bd93f9><$AzureVirtualMachine></color>\n//<size:18>[Standard DS4]</size>//\n\n api.contoso.com" <<AzureVirtualMachine>> as vmSpoke
+    }
+
+}
+
+vmIsland - -> fwBridge
+fwBridge - -> fwHub : <size:20>**SNAT**:</size>\n<size:20>10.10.16.4</size>
+fwHub - -> vmSpoke : <size:20>**SNAT**:</size>\n<size:20>10.10.0.4</size>
+
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 12:01:30 CDT 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
