@@ -60,7 +60,7 @@ AzureSubscription(subscriptionIsland, "Business Unit A", null, null, YELLOW) {
     AzureVirtualNetwork(vnetIslandA, "workload a", null, "192.168.0.0/20") #line:white {
         AzureSubnet(subnetIslandVM, "Compute Subnet", null, "192.168.4.0/22") #line:white {
             AzureVirtualMachine(vmIsland, "API Client", "Standard DS4", "GET: api.contoso.com", PURPLE)
-            AzureRouteTable(rtISland, "Custom Routes", null, "0 / 0 ---> 10.10.16.4")
+            AzureRouteTable(rtISland, "Custom Routes", null, "0 / 0 : 10.10.16.4")
         }
     }
 
@@ -69,11 +69,16 @@ AzureSubscription(subscriptionIsland, "Business Unit A", null, null, YELLOW) {
 
 AzureSubscription(subscriptionInfrastructure, "Core Infrastructure Services", null, null, YELLOW) {
     AzureVirtualNetwork(vnetBridge, "Bridge - Business Unit A", null, "10.10.16.0/20", ORANGE)  {
-        AzureFirewall(fwBridge, "Bridge Fireawll", "Basic SKU", "Private IP: 10.10.16.4", RED)
+        AzureSubnet(subnetBridgeFirewall, "AzureFirewallSubnet", null, "10.10.16.0/25", ORANGE) {
+            AzureFirewall(fwBridge, "Bridge Fireawll", "Basic SKU", "Private IP: 10.10.16.4", RED)
+            AzureRouteTable(rtBridge, "Custom Routes", null, "10.10.32.0/20 : 10.10.0.4")
+        }
     }
 
     AzureVirtualNetwork(vnetHub, "Hub", null, "10.10.0.0/20", ORANGE) {
-        AzureFirewall(fwHub, "Hub Fireawll", "Basic SKU", "Private IP: 10.10.0.4", RED)
+        AzureSubnet(subnetHubFirewall, "AzureFirewallSubnet", null, "10.10.0.0/25", ORANGE) {
+            AzureFirewall(fwHub, "Hub Fireawll", "Basic SKU", "Private IP: 10.10.0.4", RED)
+        }
     }
 }
 
@@ -86,6 +91,6 @@ AzureSubscription(subscriptionSpoke, "Hybrid Workload", null, null, YELLOW) {
 
 vmIsland --> fwBridge
 fwBridge --> fwHub : <size:20>**SNAT**:</size>\n<size:20>10.10.16.4</size>
-fwHub --> vmSpoke : <size:20>**SNAT**:</size>\n<size:20>10.10.0.4</size>
+fwHub --> vmSpoke : <size:20>**SOURCE IP**:</size>\n<size:20>10.10.16.4 (Bridge FW)</size>
 
 @enduml

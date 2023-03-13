@@ -23,12 +23,15 @@ Outbound connectivity from workload VNETs is managed through a centralized "brid
 
 <img src="media/diagram-outbound-flow.svg" alt="Outbound flow diagram"/>
 
-In this current design, seamless access to resources hosted on-premises or in the hybrid cloud network address space is achieved using two layers of SNAT provided by the Azure Fireall instances. Name resolution for resources hosted in self-hosted DNS zones is accomplished using Azure Private DNS resolver.
+In this current design, access to resources hosted on-premises or in the hybrid cloud network address space is achieved by enabling SNAT for private RFC 1918 addresses on the Bridge firewall as well as forcing traffic destined to remote networks to the Hub firewall via a custom route table linked to the Bridge network. No changes to the existing core network are required.
 
 ### Inbound Connectivity
 
 ### Name Resolution
 
+Workloads hosted in island networks use Azure Private DNS to resovle Azure PaaS services. Name resolution for internal DNS zones is facilitated using Azure Private DNS Resolver, which routes DNS queries from island networks to enterprise DNS servers. No changes to the existing core network is required.
+
+Name resolution of services exposed by island-hosted workloads via Private Endpoints can be provided in a variety of ways using enterprise DNS servers (ex: zone forwarding to Azure Private DNS Zones).
 
 ## Deployment
 
