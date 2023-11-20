@@ -4,6 +4,8 @@ param appPrefix string
 param regionCode string
 param location string = resourceGroup().location
 param storageSkuName string = 'Standard_LRS'
+@description('SSH key for AKS nodes')
+param keyData string
 param tags object = { }
 param zoneRedundant bool = false
 @maxLength(16)
@@ -100,7 +102,6 @@ var functionApps = [
   }
 ]
 
-/*
 // TODO - Refactor to parameterize vnet name
 // TODO - This is all jacked up around managed identities
 module aks 'modules/aks.bicep' = {
@@ -108,10 +109,10 @@ module aks 'modules/aks.bicep' = {
   params: {
     location: location
     resourcePrefix: resourcePrefix
-    subnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${orgPrefix}-network/providers/Microsoft.Network/virtualNetworks/${appPrefix}-vnet/subnets/aks'
+    subnetId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${fullPrefix}-network/providers/Microsoft.Network/virtualNetworks/${workloadVnetName}/subnets/aks'
+    keyData: keyData
   }
 }
-*/
 
 module monitoring 'Modules/monitoring.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-monitoring'
