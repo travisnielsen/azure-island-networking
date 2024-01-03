@@ -1,7 +1,16 @@
 param name string
 param location string = resourceGroup().location
 param subnetId string
-param publicIpId string
+
+resource vnetGatewayIP 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
+  name: '${name}-ip'
+  location: location
+  properties: {
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Static'
+  }
+  sku: { name: 'Standard' }
+}
 
 resource vpnGateway 'Microsoft.Network/virtualNetworkGateways@2023-05-01' = {
   name: name
@@ -16,7 +25,7 @@ resource vpnGateway 'Microsoft.Network/virtualNetworkGateways@2023-05-01' = {
         properties: {
           privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
-            id: publicIpId
+            id: vnetGatewayIP.id
           }
           subnet: {
             id: subnetId

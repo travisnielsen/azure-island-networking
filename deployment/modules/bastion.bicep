@@ -9,7 +9,7 @@ resource bastionIP 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
   }
-  sku: { name: 'Basic' }
+  sku: { name: 'Standard' }
 }
 
 resource bastion 'Microsoft.Network/bastionHosts@2020-06-01' = {

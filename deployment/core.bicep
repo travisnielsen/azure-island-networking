@@ -33,7 +33,7 @@ param hubFirewallSubnetAddressSpace string = '10.10.0.0/25' // 123 addresses - 1
 param hubDnsSubnetAddressSpace string = '10.10.0.128/25' // 123 addresses - 10.10.0.128 - 10.10.1.255
 param hubDnsResolverOutboundSubnetAddressSpace string = '10.10.1.0/26' // 59 addresses - 10.10.1.0 - 10.10.1.63
 param hubServicesSubnetAddressSpace string = '10.10.1.64/26' // 59 addresses - 10.10.1.64 - 10.10.1.127
-param hubGatewaySubnetAddressSpace string = '10.10.1.128/26' // 59 addresses
+// param hubGatewaySubnetAddressSpace string = '10.10.1.128/26' // 59 addresses
 
 // BRIDGE VNET IP SETTINGS
 param bridgeVnetAddressSpace string = '10.10.16.0/20'
@@ -136,12 +136,14 @@ module hubVnet 'modules/vnet.bicep' = {
           }
         }
       }
+      /*
       {
         name: 'GatewaySubnet'
         properties: {
           addressPrefix: hubGatewaySubnetAddressSpace
         }
       }
+      */
     ]
   }
 }
@@ -1124,7 +1126,6 @@ module vnetGateway 'modules/vnetGateway.bicep' = if (deployVnetGateway) {
   scope: resourceGroup(netrg.name)
   dependsOn: [
     hubVnet
-    vnetGatewayPublicIp
   ]
   params: {
     name: '${resourcePrefix}-vnet-gateway'
@@ -1133,6 +1134,7 @@ module vnetGateway 'modules/vnetGateway.bicep' = if (deployVnetGateway) {
     publicIpId: (deployVnetGateway ? vnetGatewayPublicIp.outputs.id : '' )
   }
 }
+*/
 
 // DNS server for contoso.com
 module dnsServer 'modules/virtualMachine.bicep' = {
