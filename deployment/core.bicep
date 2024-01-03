@@ -1131,10 +1131,8 @@ module vnetGateway 'modules/vnetGateway.bicep' = if (deployVnetGateway) {
     name: '${resourcePrefix}-vnet-gateway'
     location: region
     subnetId: '${hubVnet.outputs.id}/subnets/GatewaySubnet'
-    publicIpId: (deployVnetGateway ? vnetGatewayPublicIp.outputs.id : '' )
   }
 }
-*/
 
 // DNS server for contoso.com
 module dnsServer 'modules/virtualMachine.bicep' = {
