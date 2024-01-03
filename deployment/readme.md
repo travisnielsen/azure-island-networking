@@ -43,6 +43,7 @@ In the `deployments` directory, create a new file called `core.params.json` and 
       "region": { "value": "centralus"},
       "orgPrefix": { "value": "contoso" },
       "appPrefix": { "value": "core" },
+      "deployBridge" { "value:" true },
       "vmAdminUserName": { "value": "vmadmin" },
       "vmAdminPwd": { "value": "" },
       "tags": {
@@ -55,7 +56,7 @@ In the `deployments` directory, create a new file called `core.params.json` and 
  }
 ```
 
-Update these parameters to fit your environment. Be sure to set the value of `vmAdminPwd` to a random value.
+Update these parameters to fit your environment. Be sure to set the value of `vmAdminPwd` to a random value. In addtion, the value for `deployBridge` parameter will default to false unless otherwise specified.
 
 Next, run the following command to deploy the core infrastructure:
 

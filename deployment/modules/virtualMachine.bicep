@@ -11,12 +11,16 @@ param vmSize string
 param location string = resourceGroup().location
 @description('Base64 encocded string to be run at VM startup')
 param initScriptBase64 string = ''
+param tags object = {}
 
 @allowed([
-  'windows10'
+  'windows11'
+  'windowsserver'
   'linux'
 ])
 param os string
+
+var osType = os =~ 'linux' ? 'linux' : 'windows'
 
 var linuxImage = {
   publisher: 'canonical'
@@ -25,10 +29,10 @@ var linuxImage = {
   version: 'latest'
 }
 
-var windows10Image = {
+var windows11Image = {
   publisher: 'MicrosoftWindowsDesktop'
-  offer: 'Windows-10'
-  sku: '20h2-pro'
+  offer: 'Windows-11'
+  sku: 'win11-23h2-pro'
   version: 'latest'
 }
 
@@ -42,6 +46,7 @@ var nicName = '${vmName}-nic'
 resource nic 'Microsoft.Network/networkInterfaces@2022-05-01' = {
   name: nicName
   location: location
+  tags: tags
   properties: {
     ipConfigurations: [
       {
@@ -60,6 +65,10 @@ resource nic 'Microsoft.Network/networkInterfaces@2022-05-01' = {
 resource vm 'Microsoft.Compute/virtualMachines@2022-08-01' = {
   name: vmName
   location: location
+  tags: tags
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     hardwareProfile: {
       vmSize: vmSize
@@ -69,10 +78,10 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-08-01' = {
       adminUsername: adminUserName
       adminPassword: adminPassword
       linuxConfiguration: (os =~ 'linux') ? linuxConfiguration : null
-      customData: ( !empty(initScriptBase64) ? initScriptBase64 : null )
+      customData: (!empty(initScriptBase64) && osType == 'linux') ? initScriptBase64 : null
     }
     storageProfile: {
-      imageReference: (os =~ 'linux') ? linuxImage : windows10Image
+      imageReference: (os =~ 'linux') ? linuxImage : windows11Image
       osDisk: {
         name: '${vmName}-os'
         caching: 'ReadWrite'
@@ -100,25 +109,22 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-08-01' = {
         // storageUri: stg.properties.primaryEndpoints.blob
       }
     }
+    userData: (!empty(initScriptBase64) && osType == 'windows') ? initScriptBase64 : null
+    
   }
 }
 
-/*
-resource aadextension 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = {
-  name: '${vm.name}/AADLoginForWindows'
+resource aadextension 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = if(os =~ 'windows11' || os =~ 'windowsserver') {
+  name: '${vm.name}-AADLoginForWindows'
+  parent: vm
   location: location
-  dependsOn: [
-    vm
-  ]
   properties: {
     publisher: 'Microsoft.Azure.ActiveDirectory'
     type: 'AADLoginForWindows'
-    typeHandlerVersion: ''
+    typeHandlerVersion: '1.0'
     autoUpgradeMinorVersion: true
-
   }
 }
-*/
 
 resource autoShutdown 'Microsoft.DevTestLab/schedules@2016-05-15' = {
   name: 'shutdown-computevm-${vm.name}'
