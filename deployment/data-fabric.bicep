@@ -47,13 +47,13 @@ module sqlDabase 'modules/sqldb.bicep' = {
   }
 }
 
-module windows11vm 'modules/virtualMachine.bicep' = {
-  name: 'windows11vm'
+module windowsservervm 'modules/virtualMachine.bicep' = {
+  name: 'windowsserver'
   scope: resourceGroup()
   params: {
     vmName: 'win11vm'
     vmSize: 'Standard_D2s_v4'
-    os: 'windows11'
+    os: 'windowsserver'
     adminUserName: vmAdminUserName
     adminPassword: vmAdminPwd
     networkResourceGroupName: networkResourceGroupName
@@ -61,6 +61,20 @@ module windows11vm 'modules/virtualMachine.bicep' = {
     subnetName: 'iaas'
     location: location
     tags: tags
-    initScriptBase64: loadFileAsBase64('win11setup.cmd')
+    initScriptBase64: loadFileAsBase64('winsetup.cmd')
+  }
+}
+
+module dataFactory 'modules/datafactory.bicep' = {
+  name: 'dataFactory'
+  scope: resourceGroup()
+  params: {
+    dataFactoryName: 'contoso-adf'
+    location: location
+    resourceGroupNameDns: dnsResourceGroupName
+    resourceGroupNameNetwork: networkResourceGroupName
+    privateLinkVnetName: vnet.name
+    privateLinkSubnetName: 'privatelink'
+    integrationRuntimeSubnetId: 'TBD'
   }
 }

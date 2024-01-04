@@ -14,7 +14,6 @@ param initScriptBase64 string = ''
 param tags object = {}
 
 @allowed([
-  'windows11'
   'windowsserver'
   'linux'
 ])
@@ -29,10 +28,19 @@ var linuxImage = {
   version: 'latest'
 }
 
+/*
 var windows11Image = {
   publisher: 'MicrosoftWindowsDesktop'
   offer: 'Windows-11'
   sku: 'win11-23h2-pro'
+  version: 'latest'
+}
+*/
+
+var windowsServerImage = {
+  publisher: 'MicrosoftWindowsServer'
+  offer: 'WindowsServer'
+  sku: '2019-Datacenter'
   version: 'latest'
 }
 
@@ -81,7 +89,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-08-01' = {
       customData: (!empty(initScriptBase64) && osType == 'linux') ? initScriptBase64 : null
     }
     storageProfile: {
-      imageReference: (os =~ 'linux') ? linuxImage : windows11Image
+      imageReference: (os =~ 'linux') ? linuxImage : windowsServerImage
       osDisk: {
         name: '${vmName}-os'
         caching: 'ReadWrite'
