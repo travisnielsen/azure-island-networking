@@ -100,6 +100,7 @@ Next, run the following command to deploy the application core infrastructure:
 ```powershell
 .\deploy-02-appbase.ps1 [your_region_name] contoso island
 ```
+
 When completed, proceed to deploy the application infrastructure.
 
 This sample includes a small AKS cluster that requires an SSH key. Generate the key using the following command:
@@ -118,14 +119,7 @@ Make sure to replace the value of the SSH key with the output from the `ssh-keyg
 
 ## Scenario 2: Data Infrastrucure (Spoke)
 
-This reference deployment includes access control setup based on Azure AD groups. Create an Entra ID group to be used for SQL Admins by opening the Azure Portal and navigating to **Microsoft Entra ID** > **Groups** and clicking the **New group** button. Name the group `sqladmins` (or similar) and accept the default group type (security) and membership type (assigned). Once completed, document the **Object ID**, which is found on the Overview page of the group. Alternatively, you can get the object ID using the following PowerShell commands:
-
-```powershell
-Connect-AzAccount -Tenant [your_environment_tenant_id]
-$sqlAdminGroup = Get-AzADGroup -DisplayName "sqladmins"
-$objectId = $sqlAdminGroup.Id
-Write-Host "objectId: $objectId"
-```
+This reference deployment includes access control setup based on Azure AD groups. Create an Entra ID group to be used for SQL Admins by opening the Azure Portal and navigating to **Microsoft Entra ID** > **Groups** and clicking the **New group** button. Name the group `sqladmins` (or similar) and accept the default group type (security) and membership type (assigned).
 
 In the `deployments` directory, create a new file called `dataservices.params.json` and place the following contents into the file:
 
@@ -134,7 +128,6 @@ In the `deployments` directory, create a new file called `dataservices.params.js
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "sqlAdminObjectId": { "value": "" },
       "vmAdminUserName": { "value": "vmadmin" },
       "vmAdminPwd": { "value": "" },
       "tags": {
@@ -147,8 +140,11 @@ In the `deployments` directory, create a new file called `dataservices.params.js
  }
 ```
 
-Be sure to update the values for the `sqlAdminObjectId` and `vmAdminPwd` parameters.
+Be sure to update the values for the `vmAdminPwd` parameter. Next, run the following PowerShell script to deploy the data services.
 
 ```powershell
 .\deploy-05-dataservices.ps1 centralus contoso dataservices
 ```
+
+> [!NOTE]
+> This deployment script sets group membership for access control to data sources. The account used must have permissions to read the Entra ID directory and manage group membership.

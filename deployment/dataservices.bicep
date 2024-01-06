@@ -25,6 +25,9 @@ param vmAdminUserName string
 @secure()
 param vmAdminPwd string
 
+// Data Factory identity
+param userAssignedIdentityName string = ''
+
 // Scripts for VM custom script extensions
 @description('URL of the script for installation of a self-hosted integration runtime')
 var shirInstallScriptURL = 'https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.compute/vms-with-selfhost-integration-runtime/gatewayInstall.ps1'
@@ -32,6 +35,11 @@ var shirInstallScriptURL = 'https://raw.githubusercontent.com/Azure/azure-quicks
 resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' existing = {
   name: vnetName
   scope: resourceGroup(subscription().id, networkResourceGroupName)
+}
+
+resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
+  name: userAssignedIdentityName
+  scope: resourceGroup()
 }
 
 module sqlDabase 'modules/sqldb.bicep' = {
@@ -77,6 +85,7 @@ module dataFactory 'modules/datafactory.bicep' = {
   params: {
     dataFactoryName: 'contoso-adf'
     location: location
+    identityId: userAssignedIdentity.id
     resourceGroupNameDns: dnsResourceGroupName
     resourceGroupNameNetwork: networkResourceGroupName
     privateLinkVnetName: vnet.name
