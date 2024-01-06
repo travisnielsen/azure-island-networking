@@ -65,7 +65,11 @@ Next, run the following command to deploy the core infrastructure (hub and spoke
 .\deploy-01-core.ps1 centralus contoso core
 ```
 
-## Deploy Application (Island) Network Infrastructure Services
+## Deploy Workload Scenarios
+
+This repo includes scripts for deploying two optional scenarios. Deployment steps for each are documented in the following sections.
+
+### Scenario 1: Application Infrastructure (Island)
 
 In the `deployments` directory, create a new file called `app-base.params.json` and place the following contents into the file:
 
@@ -96,21 +100,55 @@ Next, run the following command to deploy the application core infrastructure:
 ```powershell
 .\deploy-02-appbase.ps1 [your_region_name] contoso island
 ```
+When completed, proceed to deploy the application infrastructure.
 
-## Deploy the Application (island) Workload Services
-
-The samle workload application includes a small AKS cluster that requires an SSH key. Generate the key using the following command:
+This sample includes a small AKS cluster that requires an SSH key. Generate the key using the following command:
 
 ```bash
 ssh-keygen -t rsa -b 4096
 ```
 
-
-
-Run the following command to deploy the application services for the sample workload:
+Next, run the following command to deploy the application services for the sample workload:
 
 ```powershell
 .\deploy-03-appsvc.ps1 [your_region_name] contoso island 'ssh rsa AAAAB3NzaC1yc ...'
 ```
 
 Make sure to replace the value of the SSH key with the output from the `ssh-keygen` command.
+
+## Scenario 2: Data Infrastrucure (Spoke)
+
+This reference deployment includes access control setup based on Azure AD groups. Create an Entra ID group to be used for SQL Admins by opening the Azure Portal and navigating to **Microsoft Entra ID** > **Groups** and clicking the **New group** button. Name the group `sqladmins` (or similar) and accept the default group type (security) and membership type (assigned). Once completed, document the **Object ID**, which is found on the Overview page of the group. Alternatively, you can get the object ID using the following PowerShell commands:
+
+```powershell
+Connect-AzAccount -Tenant [your_environment_tenant_id]
+$sqlAdminGroup = Get-AzADGroup -DisplayName "sqladmins"
+$objectId = $sqlAdminGroup.Id
+Write-Host "objectId: $objectId"
+```
+
+In the `deployments` directory, create a new file called `dataservices.params.json` and place the following contents into the file:
+
+```json
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "sqlAdminObjectId": { "value": "" },
+      "vmAdminUserName": { "value": "vmadmin" },
+      "vmAdminPwd": { "value": "" },
+      "tags": {
+        "value": {
+          "project": "ContosoDemo",
+          "component": "Data"
+        }
+      }
+    }
+ }
+```
+
+Be sure to update the values for the `sqlAdminObjectId` and `vmAdminPwd` parameters.
+
+```powershell
+.\deploy-05-dataservices.ps1 centralus contoso dataservices
+```

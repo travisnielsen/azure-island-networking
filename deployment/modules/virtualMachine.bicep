@@ -40,7 +40,7 @@ var windows11Image = {
 var windowsServerImage = {
   publisher: 'MicrosoftWindowsServer'
   offer: 'WindowsServer'
-  sku: '2019-Datacenter'
+  sku: '2022-datacenter-azure-edition-hotpatch'
   version: 'latest'
 }
 
@@ -51,7 +51,7 @@ var linuxConfiguration = {
 var subscriptionId = subscription().subscriptionId
 var nicName = '${vmName}-nic'
 
-resource nic 'Microsoft.Network/networkInterfaces@2022-05-01' = {
+resource nic 'Microsoft.Network/networkInterfaces@2022-11-01' = {
   name: nicName
   location: location
   tags: tags
@@ -67,16 +67,20 @@ resource nic 'Microsoft.Network/networkInterfaces@2022-05-01' = {
         }
       }
     ]
+    enableAcceleratedNetworking: true
   }
 }
 
-resource vm 'Microsoft.Compute/virtualMachines@2022-08-01' = {
+resource vm 'Microsoft.Compute/virtualMachines@2022-11-01' = {
   name: vmName
   location: location
   tags: tags
   identity: {
     type: 'SystemAssigned'
   }
+  zones: [
+    '1'
+  ]
   properties: {
     hardwareProfile: {
       vmSize: vmSize
@@ -92,8 +96,11 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-08-01' = {
       imageReference: (os =~ 'linux') ? linuxImage : windowsServerImage
       osDisk: {
         name: '${vmName}-os'
-        caching: 'ReadWrite'
         createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'StandardSSD_LRS'
+        }
+        deleteOption: 'Delete'
       }
       dataDisks: [
         {

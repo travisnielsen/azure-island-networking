@@ -33,7 +33,7 @@ param hubFirewallSubnetAddressSpace string = '10.10.0.0/25' // 123 addresses - 1
 param hubDnsSubnetAddressSpace string = '10.10.0.128/25' // 123 addresses - 10.10.0.128 - 10.10.1.255
 param hubDnsResolverOutboundSubnetAddressSpace string = '10.10.1.0/26' // 59 addresses - 10.10.1.0 - 10.10.1.63
 param hubServicesSubnetAddressSpace string = '10.10.1.64/26' // 59 addresses - 10.10.1.64 - 10.10.1.127
-// param hubGatewaySubnetAddressSpace string = '10.10.1.128/26' // 59 addresses
+param hubGatewaySubnetAddressSpace string = '10.10.1.128/26' // 59 addresses
 
 // BRIDGE VNET IP SETTINGS
 param bridgeVnetAddressSpace string = '10.10.16.0/20'
@@ -47,6 +47,7 @@ param spokeVnetAddressSpace string = '10.10.32.0/20'
 param spokeVnetVmAddressSpace string = '10.10.32.0/25' // 123 addresses - 10.10.32.0 - 10.10.32.127
 param spokeVnetPrivateLinkAddressSpace string = '10.10.32.128/25' // 123 addresses - 10.10.32.128 - 10.10.32.255
 param spokeVnetIntegrationSubnetAddressSpace string = '10.10.33.0/25' // 123 addresses - 10.10.33.0 - 10.10.33.127
+param spokeAzureBastionSubnetAddressSpace string = '10.10.34.0/26' // 59 addresses -10.10.34.0 - 10.10.34.63
 
 // ISLAND NEtworks
 param islandNetworkAddressSpace string = '192.168.0.0/16' // used by AZ FW for SNAT rules
@@ -136,14 +137,12 @@ module hubVnet 'modules/vnet.bicep' = {
           }
         }
       }
-      /*
       {
         name: 'GatewaySubnet'
         properties: {
           addressPrefix: hubGatewaySubnetAddressSpace
         }
       }
-      */
     ]
   }
 }
@@ -210,7 +209,7 @@ module spokeVnet 'modules/vnet.bicep' = {
     ]
     subnets: [
       {
-        name: 'iaas'
+        name: 'compute'
         properties: {
           addressPrefix: spokeVnetVmAddressSpace
           routeTable: {
@@ -222,7 +221,7 @@ module spokeVnet 'modules/vnet.bicep' = {
         }
       }
       {
-        name: 'privatelink'
+        name: 'services'
         properties: {
           addressPrefix: spokeVnetPrivateLinkAddressSpace
           routeTable: {
@@ -235,24 +234,25 @@ module spokeVnet 'modules/vnet.bicep' = {
         }
       }
       {
-        name: 'funcintegration'
+        name: 'integration'
         properties: {
           addressPrefix: spokeVnetIntegrationSubnetAddressSpace
-          delegations: [
-            {
-              name: 'delegation'
-              properties: {
-                serviceName: 'Microsoft.Web/serverfarms'
-              }
-            }
-          ]
           privateEndpointNetworkPolicies: 'Enabled'
           routeTable: {
             id: route.outputs.id
           }
           networkSecurityGroup: {
-            id: spokeFuncIntegrationNsg.outputs.id
+            id: spokeIntegrationNsg.outputs.id
           }
+        }
+      }
+      {
+        name: 'AzureBastionSubnet'
+        properties: {
+          addressPrefix: spokeAzureBastionSubnetAddressSpace
+        }
+        networkSecurityGroup: {
+          id: bastionNsg.outputs.id
         }
       }
     ]
@@ -317,7 +317,7 @@ module hubDnsNsg 'modules/nsg.bicep' = {
 }
 
 // NSG for Bastion subnet
-module bastionNsg 'modules/nsg.bicep' = if (deployBridge) {
+module bastionNsg 'modules/nsg.bicep' = {
   name: '${resourcePrefix}-bridge-bastion'
   scope: resourceGroup(netrg.name)
   dependsOn: [
@@ -555,11 +555,11 @@ module spokeVirtualMachinesNsg 'modules/nsg.bicep' = {
 }
 
 // NSG for Azure Functions subnet
-module spokeFuncIntegrationNsg 'modules/nsg.bicep' = {
-  name: '${resourcePrefix}-spoke-functions'
+module spokeIntegrationNsg 'modules/nsg.bicep' = {
+  name: '${resourcePrefix}-spoke-integration'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${resourcePrefix}-spoke-functions'
+    name: '${resourcePrefix}-spoke-integration'
     location: region
     securityRules: [
       {
@@ -584,7 +584,7 @@ module spokePrivateLinkNsg 'modules/nsg.bicep' = {
   name: '${resourcePrefix}-spoke-privatelinks'
   scope: resourceGroup(netrg.name)
   dependsOn: [
-    spokeFuncIntegrationNsg
+    spokeIntegrationNsg
   ]
   params: {
     name: '${resourcePrefix}-spoke-privatelinks'
@@ -826,14 +826,26 @@ module bridgeRoute 'modules/udr.bicep' = if(deployBridge) {
   }
 }
 
-// Bastion
-module bastion 'modules/bastion.bicep' = if(deployBridge) {
+// Bastion - bridge
+module bastionBridge 'modules/bastion.bicep' = if(deployBridge) {
   name: 'bridge-bastion'
   scope: resourceGroup(netrg.name)
   params: {
     name: '${resourcePrefix}-bastion'
     location: region
-    subnetId: (deployBridge ? '${bridgeVnet.outputs.id}/subnets/AzureBastionSubnet' : '') 
+    subnetId: (deployBridge ? '${bridgeVnet.outputs.id}/subnets/AzureBastionSubnet' : '')
+  }
+}
+
+// Bastion - spoke
+module bastionSpoke 'modules/bastion.bicep' = {
+  name: 'spoke-bastion'
+  scope: resourceGroup(netrg.name)
+  params: {
+    name: '${resourcePrefix}-bastion'
+    location: region
+    subnetId: '${spokeVnet.outputs.id}/subnets/AzureBastionSubnet'
+    sku: 'Basic'
   }
 }
 
@@ -1003,7 +1015,7 @@ module privateZoneAzure 'modules/dnszoneprivate.bicep' = {
 }
 
 // Link the spoke VNet to the privatelink.azure.com private zone
-// NOTE: See: https://stackoverflow.com/questions/64725413/azure-bastion-and-private-link-in-the-same-virtual-network-access-to-virtual-ma
+// NOTE: See: https://learn.microsoft.com/en-us/azure/bastion/bastion-faq#my-privatelinkazurecom-cant-resolve-to-managementprivatelinkazurecom
 // Must add CNAME record for 'management.privatelink.azure.com' that points to 'arm-frontdoor-prod.trafficmanager.net'
 module frontdoorcname 'modules/dnscname.bicep' = {
   name: 'frontdoor-cname'
@@ -1150,7 +1162,7 @@ module dnsServer 'modules/virtualMachine.bicep' = {
     subnetName: 'dns'
     os: 'linux'
     vmName: '${resourcePrefix}-dns01'
-    vmSize: 'Standard_B2ms'
+    vmSize: 'Standard_B2as_v2'
     initScriptBase64: loadFileAsBase64('dnsserver.yml')
   }
 }
@@ -1224,10 +1236,10 @@ module webServer 'modules/virtualMachine.bicep' = {
     networkResourceGroupName: netrg.name
     location: region
     vnetName: spokeVnet.outputs.name
-    subnetName: 'iaas'
+    subnetName: 'compute'
     os: 'linux'
     vmName: '${resourcePrefix}-web01'
-    vmSize: 'Standard_B2ms'
+    vmSize: 'Standard_B2as_v2'
     initScriptBase64: loadFileAsBase64('webserver.yml')
   }
 }

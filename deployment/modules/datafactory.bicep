@@ -4,8 +4,6 @@ param resourceGroupNameDns string
 param resourceGroupNameNetwork string
 param privateLinkVnetName string
 param privateLinkSubnetName string
-param integrationRuntimeSubnetId string
-
 
 resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: dataFactoryName
@@ -13,35 +11,13 @@ resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
   identity: {
     type: 'SystemAssigned'
   }
-  properties: {
-    publicNetworkAccess: 'Disabled'
-    /*
-    repoConfiguration: {
-      type: 'FactoryVSTSConfiguration'
-      accountName: ''
-      projectName: ''
-      repositoryName: ''
-      collaborationBranch: ''
-      rootFolder: ''
-    }
-    */
-  }
 }
 
-
 resource integrationRuntime 'Microsoft.DataFactory/factories/integrationRuntimes@2018-06-01' = {
-  name: '${dataFactoryName}-integrationRuntime'
+  name: '${dataFactoryName}-ir'
   parent: dataFactory
   properties: {
-    type: 'Managed'
-    typeProperties: {
-      computeProperties: {
-        location: 'AutoResolve'
-      }
-      customerVirtualNetwork: {
-        subnetId: integrationRuntimeSubnetId
-      }
-    }
+    type: 'SelfHosted'
   }
 }
 
@@ -71,5 +47,9 @@ resource privateLink 'Microsoft.DataFactory/factories/managedVirtualNetworks/man
 }
 */
 
-output id string = dataFactory.id
+var integrationRuntimeKey = integrationRuntime.listAuthKeys().authKey1
+
+output dataFactoryId string = dataFactory.id
+output integrationRuntimeId string = integrationRuntime.id
 output name string = dataFactory.name
+output integrationRuntimeKey string = integrationRuntimeKey

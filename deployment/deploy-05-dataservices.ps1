@@ -42,4 +42,4 @@ az group create --name $resourceGroupName --location $location
 # Write-Host "objectId: $objectId"
 
 az configure --defaults group="$resourceGroupName"
-az deployment group create --name "$timeStamp-data" --template-file 'data-fabric.bicep' --parameters data.fabric.params.json orgPrefix=$orgPrefix appPrefix=$appPrefix regionCode=$regionCode
+az deployment group create --name "$timeStamp-data" --template-file 'dataservices.bicep' --parameters dataservices.params.json orgPrefix=$orgPrefix appPrefix=$appPrefix regionCode=$regionCode

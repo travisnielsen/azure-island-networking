@@ -3,7 +3,7 @@ param appPrefix string
 param regionCode string
 param location string = resourceGroup().location
 param tags object = { }
-@maxLength(16)
+@maxLength(20)
 @description('The full prefix is the combination of the org prefix and app prefix and cannot exceed 16 characters in order to avoid deployment failures with certain PaaS resources such as storage or key vault')
 param fullPrefix string = '${orgPrefix}-${appPrefix}'
 
@@ -25,6 +25,10 @@ param vmAdminUserName string
 @secure()
 param vmAdminPwd string
 
+// Scripts for VM custom script extensions
+@description('URL of the script for installation of a self-hosted integration runtime')
+var shirInstallScriptURL = 'https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.compute/vms-with-selfhost-integration-runtime/gatewayInstall.ps1'
+
 resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' existing = {
   name: vnetName
   scope: resourceGroup(subscription().id, networkResourceGroupName)
@@ -39,31 +43,33 @@ module sqlDabase 'modules/sqldb.bicep' = {
     adminGroupObjectId: sqlAdminObjectId
     resourceGroupNameDns: dnsResourceGroupName
     resourceGroupNameNetwork: networkResourceGroupName
-    vnetName: vnet.name
-    subnetName: 'privatelink'
+    privateLinkVnetName: vnet.name
+    privateLinkSubnetName: 'services'
     location: location
     useSampleDatabase: true
     tags: tags
   }
 }
 
+/*
 module windowsservervm 'modules/virtualMachine.bicep' = {
   name: 'windowsserver'
   scope: resourceGroup()
   params: {
-    vmName: 'win11vm'
-    vmSize: 'Standard_D2s_v4'
+    vmName: 'win-01'
+    vmSize: 'Standard_B4as_v2'
     os: 'windowsserver'
     adminUserName: vmAdminUserName
     adminPassword: vmAdminPwd
     networkResourceGroupName: networkResourceGroupName
     vnetName: vnet.name
-    subnetName: 'iaas'
+    subnetName: 'compute'
     location: location
     tags: tags
     initScriptBase64: loadFileAsBase64('winsetup.cmd')
   }
 }
+*/
 
 module dataFactory 'modules/datafactory.bicep' = {
   name: 'dataFactory'
@@ -74,7 +80,41 @@ module dataFactory 'modules/datafactory.bicep' = {
     resourceGroupNameDns: dnsResourceGroupName
     resourceGroupNameNetwork: networkResourceGroupName
     privateLinkVnetName: vnet.name
-    privateLinkSubnetName: 'privatelink'
-    integrationRuntimeSubnetId: 'TBD'
+    privateLinkSubnetName: 'services'
+  }
+}
+
+module shirVirtualMachine 'modules/virtualMachine.bicep' = {
+  name: 'shirVirtualMachine'
+  scope: resourceGroup()
+  dependsOn: [
+    dataFactory
+  ]
+  params: {
+    vmName: 'shir-01'
+    vmSize: 'Standard_B4as_v2'
+    os: 'windowsserver'
+    adminUserName: vmAdminUserName
+    adminPassword: vmAdminPwd
+    networkResourceGroupName: networkResourceGroupName
+    vnetName: vnet.name
+    subnetName: 'integration'
+    location: location
+    tags: tags
+  }
+}
+
+module shirInstall 'modules/customScriptExtension.bicep' = {
+  name: 'shirInstall'
+  scope: resourceGroup()
+  dependsOn: [
+    shirVirtualMachine
+    dataFactory
+  ]
+  params: {
+    vmName: 'shir-01'
+    location: location
+    scriptUrl: shirInstallScriptURL
+    command: 'powershell.exe -ExecutionPolicy Unrestricted -File gatewayInstall.ps1 ${dataFactory.outputs.integrationRuntimeKey}'
   }
 }

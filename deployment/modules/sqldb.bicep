@@ -1,4 +1,3 @@
-
 param serverName string = uniqueString(resourceGroup().id)
 param databaseName string
 param adminGroupObjectId string
@@ -8,8 +7,8 @@ param useSampleDatabase bool = false
 param location string = resourceGroup().location
 param resourceGroupNameNetwork string
 param resourceGroupNameDns string
-param vnetName string
-param subnetName string
+param privateLinkVnetName string
+param privateLinkSubnetName string
 
 param tags object = {}
 
@@ -62,8 +61,8 @@ module sqlPrivateEndpoint 'privateendpoint.bicep' = {
     dnsZoneName: 'privatelink${environment().suffixes.sqlServerHostname}'
     dnsResourceGroupName: resourceGroupNameDns
     networkResourceGroupName: resourceGroupNameNetwork
-    vnetName: vnetName
-    subnetName: subnetName
+    vnetName: privateLinkVnetName
+    subnetName: privateLinkSubnetName
     groupId: 'sqlServer'
   }
 }
