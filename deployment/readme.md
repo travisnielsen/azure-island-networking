@@ -129,6 +129,9 @@ First, create an Entra ID group to be used for providing administrative access t
 
 Next, navigate to your Microsoft Fabric environment and document the the target Workspace and Lakehouse (artifact) IDs. This is done by selecting the Lakehouse and copying the values from the URL. Example: `https://app.fabric.microsoft.com/groups/[WORKSPACE_ID]/lakehouses/[ARTIFACT_ID]?experience=data-engineering`. This information will be used by the configuration scripts for the Lakehouse Linked Service in Data Factory.
 
+Ensure your Fabric environment is configured to allow Service Principal Authentication via the **Tenant Settings** in the Admin Portal. This needs to be set in two places in the **Developer Settings** section: *Allow service principals to use Power BI APIs* and *Allow service principals to create and use profiles*. For details, see: [OneLake Security: Authentication](https://learn.microsoft.com/en-us/fabric/onelake/onelake-security#authentication).
+
+
 In the `deployments` directory, create a new file called `dataservices.params.json` and place the following contents into the file:
 
 ```json
@@ -156,4 +159,4 @@ Be sure to update the values for the `fabricWorkspaceId`, `fabricArtifactId`, an
 .\deploy-05-dataservices.ps1 centralus contoso dataservices
 ```
 
-After the deployment completes, use the **Manage Access** section in your Fabric Workspace to grant access to the Service Principal created by the deployment script. Detailed instructions can be found here: [Set up Microsoft Fabric](https://learn.microsoft.com/en-us/azure/iot-operations/connect-to-cloud/howto-configure-destination-fabric#set-up-microsoft-fabric). The default name of the Service Principal is `contoso-dataservices-adf-fabric`. Note that your Fabric environment must first be configured to allow Service Principal Authentication via the **Tenant Settings** in the Admin Portal. For details, see: [OneLake Security: Authentication](https://learn.microsoft.com/en-us/fabric/onelake/onelake-security#authentication).
+After the deployment completes, use the **Manage Access** section in your Fabric Workspace to grant access to the Service Principal created by the deployment script. The default name of the Service Principal is `contoso-dataservices-adf-fabric`. Detailed instructions can be found here: [Set up Microsoft Fabric](https://learn.microsoft.com/en-us/azure/iot-operations/connect-to-cloud/howto-configure-destination-fabric#set-up-microsoft-fabric).

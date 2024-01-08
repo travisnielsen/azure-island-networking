@@ -31,7 +31,7 @@ param fabricArtifactId string
 
 // Identities
 param userAssignedIdentityName string
-param servicePrincipalId string
+param servicePrincipalAppId string
 @secure()
 param servicePrincipalSecret string
 param updateServicePrincipalSecret bool = false
@@ -201,7 +201,7 @@ module fabricCredential 'modules/datafactoryCredentialServicePrincipal.bicep' = 
   params: {
     credentialName: 'contoso-adf-fabric'
     dataFactoryName: dataFactory.outputs.name
-    servicePrincipalId: servicePrincipalId
+    servicePrincipalId: servicePrincipalAppId
     keyVaultLinkedServiceName: keyVaultLinkedService.outputs.linkedServiceName
     secretName: keyVaultSecretName
   }

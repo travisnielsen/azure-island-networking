@@ -46,12 +46,12 @@ $updateServicePrincipalSecret = $false
 
 if ($sp) {
     Write-Host "Service Principal found. Using existing Service Principal" -ForegroundColor Yellow
-    $servicePrincipalObjectId = $sp.Id
+    $servicePrincipalObjectId = $sp.AppId
     Write-Host "Service Principal Object ID: $servicePrincipalObjectId" -ForegroundColor Cyan
 } else {
     Write-Host "Creating Service Principal: $servicePrincipalName. This will be used by Data Factory for accessing the Fabric Lakehouse" -ForegroundColor Cyan
     $sp = New-AzADServicePrincipal -DisplayName $servicePrincipalName
-    $servicePrincipalObjectId = $sp.Id
+    $servicePrincipalObjectId = $sp.AppId
     $servicePrincipalSecret = $sp.PasswordCredentials.SecretText
     $updateServicePrincipalSecret = $true
     Write-Host "Service Principal Object ID: $servicePrincipalObjectId" -ForegroundColor Cyan
@@ -88,7 +88,7 @@ az deployment group create `
         regionCode=$regionCode `
         sqlAdminObjectId=$sqlAdminsObjectId `
         userAssignedIdentityName=$userAssignedIdentityName `
-        servicePrincipalId=$servicePrincipalObjectId `
+        servicePrincipalAppId=$servicePrincipalAppId `
         servicePrincipalSecret=$servicePrincipalSecret `
         updateServicePrincipalSecret=$updateServicePrincipalSecret `
         --verbose
