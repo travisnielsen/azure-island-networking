@@ -50,7 +50,7 @@ if ($sp) {
     Write-Host "Service Principal Object ID: $servicePrincipalObjectId" -ForegroundColor Cyan
 } else {
     Write-Host "Creating Service Principal: $servicePrincipalName. This will be used by Data Factory for accessing the Fabric Lakehouse" -ForegroundColor Cyan
-    $sp = New-AzADServicePrincipal -DisplayName $servicePrincipalName -ServicePrincipalName $servicePrincipalName -SkipAssignment
+    $sp = New-AzADServicePrincipal -DisplayName $servicePrincipalName
     $servicePrincipalObjectId = $sp.Id
     $servicePrincipalSecret = $sp.PasswordCredentials.SecretText
     $updateServicePrincipalSecret = $true
