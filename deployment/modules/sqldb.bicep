@@ -66,3 +66,5 @@ module sqlPrivateEndpoint 'privateendpoint.bicep' = {
     groupId: 'sqlServer'
   }
 }
+
+output sqlServerDnsName string = '${sqlserver.name}${environment().suffixes.sqlServerHostname}'

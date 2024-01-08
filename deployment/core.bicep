@@ -1005,6 +1005,28 @@ module hubVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
   }
 }
 
+module privateZoneKeyVault 'modules/dnszoneprivate.bicep' = {
+  name: 'dns-private-keyvault'
+  scope: resourceGroup(dnsrg.name)
+  params: {
+    zoneName: 'privatelink.vaultcore.azure.net'
+  }
+}
+
+module vnetKeyVaultZoneLink 'modules/dnszonelink.bicep' = {
+  name: 'dns-link-keyvault-spoke'
+  scope: resourceGroup(dnsrg.name)
+  dependsOn: [
+    privateZoneKeyVault
+  ]
+  params: {
+    vnetName: spokeVnet.outputs.name
+    vnetId: spokeVnet.outputs.id
+    zoneName: 'privatelink.vaultcore.azure.net'
+    autoRegistration: false
+  }
+}
+
 // Private DNS zone for other Azure services
 module privateZoneAzure 'modules/dnszoneprivate.bicep' = {
   name: 'dns-private-azure'

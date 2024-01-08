@@ -117,9 +117,17 @@ Next, run the following command to deploy the application services for the sampl
 
 Make sure to replace the value of the SSH key with the output from the `ssh-keygen` command.
 
-## Scenario 2: Data Infrastrucure (Spoke)
+### Scenario 2: Data Infrastrucure (Spoke)
 
-This reference deployment includes access control setup based on Azure AD groups. Create an Entra ID group to be used for SQL Admins by opening the Azure Portal and navigating to **Microsoft Entra ID** > **Groups** and clicking the **New group** button. Name the group `sqladmins` (or similar) and accept the default group type (security) and membership type (assigned).
+The infrastructure in this scenario demonstrates moving data from a privately deployed source system (i.e. inside an Azure VNET) to a Microsoft Fabric Lakehouse usinng Azure Data Factory Self Hosted Integration Runtime (SHIR). This represnts a data movement pattern common at many large enterprises. All outbound traffic from Azure is filtered through a common egress point: Azure Firewall in this case. Use the instructions below to deploy this scenario in order to validate and examine the details.
+
+> [!NOTE]
+> It is assumed you have administraitve access to a workspace deployed to a Microsoft Fabric instance that is associated with the same tenant as your Azure environment.
+> The deployment scripts used in this section configure access control based on Entra ID groups. It is assumed the account being used for deployment has permissions to read the Entra ID directory, manage group membership, and create Service Principals.
+
+First, create an Entra ID group to be used for providing administrative access to the SQL server deployed in this topology. Open the Azure Portal and navigate to **Microsoft Entra ID** > **Groups** and click the **New group** button. Name the group `sqladmins` (or similar) and accept the default group type (security) and membership type (assigned).
+
+Next, navigate to your Microsoft Fabric environment and document the the target Workspace and Lakehouse (artifact) IDs. This is done by selecting the Lakehouse and copying the values from the URL. Example: `https://app.fabric.microsoft.com/groups/[WORKSPACE_ID]/lakehouses/[ARTIFACT_ID]?experience=data-engineering`. This information will be used by the configuration scripts for the Lakehouse Linked Service in Data Factory.
 
 In the `deployments` directory, create a new file called `dataservices.params.json` and place the following contents into the file:
 
@@ -128,6 +136,8 @@ In the `deployments` directory, create a new file called `dataservices.params.js
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+      "fabricWorkspaceId": { "value": "" },
+      "fabricArtifactId": { "value": "" },
       "vmAdminUserName": { "value": "vmadmin" },
       "vmAdminPwd": { "value": "" },
       "tags": {
@@ -140,11 +150,10 @@ In the `deployments` directory, create a new file called `dataservices.params.js
  }
 ```
 
-Be sure to update the values for the `vmAdminPwd` parameter. Next, run the following PowerShell script to deploy the data services.
+Be sure to update the values for the `fabricWorkspaceId`, `fabricArtifactId`, and `vmAdminPwd` parameters. Next, run the following PowerShell script to deploy the data services.
 
 ```powershell
 .\deploy-05-dataservices.ps1 centralus contoso dataservices
 ```
 
-> [!NOTE]
-> This deployment script sets group membership for access control to data sources. The account used must have permissions to read the Entra ID directory and manage group membership.
+After the deployment completes, use the **Manage Access** section in your Fabric Workspace to grant access to the Service Principal created by the deployment script. Detailed instructions can be found here: [Set up Microsoft Fabric](https://learn.microsoft.com/en-us/azure/iot-operations/connect-to-cloud/howto-configure-destination-fabric#set-up-microsoft-fabric). The default name of the Service Principal is `contoso-dataservices-adf-fabric`. Note that your Fabric environment must first be configured to allow Service Principal Authentication via the **Tenant Settings** in the Admin Portal. For details, see: [OneLake Security: Authentication](https://learn.microsoft.com/en-us/fabric/onelake/onelake-security#authentication).

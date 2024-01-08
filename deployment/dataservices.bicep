@@ -25,8 +25,18 @@ param vmAdminUserName string
 @secure()
 param vmAdminPwd string
 
-// Data Factory identity
-param userAssignedIdentityName string = ''
+// Fabric
+param fabricWorkspaceId string
+param fabricArtifactId string
+
+// Identities
+param userAssignedIdentityName string
+param servicePrincipalId string
+@secure()
+param servicePrincipalSecret string
+param updateServicePrincipalSecret bool = false
+
+var keyVaultSecretName = 'fabricServicePrincipal'
 
 // Scripts for VM custom script extensions
 @description('URL of the script for installation of a self-hosted integration runtime')
@@ -41,6 +51,7 @@ resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
   name: userAssignedIdentityName
   scope: resourceGroup()
 }
+
 
 module sqlDabase 'modules/sqldb.bicep' = {
   name: 'sqlDabase'
@@ -93,6 +104,28 @@ module dataFactory 'modules/datafactory.bicep' = {
   }
 }
 
+module keyVault 'modules/keyVault.bicep' = {
+  name: 'keyVault'
+  scope: resourceGroup()
+  dependsOn: [
+    dataFactory
+  ]
+  params: {
+    valutName: 'contosodatakv'
+    resourcePrefix: resourcePrefix
+    location: location
+    dnsResourceGroupName: dnsResourceGroupName
+    networkResourceGroupName: networkResourceGroupName
+    vnetName: vnet.name
+    subnetName: 'services'
+    secretsReaderObjectId: dataFactory.outputs.dataFactoryManagedIdentity
+    updateSecret: updateServicePrincipalSecret
+    secretName: keyVaultSecretName
+    secretValue: servicePrincipalSecret
+  }
+}
+
+
 module shirVirtualMachine 'modules/virtualMachine.bicep' = {
   name: 'shirVirtualMachine'
   scope: resourceGroup()
@@ -125,5 +158,66 @@ module shirInstall 'modules/customScriptExtension.bicep' = {
     location: location
     scriptUrl: shirInstallScriptURL
     command: 'powershell.exe -ExecutionPolicy Unrestricted -File gatewayInstall.ps1 ${dataFactory.outputs.integrationRuntimeKey}'
+  }
+}
+
+module sqlDatabaseLinkedService 'modules/datafactorylinkedservice.bicep' = {
+  name: 'sqlDatabaseLinkedService'
+  scope: resourceGroup()
+  dependsOn: [
+    shirInstall
+  ]
+  params: {
+    linkedServiceName: 'sqlDatabaseLinkedService'
+    linkedServiceType: 'AzureSqlDatabase'
+    dataFactoryName: dataFactory.outputs.name
+    integrationRuntimeName: dataFactory.outputs.integrationRuntimeName
+    credentialName: dataFactory.outputs.dataFactoryCredentialName
+    resourceFqdn: sqlDabase.outputs.sqlServerDnsName
+    itemContainerName: databaseName
+  }
+}
+
+module keyVaultLinkedService 'modules/datafactorylinkedservicekeyvault.bicep' = {
+  name: 'keyVaultLinkedService'
+  scope: resourceGroup()
+  dependsOn: [
+    dataFactory
+  ]
+  params: {
+    linkedServiceName: 'keyVaultLinkedService'
+    dataFactoryName: dataFactory.outputs.name
+    valutUri: keyVault.outputs.keyVaultUri
+  }
+
+}
+
+module fabricCredential 'modules/datafactoryCredentialServicePrincipal.bicep' = {
+  name: 'fabricCredential'
+  scope: resourceGroup()
+  dependsOn: [
+    keyVaultLinkedService
+  ]
+  params: {
+    credentialName: 'contoso-adf-fabric'
+    dataFactoryName: dataFactory.outputs.name
+    servicePrincipalId: servicePrincipalId
+    keyVaultLinkedServiceName: keyVaultLinkedService.outputs.linkedServiceName
+    secretName: keyVaultSecretName
+  }
+}
+
+module fabricLinkedService 'modules/datafactoryLinkedServiceFabricLakehouse.bicep' = {
+  name: 'fabricLinkedService'
+  scope: resourceGroup()
+  dependsOn: [
+    fabricCredential
+  ]
+  params: {
+    linkedServiceName: 'fabricLakehouse'
+    dataFactoryName: dataFactory.outputs.name
+    credentialName: fabricCredential.outputs.credentialName
+    fabricWorkspaceId: fabricWorkspaceId
+    fabricArtifactId: fabricArtifactId
   }
 }

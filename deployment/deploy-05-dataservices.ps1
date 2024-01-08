@@ -34,7 +34,34 @@ switch ($location) {
 $resourceGroupName = "$orgPrefix-$appPrefix"
 az group create --name $resourceGroupName --location $location
 
+# create Service Principal for ADF to use for accessing the Fabric Lakehouse
+
+$servicePrincipalName = "$orgPrefix-dataservices-adf-fabric"
+
+Write-Host "Looking for Service Principal: $servicePrincipalName" -ForegroundColor Cyan
+$sp = Get-AzADServicePrincipal -DisplayName $servicePrincipalName
+$servicePrincipalObjectId = ''
+$servicePrincipalSecret = ''
+$updateServicePrincipalSecret = $false
+
+if ($sp) {
+    Write-Host "Service Principal found. Using existing Service Principal" -ForegroundColor Yellow
+    $servicePrincipalObjectId = $sp.Id
+    Write-Host "Service Principal Object ID: $servicePrincipalObjectId" -ForegroundColor Cyan
+} else {
+    Write-Host "Creating Service Principal: $servicePrincipalName. This will be used by Data Factory for accessing the Fabric Lakehouse" -ForegroundColor Cyan
+    $sp = New-AzADServicePrincipal -DisplayName $servicePrincipalName -ServicePrincipalName $servicePrincipalName -SkipAssignment
+    $servicePrincipalObjectId = $sp.Id
+    $servicePrincipalSecret = $sp.PasswordCredentials.SecretText
+    $updateServicePrincipalSecret = $true
+    Write-Host "Service Principal Object ID: $servicePrincipalObjectId" -ForegroundColor Cyan
+}
+
+Write-Host ""
+
 # create the user assigned identity for the ADF instance and assign it to the SQL Admins group
+# NOTE: This is idempotent and secrets are not involved, so we do not need to check if the identity already exists
+
 $userAssignedIdentityName = 'contoso-dataservices-adf'
 Write-Host "Setting up Data Factory User Assigned Managed Identity: $userAssignedIdentityName" -ForegroundColor Cyan
 New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name $userAssignedIdentityName -Location $location
@@ -49,9 +76,19 @@ Write-Host "Adding ADF Identity to SQL Admins Group" -ForegroundColor Cyan
 Add-AzADGroupMember -MemberObjectId $adfIdentityObjectId -TargetGroupObjectId $sqlAdminsObjectId -ErrorAction SilentlyContinue
 Write-Host "Membership added. Beginning deployment." -ForegroundColor Cyan
 
+Write-Host ""
+
 az configure --defaults group="$resourceGroupName"
 az deployment group create `
     --name "$timeStamp-data" `
     --template-file 'dataservices.bicep' `
-    --parameters dataservices.params.json orgPrefix=$orgPrefix appPrefix=$appPrefix regionCode=$regionCode sqlAdminObjectId=$sqlAdminsObjectId userAssignedIdentityName=$userAssignedIdentityName `
-    --verbose
+    --parameters dataservices.params.json `
+        orgPrefix=$orgPrefix `
+        appPrefix=$appPrefix `
+        regionCode=$regionCode `
+        sqlAdminObjectId=$sqlAdminsObjectId `
+        userAssignedIdentityName=$userAssignedIdentityName `
+        servicePrincipalId=$servicePrincipalObjectId `
+        servicePrincipalSecret=$servicePrincipalSecret `
+        updateServicePrincipalSecret=$updateServicePrincipalSecret `
+        --verbose

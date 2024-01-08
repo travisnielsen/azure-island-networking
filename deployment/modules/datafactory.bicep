@@ -6,8 +6,6 @@ param resourceGroupNameNetwork string
 param privateLinkVnetName string
 param privateLinkSubnetName string
 
-
-
 resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: dataFactoryName
   location: location
@@ -53,21 +51,13 @@ module privateEndpoint 'privateendpoint.bicep' = {
   }
 }
 
-
-// TODO: need to finsih configuration
-/*
-resource privateLink 'Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints@2018-06-01' = {
-  name: '${name}/something'
-  properties: {
-
-  }
-}
-*/
-
 var integrationRuntimeKey = integrationRuntime.listAuthKeys().authKey1
 
-output dataFactoryId string = dataFactory.id
-output integrationRuntimeId string = integrationRuntime.id
 output name string = dataFactory.name
+output dataFactoryId string = dataFactory.id
+output dataFactoryManagedIdentity string = dataFactory.identity.principalId
+output integrationRuntimeName string = integrationRuntime.name
+output integrationRuntimeId string = integrationRuntime.id
 output integrationRuntimeKey string = integrationRuntimeKey
 output dataFactoryCredentialId string = dataFactoryCredential.id
+output dataFactoryCredentialName string = dataFactoryCredential.name
