@@ -125,7 +125,6 @@ module keyVault 'modules/keyVault.bicep' = {
   }
 }
 
-
 module shirVirtualMachine 'modules/virtualMachine.bicep' = {
   name: 'shirVirtualMachine'
   scope: resourceGroup()
@@ -161,7 +160,14 @@ module shirInstall 'modules/customScriptExtension.bicep' = {
   }
 }
 
-module sqlDatabaseLinkedService 'modules/datafactorylinkedservice.bicep' = {
+// TODO: Separate Data Factory deployment from this file. Need at least a 30 second pause after SHIR install for it to come online. Issues with setting up the SQL Database linked service on first run.
+
+resource dataFactoryExisting 'Microsoft.DataFactory/factories@2018-06-01' existing = {
+  name: 'contoso-adf'
+  scope: resourceGroup()
+}
+
+module sqlDatabaseLinkedService 'modules/datafactorylinkedserviceSql.bicep' = {
   name: 'sqlDatabaseLinkedService'
   scope: resourceGroup()
   dependsOn: [
@@ -219,5 +225,267 @@ module fabricLinkedService 'modules/datafactoryLinkedServiceFabricLakehouse.bice
     credentialName: fabricCredential.outputs.credentialName
     fabricWorkspaceId: fabricWorkspaceId
     fabricArtifactId: fabricArtifactId
+  }
+}
+
+resource fabricDataSetProductsSql 'Microsoft.DataFactory/factories/datasets@2018-06-01' = {
+  parent: dataFactoryExisting
+  name: 'SqlProductTable'
+  properties: {
+    type: 'AzureSqlTable'
+    linkedServiceName: {
+      referenceName: sqlDatabaseLinkedService.outputs.linkedServiceName
+      type: 'LinkedServiceReference'
+    }
+    typeProperties: {
+      schema: 'SalesLT'
+      table: 'Product'
+    }
+    annotations:[]
+    schema: [
+      {
+        name: 'ProductID'
+        type: 'int'
+        precision: 10
+      }
+      {
+        name: 'Name'
+        type: 'nvarchar'
+      }
+      {
+          name: 'ProductNumber'
+          type: 'nvarchar'
+      }
+      {
+          name: 'Color'
+          type: 'nvarchar'
+      }
+      {
+          name: 'StandardCost'
+          type: 'money'
+          precision: 19
+          scale: 4
+      }
+      {
+          name: 'ListPrice'
+          type: 'money'
+          precision: 19
+          scale: 4
+      }
+      {
+          name: 'Size'
+          type: 'nvarchar'
+      }
+      {
+          name: 'Weight'
+          type: 'decimal'
+          precision: 8
+          scale: 2
+      }
+      {
+          name: 'ProductCategoryID'
+          type: 'int'
+          precision: 10
+      }
+      {
+          name: 'ProductModelID'
+          type: 'int'
+          precision: 10
+      }
+      {
+          name: 'SellStartDate'
+          type: 'datetime'
+          precision: 23
+          scale: 3
+      }
+      {
+          name: 'SellEndDate'
+          type: 'datetime'
+          precision: 23
+          scale: 3
+      }
+      {
+          name: 'DiscontinuedDate'
+          type: 'datetime'
+          precision: 23
+          scale: 3
+      }
+      {
+          name: 'ThumbNailPhoto'
+          type: 'varbinary'
+      }
+      {
+          name: 'ThumbnailPhotoFileName'
+          type: 'nvarchar'
+      }
+      {
+          name: 'rowguid'
+          type: 'uniqueidentifier'
+      }
+      {
+          name: 'ModifiedDate'
+          type: 'datetime'
+          precision: 23
+          scale: 3
+      }
+    ]
+  }
+}
+
+resource fabricDataSetProductsLakehouse 'Microsoft.DataFactory/factories/datasets@2018-06-01' = {
+  parent: dataFactoryExisting
+  name: 'LakehouseProductTable'
+  properties: {
+    type: 'LakehouseTable'
+    linkedServiceName: {
+      referenceName: fabricLinkedService.outputs.linkedServiceName
+      type: 'LinkedServiceReference'
+    }
+    typeProperties: {
+      table: 'Products'
+    }
+    annotations:[]
+    schema: [
+      {
+        name: 'ProductID'
+        type: 'int'
+        precision: 10
+      }
+      {
+        name: 'Name'
+        type: 'nvarchar'
+      }
+      {
+          name: 'ProductNumber'
+          type: 'nvarchar'
+      }
+      {
+          name: 'Color'
+          type: 'nvarchar'
+      }
+      {
+          name: 'StandardCost'
+          type: 'money'
+          precision: 19
+          scale: 4
+      }
+      {
+          name: 'ListPrice'
+          type: 'money'
+          precision: 19
+          scale: 4
+      }
+      {
+          name: 'Size'
+          type: 'nvarchar'
+      }
+      {
+          name: 'Weight'
+          type: 'decimal'
+          precision: 8
+          scale: 2
+      }
+      {
+          name: 'ProductCategoryID'
+          type: 'int'
+          precision: 10
+      }
+      {
+          name: 'ProductModelID'
+          type: 'int'
+          precision: 10
+      }
+      {
+          name: 'SellStartDate'
+          type: 'datetime'
+          precision: 23
+          scale: 3
+      }
+      {
+          name: 'SellEndDate'
+          type: 'datetime'
+          precision: 23
+          scale: 3
+      }
+      {
+          name: 'DiscontinuedDate'
+          type: 'datetime'
+          precision: 23
+          scale: 3
+      }
+      {
+          name: 'ThumbNailPhoto'
+          type: 'varbinary'
+      }
+      {
+          name: 'ThumbnailPhotoFileName'
+          type: 'nvarchar'
+      }
+      {
+          name: 'rowguid'
+          type: 'uniqueidentifier'
+      }
+      {
+          name: 'ModifiedDate'
+          type: 'datetime'
+          precision: 23
+          scale: 3
+      }
+    ]
+  }
+}
+
+resource copyPipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
+  parent: dataFactoryExisting
+  name: 'CopyProducts'
+  properties: {
+    activities: [
+      {
+        name: 'CopyProducts'
+        type: 'Copy'
+        dependsOn: []
+        policy: {
+          timeout: '0.12:00:00'
+          retry: 3
+          retryIntervalInSeconds: 30
+          secureInput: false
+          secureOutput: false
+        }
+        userProperties: []
+        typeProperties: {
+          source: {
+            type: 'SqlSource'
+            queryTimeout: '02:00:00'
+            partitionOption: 'None'
+          }
+          sink: {
+            type: 'LakehouseTableSink'
+            tableActionOption: 'Append'
+          }
+          enableStaging: false
+          translator: {
+            type: 'TabularTranslator'
+            typeConversion: true
+            typeConversionSettings: {
+              allowDataTruncation: true
+              treatBooleanAsNumber: false
+            }
+          }
+        }
+        inputs: [
+          {
+            referenceName: fabricDataSetProductsSql.name
+            type: 'DatasetReference'
+          }
+        ]
+        outputs: [
+          {
+            referenceName: fabricDataSetProductsLakehouse.name
+            type: 'DatasetReference'
+          }
+        ]
+      }
+    ]
+    annotations: []
   }
 }

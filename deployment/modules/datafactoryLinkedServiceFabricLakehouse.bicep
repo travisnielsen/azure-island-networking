@@ -26,3 +26,5 @@ resource fabricLinkedService 'Microsoft.DataFactory/factories/linkedservices@201
     }
   }
 }
+
+output linkedServiceName string = fabricLinkedService.name

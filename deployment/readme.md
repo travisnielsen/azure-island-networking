@@ -43,7 +43,7 @@ In the `deployments` directory, create a new file called `core.params.json` and 
       "region": { "value": "centralus"},
       "orgPrefix": { "value": "contoso" },
       "appPrefix": { "value": "core" },
-      "deployBridge": { "value:" true },
+      "deployBridge": { "value": true },
       "deployVnetGateway": { "value": false },
       "vmAdminUserName": { "value": "vmadmin" },
       "vmAdminPwd": { "value": "" },

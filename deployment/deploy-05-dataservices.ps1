@@ -40,21 +40,21 @@ $servicePrincipalName = "$orgPrefix-dataservices-adf-fabric"
 
 Write-Host "Looking for Service Principal: $servicePrincipalName" -ForegroundColor Cyan
 $sp = Get-AzADServicePrincipal -DisplayName $servicePrincipalName
-$servicePrincipalObjectId = ''
+$servicePrincipalAppId = ''
 $servicePrincipalSecret = ''
 $updateServicePrincipalSecret = $false
 
 if ($sp) {
     Write-Host "Service Principal found. Using existing Service Principal" -ForegroundColor Yellow
-    $servicePrincipalObjectId = $sp.AppId
-    Write-Host "Service Principal Object ID: $servicePrincipalObjectId" -ForegroundColor Cyan
+    $servicePrincipalAppId = $sp.AppId
+    Write-Host "Service Principal App ID: $servicePrincipalAppId" -ForegroundColor Cyan
 } else {
     Write-Host "Creating Service Principal: $servicePrincipalName. This will be used by Data Factory for accessing the Fabric Lakehouse" -ForegroundColor Cyan
     $sp = New-AzADServicePrincipal -DisplayName $servicePrincipalName
-    $servicePrincipalObjectId = $sp.AppId
+    $servicePrincipalAppId = $sp.AppId
     $servicePrincipalSecret = $sp.PasswordCredentials.SecretText
     $updateServicePrincipalSecret = $true
-    Write-Host "Service Principal Object ID: $servicePrincipalObjectId" -ForegroundColor Cyan
+    Write-Host "Service Principal App ID: $servicePrincipalAppId" -ForegroundColor Cyan
 }
 
 Write-Host ""
@@ -90,5 +90,4 @@ az deployment group create `
         userAssignedIdentityName=$userAssignedIdentityName `
         servicePrincipalAppId=$servicePrincipalAppId `
         servicePrincipalSecret=$servicePrincipalSecret `
-        updateServicePrincipalSecret=$updateServicePrincipalSecret `
-        --verbose
+        updateServicePrincipalSecret=$updateServicePrincipalSecret
