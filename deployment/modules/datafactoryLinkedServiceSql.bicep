@@ -37,3 +37,5 @@ resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
     }
   }
 }
+
+output linkedServiceName string = linkedService.name

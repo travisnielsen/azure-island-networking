@@ -876,7 +876,7 @@ module privateZoneAzureBlobStorage 'modules/dnszoneprivate.bicep' = {
   }
 }
 
-// Link the spoke VNet to the privatelink.blob.core.windows.net private zone
+// Link the spoke VNET to the privatelink.blob.core.windows.net private zone
 module spokeVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-blobstorage-spokevnet'
   scope: resourceGroup(dnsrg.name)
@@ -891,7 +891,7 @@ module spokeVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
   }
 }
 
-// Link the hub VNet to the privatelink.blob.core.windows.net private zone
+// Link the hub VNET to the privatelink.blob.core.windows.net private zone
 module hubVnetAzureBlobStorageZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-blobstorage-hubvnet'
   scope: resourceGroup(dnsrg.name)
@@ -915,7 +915,7 @@ module privateZoneAzureDataFactory 'modules/dnszoneprivate.bicep' = {
   }
 }
 
-// Link the spoke VNet to the privatelink.datafactory.azure.net private zone
+// Link the spoke VNET to the privatelink.datafactory.azure.net private zone
 module spokeVnetAzureDataFactoryZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-datafactory-spokevnet'
   scope: resourceGroup(dnsrg.name)
@@ -930,7 +930,7 @@ module spokeVnetAzureDataFactoryZoneLink 'modules/dnszonelink.bicep' = {
   }
 }
 
-// Link the hub VNet to the privatelink.datafactory.azure.net private zone
+// Link the hub VET to the privatelink.datafactory.azure.net private zone
 module hubVnetAzureDataFactoryZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-datafactory-hubvnet'
   scope: resourceGroup(dnsrg.name)
@@ -954,7 +954,7 @@ module privateZoneSql 'modules/dnszoneprivate.bicep' = {
   }
 }
 
-// Link the spoke VNet to the privatelink.database.windows.net private zone
+// Link the spoke VNET to the privatelink.database.windows.net private zone
 module spokeVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-sql-spokevnet'
   scope: resourceGroup(dnsrg.name)
@@ -969,7 +969,7 @@ module spokeVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
   }
 }
 
-// Link the hub VNet to the privatelink.database.windows.net private zone
+// Link the hub VNET to the privatelink.database.windows.net private zone
 module hubVnetSqlZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-sql-hubvnet'
   scope: resourceGroup(dnsrg.name)
@@ -992,6 +992,7 @@ module privateZoneKeyVault 'modules/dnszoneprivate.bicep' = {
   }
 }
 
+// Link the spoke VNET to the privatelink.vaultcore.azure.ne private zone
 module vnetKeyVaultZoneLink 'modules/dnszonelink.bicep' = {
   name: 'dns-link-keyvault-spoke'
   scope: resourceGroup(dnsrg.name)
