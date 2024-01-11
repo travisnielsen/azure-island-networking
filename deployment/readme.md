@@ -40,13 +40,11 @@ In the `deployments` directory, create a new file called `core.params.json` and 
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "region": { "value": "centralus"},
-      "orgPrefix": { "value": "contoso" },
-      "appPrefix": { "value": "core" },
-      "deployBridge": { "value:" true },
+      "deployBridge": { "value": true },
       "deployVnetGateway": { "value": false },
       "vmAdminUserName": { "value": "vmadmin" },
       "vmAdminPwd": { "value": "" },
+      "vmSize": { "value": "Standard_B2as_v2" },
       "tags": {
         "value": {
           "project": "AzIslandNetworking",
@@ -83,6 +81,7 @@ In the `deployments` directory, create a new file called `app-base.params.json` 
     "appPrefix": { "value": "island" },
     "vmAdminUserName": { "value": "vmadmin" },
     "vmAdminPwd": { "value": "" },
+    "vmSizeUtilityServer": { "value": "Standard_B2as_v2" },
     "tags": {
       "value": {
         "project": "AzIslandNetworking",

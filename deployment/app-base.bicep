@@ -20,6 +20,7 @@ param vmAdminUserName string = 'vmadmin'
 @secure()
 param vmAdminPwd string
 param vmSubnetName string = 'util'
+param vmSizeUtilityServer string = 'Standard_B2as_v2'
 @maxLength(16)
 @description('The full prefix is the combination of the org prefix and app prefix and cannot exceed 16 characters in order to avoid deployment failures with certain PaaS resources such as storage or key vault')
 param fullPrefix string = '${orgPrefix}-${appPrefix}'
@@ -392,7 +393,7 @@ module utilServer 'modules/virtualMachine.bicep' = {
     subnetName: vmSubnetName
     os: 'linux'
     vmName: '${resourcePrefix}-util01'
-    vmSize: 'Standard_B2ms'
+    vmSize: vmSizeUtilityServer
   }
 }
 

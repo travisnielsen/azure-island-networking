@@ -11,7 +11,7 @@ targetScope = 'subscription'
 ])
 param region string
 param orgPrefix string
-param appPrefix string
+param appPrefix string 
 param regionCode string
 param tags object = {}
 
@@ -23,6 +23,7 @@ var resourcePrefix = '${orgPrefix}-${appPrefix}-${regionCode}'
 
 // DNS Server
 param vmAdminUserName string = 'vmadmin'
+param vmSize string = 'Standard_B2as_v2'
 
 @secure()
 param vmAdminPwd string
@@ -47,9 +48,8 @@ param spokeVnetAddressSpace string = '10.10.32.0/20'
 param spokeVnetVmAddressSpace string = '10.10.32.0/25' // 123 addresses - 10.10.32.0 - 10.10.32.127
 param spokeVnetPrivateLinkAddressSpace string = '10.10.32.128/25' // 123 addresses - 10.10.32.128 - 10.10.32.255
 param spokeVnetIntegrationSubnetAddressSpace string = '10.10.33.0/25' // 123 addresses - 10.10.33.0 - 10.10.33.127
-param spokeAzureBastionSubnetAddressSpace string = '10.10.34.0/26' // 59 addresses -10.10.34.0 - 10.10.34.63
 
-// ISLAND NEtworks
+// ISLAND Networks
 param islandNetworkAddressSpace string = '192.168.0.0/16' // used by AZ FW for SNAT rules
 
 resource netrg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
@@ -244,15 +244,6 @@ module spokeVnet 'modules/vnet.bicep' = {
           networkSecurityGroup: {
             id: spokeIntegrationNsg.outputs.id
           }
-        }
-      }
-      {
-        name: 'AzureBastionSubnet'
-        properties: {
-          addressPrefix: spokeAzureBastionSubnetAddressSpace
-        }
-        networkSecurityGroup: {
-          id: bastionNsg.outputs.id
         }
       }
     ]
@@ -831,21 +822,9 @@ module bastionBridge 'modules/bastion.bicep' = if(deployBridge) {
   name: 'bridge-bastion'
   scope: resourceGroup(netrg.name)
   params: {
-    name: '${resourcePrefix}-bastion'
+    name: '${resourcePrefix}-bridge-bastion'
     location: region
     subnetId: (deployBridge ? '${bridgeVnet.outputs.id}/subnets/AzureBastionSubnet' : '')
-  }
-}
-
-// Bastion - spoke
-module bastionSpoke 'modules/bastion.bicep' = {
-  name: 'spoke-bastion'
-  scope: resourceGroup(netrg.name)
-  params: {
-    name: '${resourcePrefix}-bastion'
-    location: region
-    subnetId: '${spokeVnet.outputs.id}/subnets/AzureBastionSubnet'
-    sku: 'Basic'
   }
 }
 
@@ -1184,7 +1163,7 @@ module dnsServer 'modules/virtualMachine.bicep' = {
     subnetName: 'dns'
     os: 'linux'
     vmName: '${resourcePrefix}-dns01'
-    vmSize: 'Standard_B2as_v2'
+    vmSize: vmSize
     initScriptBase64: loadFileAsBase64('dnsserver.yml')
   }
 }
@@ -1261,7 +1240,7 @@ module webServer 'modules/virtualMachine.bicep' = {
     subnetName: 'compute'
     os: 'linux'
     vmName: '${resourcePrefix}-web01'
-    vmSize: 'Standard_B2as_v2'
+    vmSize: vmSize
     initScriptBase64: loadFileAsBase64('webserver.yml')
   }
 }
