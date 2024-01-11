@@ -125,14 +125,15 @@ module monitoring 'Modules/monitoring.bicep' = {
 module keyVault 'Modules/keyVault.bicep' = {
   name: '${timeStamp}-${resourcePrefix}-kv'
   params: {
+    valutName: '${resourcePrefix}-kv'
     enableSoftDelete: enableSoftDeleteForKeyVault
     location: location
     networkResourceGroupName: networkResourceGroupName
     dnsResourceGroupName: dnsResourceGroupName
     resourcePrefix: resourcePrefix
     tenantId: tenantId
-    timeStamp: timeStamp
     vnetName: workloadVnetName
+    subnetName: 'privateEndpoints'
   }
 }
 

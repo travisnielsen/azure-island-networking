@@ -7,10 +7,7 @@ param resourcePrefix string
 param tenantId string = subscription().tenantId
 param vnetName string
 param subnetName string
-param updateSecret bool = false
-param secretName string = ''
-@secure()
-param secretValue string = ''
+
 #disable-next-line secure-secrets-in-params   // Doesn't contain a secret
 param secretsReaderObjectId string = ''
 @allowed([
@@ -58,15 +55,11 @@ module privateEndpoint 'privateendpoint.bicep' = {
   }
 }
 
-resource keyVaultSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = if (updateSecret) {
-  parent: keyVault
-  name: secretName
-  properties: {
-    value: secretValue
-  }
-}
+/*
 
-resource keyVaultSecretsUserRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+*/
+
+resource keyVaultSecretsUserRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(secretsReaderObjectId)) {
   scope: keyVault
   name: guid(tenantId, keyVault.id, keyVaultSecretsUserRoleId)
   properties: {
@@ -77,3 +70,4 @@ resource keyVaultSecretsUserRoleAssignment 'Microsoft.Authorization/roleAssignme
 }
 
 output keyVaultUri string = keyVault.properties.vaultUri
+output keyVaultName string = keyVault.name

@@ -119,7 +119,17 @@ module keyVault 'modules/keyVault.bicep' = {
     vnetName: vnet.name
     subnetName: 'services'
     secretsReaderObjectId: dataFactory.outputs.dataFactoryManagedIdentity
-    updateSecret: updateServicePrincipalSecret
+  }
+}
+
+module keyVaultSecret 'modules/keyVaultSecret.bicep' = {
+  name: keyVaultSecretName
+  scope: resourceGroup()
+  dependsOn: [
+    keyVault
+  ]
+  params: {
+    keyVaultName: keyVault.outputs.keyVaultName
     secretName: keyVaultSecretName
     secretValue: servicePrincipalSecret
   }
