@@ -3,4 +3,5 @@
 
 # Exclude ARM JSON files
 deployment/*.json
+deployment/*/*.json
 

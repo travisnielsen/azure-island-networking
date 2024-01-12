@@ -78,9 +78,6 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-11-01' = {
   identity: {
     type: 'SystemAssigned'
   }
-  zones: [
-    '1'
-  ]
   properties: {
     hardwareProfile: {
       vmSize: vmSize
