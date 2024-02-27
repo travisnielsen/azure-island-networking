@@ -66,25 +66,23 @@ module sqlDabase '../modules/sqldb.bicep' = {
   }
 }
 
-/*
-module windowsservervm '../modules/virtualMachine.bicep' = {
-  name: 'windowsserver'
+
+module dataGatewayVm '../modules/virtualMachine.bicep' = {
+  name: 'dataGatewayVm'
   scope: resourceGroup()
   params: {
-    vmName: 'win-01'
+    vmName: 'pbigw-01'
     vmSize: 'Standard_B4as_v2'
     os: 'windowsserver'
     adminUserName: vmAdminUserName
     adminPassword: vmAdminPwd
     networkResourceGroupName: networkResourceGroupName
     vnetName: vnet.name
-    subnetName: 'compute'
+    subnetName: 'integration'
     location: location
     tags: tags
-    initScriptBase64: loadFileAsBase64('winsetup.cmd')
   }
 }
-*/
 
 module dataFactory '../modules/datafactory.bicep' = {
   name: 'dataFactory'
